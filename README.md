@@ -21,15 +21,15 @@ Address: Flagstaff, Arizona
 
 # Prototype Features:
 
-1. ) Ability to download/save hike details and available maps for offline use.
+1.) Ability to download/save hike details and available maps for offline use.
 	
-2. ) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
+2.) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
 
-3. ) Record user's last position where cell service was available.
+3.) Record user's last position where cell service was available.
 
-4. ) Display emergency services info.
+4.) Display emergency services info.
 	
-5. ) Functionality to automatically contact emergency services during certain circumstances.
+5.) Functionality to automatically contact emergency services during certain circumstances.
 
 
 # Technologies:
