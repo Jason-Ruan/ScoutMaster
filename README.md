@@ -38,4 +38,7 @@ Address: Flagstaff, Arizona
 -	Core Location
 -	CloudKit
 -	UIApplication
-API(s): Hiking Project, NPS Data
+
+# API(s): 
+-	Hiking Project: 
+-	NPS Data:
