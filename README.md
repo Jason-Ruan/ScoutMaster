@@ -39,3 +39,10 @@ Address: Flagstaff, Arizona
 # API(s): 
 -	[Hiking Project](https://www.hikingproject.com/data)
 -	[NPS Data](https://www.nps.gov/subjects/digital/nps-data-api.htm)
+
+![Launch Screen](https://github.com/jr3911/ScoutMaster/blob/master/ScoutMasterWireFrameImages/launchScreen.png)
+![Discover Tab](https://github.com/jr3911/ScoutMaster/blob/master/ScoutMasterWireFrameImages/DiscoverTab.png)
+![Trail Detail](https://github.com/jr3911/ScoutMaster/blob/master/ScoutMasterWireFrameImages/TrailDetail.png)
+![Dashboard Tab: User Stats](https://github.com/jr3911/ScoutMaster/blob/master/ScoutMasterWireFrameImages/DashboadStats.png)
+![Dashboard Tab: Faved](https://github.com/jr3911/ScoutMaster/blob/master/ScoutMasterWireFrameImages/DashboardFavedHikes.png)
+
