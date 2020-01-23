@@ -1,6 +1,3 @@
-###### ScoutMaster
-
-
 # User Stories:
 
 1.)	Neema is a long-time hiker, she recently moved to New York City from California and realized she would need to continue her hiking passion in a new place. She has no prior knowledge of NYC hiking trails and downloads the app to familiarize herself with options.
