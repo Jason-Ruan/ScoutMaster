@@ -1,6 +1,7 @@
 # ScoutMaster
 
-User Stories:
+
+# User Stories:
 
 1.)	Neema is a long-time hiker, she recently moved to New York City from California and realized she would need to continue her hiking passion in a new place. She has no prior knowledge of NYC hiking trails and downloads the app to familiarize herself with options.
 
@@ -18,22 +19,23 @@ Level: Intermediate
 Address: Flagstaff, Arizona
 
 
-Prototype Features:
+# Prototype Features:
 
-	1. ) Ability to download/save hike details and available maps for offline use.
+1. ) Ability to download/save hike details and available maps for offline use.
 	
-	2. ) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
+2. ) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
 
-	3. ) Record user's last position where cell service was available.
+3. ) Record user's last position where cell service was available.
 
-	4. ) Display emergency services info.
+4. ) Display emergency services info.
 	
-	5. ) Functionality to automatically contact emergency services during certain circumstances.
+5. ) Functionality to automatically contact emergency services during certain circumstances.
 
-Technologies:
+
+# Technologies:
 
 Mapkit
 Core Location
 CloudKit
 UIApplication
-	API(s): Hiking Project, NPS Data
+API(s): Hiking Project, NPS Data
