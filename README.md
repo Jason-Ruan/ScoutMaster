@@ -34,8 +34,8 @@ Address: Flagstaff, Arizona
 
 # Technologies:
 
-Mapkit
-Core Location
-CloudKit
-UIApplication
+-Mapkit
+-Core Location
+-CloudKit
+-UIApplication
 API(s): Hiking Project, NPS Data
