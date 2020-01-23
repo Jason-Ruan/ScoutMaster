@@ -40,5 +40,5 @@ Address: Flagstaff, Arizona
 -	UIApplication
 
 # API(s): 
--	Hiking Project: [I'm an inline-style link](https://www.hikingproject.com/data)
--	NPS Data: [I'm an inline-style link](https://www.nps.gov/subjects/digital/nps-data-api.htm)
+-	Hiking Project: [Click here](https://www.hikingproject.com/data)
+-	NPS Data: [Click here](https://www.nps.gov/subjects/digital/nps-data-api.htm)
