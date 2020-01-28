@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Trails {
+struct Trails: Codable {
     var trail: [Trail]
 }
 
@@ -36,4 +36,22 @@ struct Trail: Codable {
     var conditionStatus: String
     var conditionDetails: String?
     var conditionDate: String
+    
+    static func getTrails(searchThis: String, completionHandler: @escaping (Result<[Trails],AppError>) -> () ) {
+        let urlStr = "http://api.tvmaze.com/search/shows?q=\(searchThis)"
+        NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
+            switch result {
+            case .failure(let error):
+                completionHandler(.failure(error))
+            case .success(let data):
+                do {
+                    let shows = try JSONDecoder().decode([Trails].self, from: data)
+                    completionHandler(.success(shows))
+                } catch let error {
+                    print(error)
+                    
+                    completionHandler(.failure(.badJSONError))                }
+            }
+        }
+    }
 }
