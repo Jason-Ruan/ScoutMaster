@@ -25,13 +25,20 @@
 		3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DFC23DF5BD0008DBC60 /* DashboardVC.swift */; };
 		3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0123DF5C7B008DBC60 /* ModelOne.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
+
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
 		4E6610DA23E37CD300846CB4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D923E37CD300846CB4 /* Secrets.swift */; };
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
-		4EB921DB23E3821F0013B245 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921DA23E3821F0013B245 /* AppError.swift */; };
 		5C90E351DA6A49EA9201FB7D /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B37BCD409F5149FCCD84AE /* Pods_ScoutMasterTests.framework */; };
 		EBCF720B8A42158E6ECE01F4 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2105CFA6D2D47E67BE695528 /* Pods_ScoutMaster.framework */; };
+		52B152D823E0A651007C9BF6 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152D723E0A651007C9BF6 /* AppError.swift */; };
+		52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */; };
+		52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */; };
+		52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E123E0C9FA007C9BF6 /* NPSFile.swift */; };
+		52B152E523E0CA1E007C9BF6 /* DarkSkyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */; };
+		52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,11 +92,17 @@
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		4E6610D923E37CD300846CB4 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ScoutMaster/Firebase/Secrets.swift; sourceTree = SOURCE_ROOT; };
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		4EB921DA23E3821F0013B245 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		731255956801D36A5C2D0DD3 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BAD78B67EE959390FA025D87 /* Pods-ScoutMasterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.release.xcconfig"; sourceTree = "<group>"; };
 		DDE6B74DDA839949F9DA928E /* Pods-ScoutMasterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F1DD3175B2007CD0579A9551 /* Pods-ScoutMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.release.xcconfig"; sourceTree = "<group>"; };
+
+		52B152D723E0A651007C9BF6 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFile.swift; sourceTree = "<group>"; };
+		52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikingProjectFile.swift; sourceTree = "<group>"; };
+		52B152E123E0C9FA007C9BF6 /* NPSFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPSFile.swift; sourceTree = "<group>"; };
+		52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyFile.swift; sourceTree = "<group>"; };
+		52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +279,8 @@
 		3A999E0523DF5D36008DBC60 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				52B152DC23E0C9A8007C9BF6 /* API */,
+				52B152D923E0C97E007C9BF6 /* Firebase */,
 				3A999E0B23DF6E8D008DBC60 /* Location */,
 				3A999E0623DF6E41008DBC60 /* Networking */,
 			);
@@ -277,6 +292,8 @@
 			children = (
 				4EB921DA23E3821F0013B245 /* AppError.swift */,
 				3A999E0723DF6E52008DBC60 /* Network.swift */,
+				52B152D723E0A651007C9BF6 /* AppError.swift */,
+				52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -289,12 +306,47 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
-		3A999E0D23DF6EFE008DBC60 /* Secrets */ = {
+		52B152D923E0C97E007C9BF6 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 				4E6610D923E37CD300846CB4 /* Secrets.swift */,
+				52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */,
 			);
-			path = Secrets;
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		52B152DC23E0C9A8007C9BF6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E323E0CA02007C9BF6 /* DarkSky */,
+				52B152E023E0C9E5007C9BF6 /* NPS */,
+				52B152DD23E0C9BD007C9BF6 /* HikingProject */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		52B152DD23E0C9BD007C9BF6 /* HikingProject */ = {
+			isa = PBXGroup;
+			children = (
+				52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */,
+			);
+			path = HikingProject;
+			sourceTree = "<group>";
+		};
+		52B152E023E0C9E5007C9BF6 /* NPS */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E123E0C9FA007C9BF6 /* NPSFile.swift */,
+			);
+			path = NPS;
+			sourceTree = "<group>";
+		};
+		52B152E323E0CA02007C9BF6 /* DarkSky */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */,
+			);
+			path = DarkSky;
 			sourceTree = "<group>";
 		};
 		4E6610D423E3739B00846CB4 /* Firebase */ = {
@@ -563,12 +615,18 @@
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */,
+				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
 				3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */,
+				52B152D823E0A651007C9BF6 /* AppError.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
+				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
+				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
+				52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */,
 				3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */,
 				3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */,
 				3A999DE923DF5960008DBC60 /* LoginVC.swift in Sources */,
+				52B152E523E0CA1E007C9BF6 /* DarkSkyFile.swift in Sources */,
 				3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */,
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
@@ -746,7 +804,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHJSDBBPS7;
+				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,7 +823,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHJSDBBPS7;
+				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
