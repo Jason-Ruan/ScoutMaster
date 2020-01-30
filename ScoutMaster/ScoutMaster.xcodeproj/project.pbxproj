@@ -24,7 +24,12 @@
 		3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DFC23DF5BD0008DBC60 /* DashboardVC.swift */; };
 		3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0123DF5C7B008DBC60 /* ModelOne.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
-		3A999E0F23DF6F55008DBC60 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0E23DF6F55008DBC60 /* Secrets.swift */; };
+		52B152D823E0A651007C9BF6 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152D723E0A651007C9BF6 /* AppError.swift */; };
+		52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */; };
+		52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */; };
+		52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E123E0C9FA007C9BF6 /* NPSFile.swift */; };
+		52B152E523E0CA1E007C9BF6 /* DarkSkyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */; };
+		52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +74,12 @@
 		3A999E0123DF5C7B008DBC60 /* ModelOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOne.swift; sourceTree = "<group>"; };
 		3A999E0723DF6E52008DBC60 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3A999E0C23DF6EA0008DBC60 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		3A999E0E23DF6F55008DBC60 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		52B152D723E0A651007C9BF6 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFile.swift; sourceTree = "<group>"; };
+		52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikingProjectFile.swift; sourceTree = "<group>"; };
+		52B152E123E0C9FA007C9BF6 /* NPSFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NPSFile.swift; sourceTree = "<group>"; };
+		52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyFile.swift; sourceTree = "<group>"; };
+		52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +130,6 @@
 		3A999DB023DF58AC008DBC60 /* ScoutMaster */ = {
 			isa = PBXGroup;
 			children = (
-				3A999E0D23DF6EFE008DBC60 /* Secrets */,
 				3A999DF123DF5AAE008DBC60 /* Controllers */,
 				3A999E0023DF5C5A008DBC60 /* Models */,
 				3A999E0523DF5D36008DBC60 /* Utilities */,
@@ -226,6 +235,8 @@
 		3A999E0523DF5D36008DBC60 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				52B152DC23E0C9A8007C9BF6 /* API */,
+				52B152D923E0C97E007C9BF6 /* Firebase */,
 				3A999E0B23DF6E8D008DBC60 /* Location */,
 				3A999E0623DF6E41008DBC60 /* Networking */,
 			);
@@ -236,6 +247,8 @@
 			isa = PBXGroup;
 			children = (
 				3A999E0723DF6E52008DBC60 /* Network.swift */,
+				52B152D723E0A651007C9BF6 /* AppError.swift */,
+				52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -248,12 +261,46 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
-		3A999E0D23DF6EFE008DBC60 /* Secrets */ = {
+		52B152D923E0C97E007C9BF6 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				3A999E0E23DF6F55008DBC60 /* Secrets.swift */,
+				52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */,
 			);
-			path = Secrets;
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		52B152DC23E0C9A8007C9BF6 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E323E0CA02007C9BF6 /* DarkSky */,
+				52B152E023E0C9E5007C9BF6 /* NPS */,
+				52B152DD23E0C9BD007C9BF6 /* HikingProject */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		52B152DD23E0C9BD007C9BF6 /* HikingProject */ = {
+			isa = PBXGroup;
+			children = (
+				52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */,
+			);
+			path = HikingProject;
+			sourceTree = "<group>";
+		};
+		52B152E023E0C9E5007C9BF6 /* NPS */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E123E0C9FA007C9BF6 /* NPSFile.swift */,
+			);
+			path = NPS;
+			sourceTree = "<group>";
+		};
+		52B152E323E0CA02007C9BF6 /* DarkSky */ = {
+			isa = PBXGroup;
+			children = (
+				52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */,
+			);
+			path = DarkSky;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,14 +438,19 @@
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */,
+				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
 				3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */,
+				52B152D823E0A651007C9BF6 /* AppError.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
+				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
+				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
+				52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */,
 				3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */,
 				3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */,
 				3A999DE923DF5960008DBC60 /* LoginVC.swift in Sources */,
+				52B152E523E0CA1E007C9BF6 /* DarkSkyFile.swift in Sources */,
 				3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */,
-				3A999E0F23DF6F55008DBC60 /* Secrets.swift in Sources */,
 				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,7 +625,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHJSDBBPS7;
+				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -591,7 +643,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BHJSDBBPS7;
+				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
