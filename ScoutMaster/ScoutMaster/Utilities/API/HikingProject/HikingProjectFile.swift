@@ -9,7 +9,7 @@
 import Foundation
 
 struct Trails: Codable {
-    var trail: [Trail]
+    var trails: [Trail]
 }
 
 struct Trail: Codable {
@@ -18,13 +18,13 @@ struct Trail: Codable {
     var type: String
     var summary: String
     var difficulty: String
-    var stars: Int
+    var stars: Double
     var starVotes: Int
     var location: String
     var url: String
     var imgSqSmall: String
     var imgSmall: String
-    var ingSmallMed: String
+    var ingSmallMed: String?
     var imgMedium: String
     var length: Double
     var ascent: Int
@@ -37,16 +37,16 @@ struct Trail: Codable {
     var conditionDetails: String?
     var conditionDate: String
     
-    static func getTrails(searchThis: String, completionHandler: @escaping (Result<[Trails],AppError>) -> () ) {
-        let urlStr = "http://api.tvmaze.com/search/shows?q=\(searchThis)"
+    static func getTrails(lat: Double, long: Double, completionHandler: @escaping (Result<[Trail],AppError>) -> () ) {
+        let urlStr = "https://www.hikingproject.com/data/get-trails?lat=\(lat)&lon=\(long)&maxDistance=20&key=200670281-f6178ccfac91f1a8d83e44f3704079c1"
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
                 completionHandler(.failure(error))
             case .success(let data):
                 do {
-                    let shows = try JSONDecoder().decode([Trails].self, from: data)
-                    completionHandler(.success(shows))
+                    let HPtrails = try JSONDecoder().decode(Trails.self, from: data)
+                    completionHandler(.success(HPtrails.trails))
                 } catch let error {
                     print(error)
                     
@@ -55,3 +55,5 @@ struct Trail: Codable {
         }
     }
 }
+
+
