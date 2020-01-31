@@ -11,6 +11,7 @@ target 'ScoutMaster' do
 	pod 'Firebase/Firestore'
 	pod 'Firebase/Storage'
 	pod 'Mapbox-iOS-SDK', '~> 5.6.1'
+	pod 'MapboxAnnotationExtension', '0.0.1-beta.1'
 
   target 'ScoutMasterTests' do
     inherit! :search_paths
