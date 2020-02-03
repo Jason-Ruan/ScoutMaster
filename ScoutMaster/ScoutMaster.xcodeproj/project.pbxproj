@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05DF1D996894DBE6E00321B5 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
 		080E1C9B23E4734500EF94A6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9A23E4734500EF94A6 /* Secrets.swift */; };
-		0CA05F336525D6D050EA2409 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C111230C627CDC0AEAF3ECE /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
 		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
@@ -26,6 +26,10 @@
 		3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF823DF5B79008DBC60 /* MapVC.swift */; };
 		3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0123DF5C7B008DBC60 /* ModelOne.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
+		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
+		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
+		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
+		3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
@@ -39,8 +43,7 @@
 		52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */; };
 		52B152F423E3936B007C9BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B152F323E3936B007C9BF6 /* GoogleService-Info.plist */; };
 		52B152F523E3937F007C9BF6 /* ScoutMasterUITests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DD223DF58AE008DBC60 /* ScoutMasterUITests.xctest */; };
-		5C90E351DA6A49EA9201FB7D /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B37BCD409F5149FCCD84AE /* Pods_ScoutMasterTests.framework */; };
-		EBCF720B8A42158E6ECE01F4 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2105CFA6D2D47E67BE695528 /* Pods_ScoutMaster.framework */; };
+		7203AAF63B8D66EF26731238 /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,10 +67,7 @@
 		01A5028CDEC1704483C0073E /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
 		080E1C9A23E4734500EF94A6 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = "ScoutMaster/Controllers/Main Tab/Map/Secrets.swift"; sourceTree = SOURCE_ROOT; };
-		0C111230C627CDC0AEAF3ECE /* Pods_ScoutMaster_ScoutMasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster_ScoutMasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13A34422FE0BAB1A2892F98C /* Pods-ScoutMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.debug.xcconfig"; sourceTree = "<group>"; };
-		2105CFA6D2D47E67BE695528 /* Pods_ScoutMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		22B37BCD409F5149FCCD84AE /* Pods_ScoutMasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,7 +90,9 @@
 		3A999DF823DF5B79008DBC60 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		3A999E0123DF5C7B008DBC60 /* ModelOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOne.swift; sourceTree = "<group>"; };
 		3A999E0723DF6E52008DBC60 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		3A999E0C23DF6EA0008DBC60 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
+		3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
+		3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "blue-trail.geojson"; sourceTree = "<group>"; };
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -103,10 +105,13 @@
 		52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyFile.swift; sourceTree = "<group>"; };
 		52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		52B152F323E3936B007C9BF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster_ScoutMasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		731255956801D36A5C2D0DD3 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAD78B67EE959390FA025D87 /* Pods-ScoutMasterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.release.xcconfig"; sourceTree = "<group>"; };
 		DDE6B74DDA839949F9DA928E /* Pods-ScoutMasterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F1DD3175B2007CD0579A9551 /* Pods-ScoutMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.release.xcconfig"; sourceTree = "<group>"; };
+		FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBCF720B8A42158E6ECE01F4 /* Pods_ScoutMaster.framework in Frameworks */,
+				05DF1D996894DBE6E00321B5 /* Pods_ScoutMaster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C90E351DA6A49EA9201FB7D /* Pods_ScoutMasterTests.framework in Frameworks */,
+				7203AAF63B8D66EF26731238 /* Pods_ScoutMasterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CA05F336525D6D050EA2409 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */,
+				3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +312,9 @@
 		3A999E0B23DF6E8D008DBC60 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				3A999E0C23DF6EA0008DBC60 /* Location.swift */,
+				3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */,
+				3A999E0C23DF6EA0008DBC60 /* LocationData.swift */,
+				3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -374,9 +381,9 @@
 		DCE124F12CFD9147237C8D82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2105CFA6D2D47E67BE695528 /* Pods_ScoutMaster.framework */,
-				0C111230C627CDC0AEAF3ECE /* Pods_ScoutMaster_ScoutMasterUITests.framework */,
-				22B37BCD409F5149FCCD84AE /* Pods_ScoutMasterTests.framework */,
+				A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */,
+				6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */,
+				FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -492,6 +499,7 @@
 			files = (
 				3A999DC123DF58AD008DBC60 /* LaunchScreen.storyboard in Resources */,
 				52B152F423E3936B007C9BF6 /* GoogleService-Info.plist in Resources */,
+				3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */,
 				3A999DBE23DF58AD008DBC60 /* Assets.xcassets in Resources */,
 				3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */,
 			);
@@ -629,6 +637,7 @@
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
+				3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
 				3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */,
 				52B152D823E0A651007C9BF6 /* AppError.swift in Sources */,
@@ -645,6 +654,7 @@
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				080E1C9B23E4734500EF94A6 /* Secrets.swift in Sources */,
 				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
+				3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */,
 				080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
