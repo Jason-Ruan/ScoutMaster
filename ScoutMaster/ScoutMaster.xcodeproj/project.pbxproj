@@ -24,7 +24,6 @@
 		3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF323DF5B1A008DBC60 /* DetailVC.swift */; };
 		3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */; };
 		3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF823DF5B79008DBC60 /* MapVC.swift */; };
-		3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DFC23DF5BD0008DBC60 /* DashboardVC.swift */; };
 		3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0123DF5C7B008DBC60 /* ModelOne.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
@@ -34,6 +33,8 @@
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
+		5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267F35A23E4D10800B7ACA0 /* TrailCell.swift */; };
+		52915B7523E880ED0064A10C /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52915B7423E880ED0064A10C /* DashboardVC.swift */; };
 		52B152D823E0A651007C9BF6 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152D723E0A651007C9BF6 /* AppError.swift */; };
 		52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */; };
 		52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */; };
@@ -87,7 +88,6 @@
 		3A999DF323DF5B1A008DBC60 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		3A999DF823DF5B79008DBC60 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		3A999DFC23DF5BD0008DBC60 /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
 		3A999E0123DF5C7B008DBC60 /* ModelOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOne.swift; sourceTree = "<group>"; };
 		3A999E0723DF6E52008DBC60 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
@@ -96,6 +96,8 @@
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5267F35A23E4D10800B7ACA0 /* TrailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailCell.swift; sourceTree = "<group>"; };
+		52915B7423E880ED0064A10C /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
 		52B152D723E0A651007C9BF6 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFile.swift; sourceTree = "<group>"; };
 		52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikingProjectFile.swift; sourceTree = "<group>"; };
@@ -249,8 +251,9 @@
 		3A999DF223DF5AF9008DBC60 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				3A999DFC23DF5BD0008DBC60 /* DashboardVC.swift */,
 				3A999DF323DF5B1A008DBC60 /* DetailVC.swift */,
+				5267F35A23E4D10800B7ACA0 /* TrailCell.swift */,
+				52915B7423E880ED0064A10C /* DashboardVC.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -628,16 +631,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */,
+				52915B7523E880ED0064A10C /* DashboardVC.swift in Sources */,
 				4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */,
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
-				3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */,
 				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
 				3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */,
 				52B152D823E0A651007C9BF6 /* AppError.swift in Sources */,
+				5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
 				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
