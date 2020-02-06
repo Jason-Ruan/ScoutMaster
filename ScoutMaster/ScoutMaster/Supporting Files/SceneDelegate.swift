@@ -21,27 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
-        if FirebaseAuthService.manager.currentUser != nil {
-            window?.rootViewController = MainTabBarViewController()
-        } else {
-            window?.rootViewController = LoginVC()
-        }
-        
+        window?.rootViewController = DashboardVC()
         window?.makeKeyAndVisible()
-        
-        /*
-         if FirebaseAuthService.manager.currentUser != nil {
-             window?.rootViewController = MainTBC()
-         }
-         
-         else {
-             let storyboard  = UIStoryboard(name: "Main", bundle: nil)
-             guard let welcomeVC = storyboard.instantiateViewController(withIdentifier: "welcomeVC") as? WelcomeViewController else { return }
-             self.window?.rootViewController = welcomeVC
-             self.window?.makeKeyAndVisible()
-         }
-         */
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -74,8 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-    
-    
 
 
 }

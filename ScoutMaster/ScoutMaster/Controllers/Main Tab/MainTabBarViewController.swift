@@ -10,39 +10,21 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
 
-    lazy var discoverVC = UINavigationController(rootViewController: DashboardVC())
-    lazy var journeyVC = UINavigationController(rootViewController: JourneyVC())
-    lazy var userVC = UINavigationController(rootViewController: ProfileVC())
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        discoverVC.isNavigationBarHidden = true
-        journeyVC.isNavigationBarHidden = true
-        userVC.isNavigationBarHidden = true
-        
-        discoverVC.tabBarItem = UITabBarItem(title: "Discover", image: UIImage(named: "search"), tag: 0)
-        journeyVC.tabBarItem = UITabBarItem(title: "Journey", image: UIImage(named: "map"), tag: 1)
-        userVC.tabBarItem = UITabBarItem(title: "User", image: UIImage(systemName: "person"), tag: 2)
-        
-        self.viewControllers = [discoverVC, journeyVC, userVC]
-        self.viewControllers?.forEach({$0.tabBarController?.tabBar.barStyle = .default})
-        
 
         // Do any additional setup after loading the view.
     }
     
 
-   
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }
-/*
- 
- 
- override func viewDidLoad() {
-    
-     
-     self.viewControllers = [produceVC,marketVC,userVC]
-     self.viewControllers?.forEach({$0.tabBarController?.tabBar.barStyle = .default})
- }
- */
