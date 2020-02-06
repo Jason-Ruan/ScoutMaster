@@ -33,7 +33,7 @@ struct Park: Codable {
     }
     
     static func getParks(stateCode: String, completionHandler: @escaping (Result<[Park], AppError>) -> () ) {
-        let urlStr = "https://developer.nps.gov/api/v1/parks?stateCode=NY&q=trail&api_key=\(Secrets.nps_key)"
+        let urlStr = "https://developer.nps.gov/api/v1/parks?stateCode=\(stateCode)&fields=images%2Ccontacts%2Caddresses%2CdirectionsInfo%2CoperatingHours%2CentranceFees%2CentrancePasses&api_key\(Secrets.nps_key)"
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
