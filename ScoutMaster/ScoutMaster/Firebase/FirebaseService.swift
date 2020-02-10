@@ -102,7 +102,34 @@ class FirestoreService {
     
 //MARK: Posts
 
-      
+
+    func createPost(post: Post, completion: @escaping (Result<(), Error>) -> ()) {
+        var fields = post.fieldsDict
+        fields["dateCreated"] = Date()
+        db.collection(FireStoreCollections.posts.rawValue).addDocument(data: fields) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func getAllPosts( completion: @escaping (Result<[Post], Error>) -> ()) {
+    db.collection(FireStoreCollections.posts.rawValue).getDocuments {(snapshot, error) in
+        if let error = error {
+            completion(.failure(error))
+        } else {
+            let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
+                let postID = snapshot.documentID
+                let post = Post(from: snapshot.data(), id: postID)
+                return post
+            })
+            completion(.success(posts!))
+            print("hey jude")
+        }
+    }
+    }
 
     
 

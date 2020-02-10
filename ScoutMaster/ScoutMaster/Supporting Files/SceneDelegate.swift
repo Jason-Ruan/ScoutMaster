@@ -21,12 +21,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        window?.rootViewController = LoginVC()
         
+        /*
         if FirebaseAuthService.manager.currentUser != nil {
             window?.rootViewController = MainTabBarViewController()
         } else {
             window?.rootViewController = LoginVC()
         }
+ */
         
         window?.makeKeyAndVisible()
         
