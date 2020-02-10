@@ -79,7 +79,7 @@ class ProfileVC: UIViewController {
 
 }
 
-
+/*
 extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         <#code#>
@@ -92,3 +92,4 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     
 }
 
+*/
