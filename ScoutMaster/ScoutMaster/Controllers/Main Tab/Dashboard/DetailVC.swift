@@ -97,8 +97,67 @@ class DetailVC: UIViewController {
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .black
+        setUpViews()
+        drawTrailPolyline()
     }
+    
+    
+    //MARK: - Private Functions
+    
+    private func setUpViews() {
+        view.addSubview(nameLabel)
+        view.addSubview(locationLabel)
+        view.addSubview(summaryTextView)
+        view.addSubview(mapView)
+        view.addSubview(trailDetailsTextView)
+        
+        constrainViews()
+    }
+    
+    private func constrainViews() {
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            nameLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            nameLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
+            nameLabel.heightAnchor.constraint(equalToConstant: 75)
+        ])
+        
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            locationLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            locationLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
+            locationLabel.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        summaryTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            summaryTextView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
+            summaryTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            summaryTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            summaryTextView.heightAnchor.constraint(equalToConstant: 75)
+        ])
+        
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 50),
+            mapView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            mapView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            mapView.heightAnchor.constraint(equalToConstant: view.frame.height / 2)
+        ])
+        
+        trailDetailsTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            trailDetailsTextView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
+            trailDetailsTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            trailDetailsTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            trailDetailsTextView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+}
 
 
 }
