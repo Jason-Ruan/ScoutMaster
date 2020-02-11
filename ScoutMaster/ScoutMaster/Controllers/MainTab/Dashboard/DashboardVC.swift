@@ -4,7 +4,6 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     
     var HPTrails = [Trail]() {
         didSet {
-            print("got here")
             collectionView.reloadData()
         }
     }
@@ -72,7 +71,6 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
                     print(error)
                 case .success(let hikingProjectAPI):
                     self.HPTrails = hikingProjectAPI
-                    print(self.HPTrails)
                 }
             }
         }
