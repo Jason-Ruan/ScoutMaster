@@ -1,0 +1,25 @@
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '13.1'
+
+target 'ScoutMaster' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for ScoutMaster
+
+	pod 'Firebase/Auth'
+	pod 'Firebase/Firestore'
+	pod 'Firebase/Storage'
+	pod 'Mapbox-iOS-SDK', '~> 5.6.1'
+	pod 'MapboxAnnotationExtension', '0.0.1-beta.1'
+
+  target 'ScoutMasterTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'ScoutMasterUITests' do
+    # Pods for testing
+  end
+
+end
