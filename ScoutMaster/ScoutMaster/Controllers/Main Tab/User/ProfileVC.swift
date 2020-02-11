@@ -34,6 +34,7 @@ class ProfileVC: UIViewController {
         return name
     }()
     
+    /*
     lazy var statsCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
@@ -44,22 +45,46 @@ class ProfileVC: UIViewController {
 //            cv.delegate = self
         return cv
     }()
+ */
     
     lazy var faveHikesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         cv.backgroundColor = .darkGray
+        cv.register(FaveHikeCVC.self, forCellWithReuseIdentifier: "faveCell")
         return cv
     }()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        faveHikesCollection.delegate = self
+        faveHikesCollection.dataSource = self
+        view.backgroundColor = .white
+        getPosts()
+        addConstraints()
     }
     
 // MARK: PRIVATE FUNCS
+    
+
+    
+    private func addConstraints(){
+        constrainFaveCollectionView()
+        
+    }
+    
+    private func constrainFaveCollectionView(){
+        view.addSubview(faveHikesCollection)
+        faveHikesCollection.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            faveHikesCollection.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            faveHikesCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            faveHikesCollection.heightAnchor.constraint(equalToConstant: 300),
+            faveHikesCollection.widthAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+    }
 
      private func getPosts(){
               FirestoreService.manager.getAllPosts { (result) in
@@ -79,17 +104,25 @@ class ProfileVC: UIViewController {
 
 }
 
-/*
+
 extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        print("i got \(userPost.count) faved hikes")
+        
+        return userPost.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faveCell", for: indexPath) as? FaveHikeCVC else {return UICollectionViewCell()}
+        let data = userPost[indexPath.row]
+        cell.configureCell(post: data)
+        return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 300)
+    }
 }
 
-*/
+

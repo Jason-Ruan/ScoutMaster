@@ -30,6 +30,7 @@
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
 		4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3BB23F1C60100501EB3 /* FireStorage.swift */; };
 		4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3BD23F1D08C00501EB3 /* Posts.swift */; };
+		4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */; };
 		4EB921DF23E396710013B245 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921DE23E396710013B245 /* Secrets.swift */; };
 		4EB921E123E8895E0013B245 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E023E8895E0013B245 /* SignUpVC.swift */; };
 		4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E223E88A9C0013B245 /* String+Validations.swift */; };
@@ -97,6 +98,7 @@
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4EA3D3BB23F1C60100501EB3 /* FireStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorage.swift; sourceTree = "<group>"; };
 		4EA3D3BD23F1D08C00501EB3 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
+		4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaveHikeCVC.swift; sourceTree = "<group>"; };
 		4EB921DE23E396710013B245 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ScoutMaster/Utilities/Networking/Secrets.swift; sourceTree = SOURCE_ROOT; };
 		4EB921E023E8895E0013B245 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4EB921E223E88A9C0013B245 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				3A999DEC23DF59AA008DBC60 /* ProfileVC.swift */,
+				4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
 				3A999DFD23DF5BD0008DBC60 /* DashboardVC.swift in Sources */,
+				4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */,
 				4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */,
 				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,

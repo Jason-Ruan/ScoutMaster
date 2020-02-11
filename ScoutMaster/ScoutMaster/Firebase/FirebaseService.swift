@@ -130,6 +130,21 @@ class FirestoreService {
         }
     }
     }
+    
+    func getUserFromPost(creatorID: String, completion: @escaping (Result<AppUser,Error>) -> ()) {
+        db.collection(FireStoreCollections.users.rawValue).document(creatorID).getDocument { (snapshot, error)  in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot,
+                let data = snapshot.data() {
+                let userID = snapshot.documentID
+                let user = AppUser(from: data, id: userID)
+                if let appUser = user {
+                    completion(.success(appUser))
+                }
+            }
+        }
+    }
 
     
 
