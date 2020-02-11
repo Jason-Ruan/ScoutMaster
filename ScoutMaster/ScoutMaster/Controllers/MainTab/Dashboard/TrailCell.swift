@@ -17,18 +17,18 @@ class TrailCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var image: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+//    lazy var image: UIImageView = {
+//        let imageView = UIImageView()
+//        return imageView
+//    }()
     
-    lazy var vStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [name, image])
-        stackView.distribution = .fillEqually
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        return stackView
-    }()
+//    lazy var vStack: UIStackView = {
+//        let stackView = UIStackView(arrangedSubviews: [name, image])
+//        stackView.distribution = .fillEqually
+//        stackView.alignment = .center
+//        stackView.axis = .vertical
+//        return stackView
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,8 +36,8 @@ class TrailCell: UICollectionViewCell {
         setUpCellAppearance()
         
         self.contentView.addSubview(name)
-        self.contentView.addSubview(image)
-        self.contentView.addSubview(vStack)
+//        self.contentView.addSubview(image)
+//        self.contentView.addSubview(vStack)
         
         addConstraints()
     }
@@ -52,8 +52,8 @@ class TrailCell: UICollectionViewCell {
     
     private func addConstraints() {
         setNameConstraints()
-        setImageConstraints()
-        setNameStackViewConstraints()
+//        setImageConstraints()
+//        setNameStackViewConstraints()
     }
     
     func configureCell(trail: Trail){
@@ -79,27 +79,27 @@ class TrailCell: UICollectionViewCell {
         ])
     }
     
-    private func setImageConstraints() {
-        self.image.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            self.image.topAnchor.constraint(equalTo: self.name.bottomAnchor, constant: 5),
-            self.image.heightAnchor.constraint(equalToConstant: 100),
-            self.image.widthAnchor.constraint(equalToConstant: 100),
-            self.image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-    }
+//    private func setImageConstraints() {
+//        self.image.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//            self.image.topAnchor.constraint(equalTo: self.name.bottomAnchor, constant: 5),
+//            self.image.heightAnchor.constraint(equalToConstant: 100),
+//            self.image.widthAnchor.constraint(equalToConstant: 100),
+//            self.image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+//        ])
+//    }
     
-    private func setNameStackViewConstraints() {
-        self.vStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            self.vStack.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5),
-            self.vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
-            self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 5),
-            self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
-        ])
-    }
+//    private func setNameStackViewConstraints() {
+//        self.vStack.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        NSLayoutConstraint.activate([
+//            self.vStack.topAnchor.constraint(equalTo: self.image.bottomAnchor, constant: 5),
+//            self.vStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
+//            self.vStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 5),
+//            self.vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
+//        ])
+//    }
 
     
 }
