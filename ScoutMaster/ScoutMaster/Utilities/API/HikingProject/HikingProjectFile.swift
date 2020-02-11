@@ -38,7 +38,7 @@ struct Trail: Codable {
     var conditionDate: String
     
     static func getTrails(lat: Double, long: Double, completionHandler: @escaping (Result<[Trail],AppError>) -> () ) {
-        let urlStr = "https://www.hikingproject.com/data/get-trails?lat=\(lat)&lon=\(long)&maxDistance=20&key=200670281-f6178ccfac91f1a8d83e44f3704079c1"
+        let urlStr = "https://www.hikingproject.com/data/get-trails?lat=\(lat)&lon=\(long)&maxDistance=20&key=\(Secrets.hiking_key)"
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
