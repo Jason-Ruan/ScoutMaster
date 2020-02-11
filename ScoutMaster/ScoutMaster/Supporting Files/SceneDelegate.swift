@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if FirebaseAuthService.manager.currentUser != nil {
             window?.rootViewController = MainTabBarViewController()
         } else {
-            window?.rootViewController = DashboardVC()
+            window?.rootViewController = MainTabBarViewController()
         }
         
         window?.makeKeyAndVisible()

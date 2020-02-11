@@ -1,6 +1,6 @@
 import UIKit
 
-class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class DashboardVC: UIViewController, UISearchBarDelegate {
     
     var HPTrails = [Trail]() {
         didSet {
@@ -8,6 +8,17 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
             collectionView.reloadData()
         }
     }
+    
+    lazy var nameLabel: UILabel = {
+        var yourName = UILabel()
+        yourName.frame = CGRect (x: 0, y: 45, width: 415, height: 50)
+        yourName.text = """
+        Hey Scout,
+        
+        Explore the best hiking trails and routes.
+        """
+        return yourName
+    }()
     
     lazy var searchItBar: UISearchBar = {
         var searchIt = UISearchBar()
@@ -22,6 +33,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
         collectionView.dataSource = self
         collectionView.backgroundColor = .cyan
         collectionView.register(TrailCell.self, forCellWithReuseIdentifier: "trailCell")
+        
         return collectionView
     }()
     
@@ -41,12 +53,13 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
     
         view.addSubview(searchItBar)
         view.addSubview(collectionView)
+        view.addSubview(nameLabel)
         
         // add Constraints
         
         setSearchItBarConstraints()
         setCollectionViewConstraints()
-        
+        setNameLabelConstraints()
         
         
     }
@@ -66,7 +79,48 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
     }
     
 
-    // Collection View
+    // Constraints
+    
+    private func setCollectionViewConstraints() {
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            self.collectionView.topAnchor.constraint(equalTo: self.searchItBar.bottomAnchor, constant: 5),
+            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
+        ])
+    }
+    
+    private func setSearchItBarConstraints() {
+        self.searchItBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.searchItBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 200),
+            self.searchItBar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.searchItBar.heightAnchor.constraint(equalToConstant: 30),
+            self.searchItBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50)
+        ])
+    }
+    
+    private func setNameLabelConstraints() {
+        self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
+        ])
+        
+    }
+    
+    
+}
+
+extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return HPTrails.count
@@ -79,38 +133,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
         return cell
     }
     
-    
-
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width * 0.7 , height: view.bounds.height * 0.3)
+        return CGSize(width: 250, height: 250)
     }
-    
-
-    
-    // Constraints
-    
-    private func setCollectionViewConstraints() {
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            
-            self.collectionView.topAnchor.constraint(equalTo: self.searchItBar.bottomAnchor, constant: 5),
-            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
-    }
-    
-    private func setSearchItBarConstraints() {
-        self.searchItBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            self.searchItBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            self.searchItBar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.searchItBar.heightAnchor.constraint(equalToConstant: 30),
-            self.searchItBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50)
-        ])
-    }
-    
 }

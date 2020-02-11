@@ -11,7 +11,7 @@ import UIKit
 class MainTabBarViewController: UITabBarController {
 
     lazy var discoverVC = UINavigationController(rootViewController: DashboardVC())
-    lazy var journeyVC = UINavigationController(rootViewController: JourneyVC())
+    lazy var journeyVC = UINavigationController(rootViewController: MapVC())
     lazy var userVC = UINavigationController(rootViewController: ProfileVC())
     
     

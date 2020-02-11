@@ -38,7 +38,7 @@
 		4EB921E123E8895E0013B245 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E023E8895E0013B245 /* SignUpVC.swift */; };
 		4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E223E88A9C0013B245 /* String+Validations.swift */; };
 		5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267F35A23E4D10800B7ACA0 /* TrailCell.swift */; };
-		52915B7523E880ED0064A10C /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52915B7423E880ED0064A10C /* DashboardVC.swift */; };
+		52915B7523E880ED0064A10C /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52915B7423E880ED0064A10C /* DiscoverVC.swift */; };
 		52B152D823E0A651007C9BF6 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152D723E0A651007C9BF6 /* AppError.swift */; };
 		52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */; };
 		52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */; };
@@ -105,7 +105,7 @@
 		4EB921E023E8895E0013B245 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4EB921E223E88A9C0013B245 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		5267F35A23E4D10800B7ACA0 /* TrailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailCell.swift; sourceTree = "<group>"; };
-		52915B7423E880ED0064A10C /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
+		52915B7423E880ED0064A10C /* DiscoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
 		52B152D723E0A651007C9BF6 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		52B152DA23E0C99B007C9BF6 /* FirebaseFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFile.swift; sourceTree = "<group>"; };
 		52B152DE23E0C9DA007C9BF6 /* HikingProjectFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HikingProjectFile.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 			children = (
 				3A999DF323DF5B1A008DBC60 /* DetailVC.swift */,
 				5267F35A23E4D10800B7ACA0 /* TrailCell.swift */,
-				52915B7423E880ED0064A10C /* DashboardVC.swift */,
+				52915B7423E880ED0064A10C /* DiscoverVC.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -643,7 +643,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */,
-				52915B7523E880ED0064A10C /* DashboardVC.swift in Sources */,
+				52915B7523E880ED0064A10C /* DiscoverVC.swift in Sources */,
 				4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */,
 				3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */,
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
