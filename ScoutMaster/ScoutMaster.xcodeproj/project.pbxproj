@@ -235,7 +235,7 @@
 			path = ScoutMasterUITests;
 			sourceTree = "<group>";
 		};
-		3A999DE423DF5938008DBC60 /* Main Tab */ = {
+		3A999DE423DF5938008DBC60 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
 				3A999DEE23DF59EC008DBC60 /* MainTabBarViewController.swift */,
@@ -243,7 +243,7 @@
 				3A999DF523DF5B3E008DBC60 /* Map */,
 				3A999DE523DF593B008DBC60 /* User */,
 			);
-			path = "Main Tab";
+			path = MainTab;
 			sourceTree = "<group>";
 		};
 		3A999DE523DF593B008DBC60 /* User */ = {
@@ -269,7 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				3A999DE723DF5941008DBC60 /* Authentication */,
-				3A999DE423DF5938008DBC60 /* Main Tab */,
+				3A999DE423DF5938008DBC60 /* MainTab */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -662,7 +662,6 @@
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
 				4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */,
 				4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */,
-
 				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
