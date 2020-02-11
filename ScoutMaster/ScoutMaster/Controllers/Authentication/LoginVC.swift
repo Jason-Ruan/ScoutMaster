@@ -128,7 +128,7 @@ class LoginVC: UIViewController {
                
     @objc func showSignUp() {
         let signupVC = SignUpVC()
-                   signupVC.modalPresentationStyle = .formSheet
+        signupVC.modalPresentationStyle = .currentContext
                    present(signupVC, animated: true, completion: nil)
                 
                }

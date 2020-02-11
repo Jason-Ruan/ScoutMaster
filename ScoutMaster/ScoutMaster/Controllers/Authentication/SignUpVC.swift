@@ -32,6 +32,8 @@ class SignUpVC: UIViewController {
     
     lazy var cancelButton: UIButton = {
         let login = UIButton()
+        login.setTitle("cancel", for: .normal)
+        login.addTarget(self, action: #selector(cancelSignUp), for: .touchUpInside)
         return login
     }()
     
@@ -86,6 +88,10 @@ class SignUpVC: UIViewController {
                 self?.handleCreateAccountResponse(with: result)
             }
         }
+    
+    @objc func cancelSignUp() {
+        dismiss(animated: true, completion: nil)
+    }
         
     
    // MARK: ViewDidLoad
@@ -108,6 +114,7 @@ class SignUpVC: UIViewController {
     //        view.addSubview(defaultImage)
             view.addSubview(passwordTextField)
             view.addSubview(signUpButton)
+            view.addSubview(cancelButton)
             
         }
         
@@ -116,6 +123,7 @@ class SignUpVC: UIViewController {
     //        defaultImageConstraint()
             passwordTextConstraint()
             signInConstraint()
+            cancelConstraint()
             
         }
         
@@ -154,6 +162,13 @@ class SignUpVC: UIViewController {
                  signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 200),
                  signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100)].forEach{$0.isActive = true}
         }
+    
+    private func cancelConstraint() {
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        [cancelButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
+        cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+        cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -275)].forEach{$0.isActive = true}
+    }
     
 // MARK: Private Funcs
     
