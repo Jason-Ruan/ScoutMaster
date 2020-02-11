@@ -1,11 +1,3 @@
-//
-//  DashboardVC.swift
-//  ScoutMaster
-//
-//  Created by Aaron Pachesa on 2/3/20.
-//  Copyright © 2020 Sam Roman. All rights reserved.
-//
-
 import UIKit
 
 class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -34,61 +26,29 @@ class DashboardVC: UIViewController, UISearchBarDelegate, UICollectionViewDelega
     }()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        view.backgroundColor = .black
-        
-        view.addSubview(searchItBar)
-        
-        view.addSubview(collectionView)
+        view.backgroundColor = .white
         
         if let collectionLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
              collectionLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
          }
         
-        
         loadData()
+        
+        // add Subviews
+    
+        view.addSubview(searchItBar)
+        view.addSubview(collectionView)
+        
+        // add Constraints
         
         setSearchItBarConstraints()
         setCollectionViewConstraints()
         
         
         
-    }
-    
-    private func setCollectionViewConstraints() {
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            
-            self.collectionView.topAnchor.constraint(equalTo: self.searchItBar.bottomAnchor, constant: 5),
-            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
-    }
-    
-    
-override func viewDidAppear(_ animated: Bool) {
-    loadData()
-    
-    
-}
-
-override func viewWillAppear(_ animated: Bool) {
-    loadData()
-}
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return HPTrails.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "trailCell", for: indexPath) as! TrailCell
-        let selectedTrail = HPTrails[indexPath.row]
-        cell.configureCell(trail: selectedTrail)
-        return cell
     }
     
     private func loadData() {
@@ -105,8 +65,41 @@ override func viewWillAppear(_ animated: Bool) {
         }
     }
     
+
+    // Collection View
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return HPTrails.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "trailCell", for: indexPath) as! TrailCell
+        let selectedTrail = HPTrails[indexPath.row]
+        cell.configureCell(trail: selectedTrail)
+        return cell
+    }
+    
+    
+
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.bounds.width * 0.7 , height: view.bounds.height * 0.3)
+    }
+    
+
+    
+    // Constraints
+    
+    private func setCollectionViewConstraints() {
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            self.collectionView.topAnchor.constraint(equalTo: self.searchItBar.bottomAnchor, constant: 5),
+            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
     }
     
     private func setSearchItBarConstraints() {
