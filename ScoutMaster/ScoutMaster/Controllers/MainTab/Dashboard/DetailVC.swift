@@ -49,7 +49,7 @@ class DetailVC: UIViewController {
     }()
     
     lazy var mapView: MGLMapView = {
-        let mv = MGLMapView()
+        let mv = MGLMapView(frame: view.bounds)
         mv.delegate = self
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mv.styleURL = MGLStyle.darkStyleURL
@@ -78,6 +78,19 @@ class DetailVC: UIViewController {
         tv.font = tv.font?.withSize(20)
         tv.adjustsFontForContentSizeCategory = true
         return tv
+    }()
+    
+    
+    lazy var favoriteButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setImage(UIImage.init(systemName: "heart"), for: .normal)
+        return button
+    }()
+    
+    lazy var weatherButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setImage(UIImage.init(systemName: "cloud"), for: .normal)
+        return button
     }()
     
     
@@ -111,6 +124,8 @@ class DetailVC: UIViewController {
         view.addSubview(summaryTextView)
         view.addSubview(mapView)
         view.addSubview(trailDetailsTextView)
+        view.addSubview(favoriteButton)
+        view.addSubview(weatherButton)
         
         constrainViews()
     }
@@ -155,6 +170,23 @@ class DetailVC: UIViewController {
             trailDetailsTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
             trailDetailsTextView.heightAnchor.constraint(equalToConstant: 200)
         ])
+        
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            favoriteButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor),
+            favoriteButton.leadingAnchor.constraint(equalTo: locationLabel.leadingAnchor, constant: 30),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        weatherButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor),
+            weatherButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor),
+            weatherButton.widthAnchor.constraint(equalToConstant: 30),
+            weatherButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
     }
     
 }
