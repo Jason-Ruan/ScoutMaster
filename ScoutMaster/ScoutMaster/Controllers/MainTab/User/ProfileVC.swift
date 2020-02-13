@@ -25,12 +25,13 @@ class ProfileVC: UIViewController {
     
     lazy var userImage: UIImageView = {
     let defaultImage = UIImageView()
-        defaultImage.image = UIImage(named: "defaultpicture")
+        defaultImage.image = UIImage(named: "alps")
         return defaultImage
     }()
     
     lazy var userName: UILabel = {
        let name = UILabel()
+        name.text = "Hello Scout!"
         return name
     }()
     
@@ -63,31 +64,81 @@ class ProfileVC: UIViewController {
         faveHikesCollection.dataSource = self
         view.backgroundColor = .white
         getPosts()
+        addSubview()
         addConstraints()
     }
     
 // MARK: PRIVATE FUNCS
     
-
+    private func addSubview() {
+        view.addSubview(faveHikesCollection)
+        view.addSubview(userImage)
+        view.addSubview(userName)
+    }
     
     private func addConstraints(){
         constrainFaveCollectionView()
+        profileimageConstraint()
+        profileNameConstraint()
         
     }
+    
+    
+//    private func setUp() {
+//        if user.userName == nil {
+//            userName.text = user.email
+//        } else {
+//            userName.text = user.userName
+//        }
+//
+//        if let photoUrl = user.photoURL {
+//        FirebaseStorage.profileManager.getImages(profileUrl: photoUrl) { (result) in
+//            switch result{
+//            case .failure(let error):
+//                self.userImage.image = UIImage(named: "alps")
+//            case .success(let data):
+//                self.userImage.image = UIImage(data: data)
+//            }
+//        }
+//        } else {
+//            self.userImage.image = UIImage(named: "alps")
+//        }
+//    }
+    
     
     private func constrainFaveCollectionView(){
         view.addSubview(faveHikesCollection)
         faveHikesCollection.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            faveHikesCollection.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            faveHikesCollection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            faveHikesCollection.heightAnchor.constraint(equalToConstant: 300),
+            faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            faveHikesCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50),
             faveHikesCollection.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
     }
+    
+    private func profileimageConstraint() {
+               userImage.translatesAutoresizingMaskIntoConstraints = false
+               [userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                userImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+                userImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+                userImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  300)].forEach{$0.isActive = true}
+    }
+    
+    
+    private func profileNameConstraint() {
+               userName.translatesAutoresizingMaskIntoConstraints = false
+               [userName.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+                userName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                userName.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  150)].forEach{$0.isActive = true}
+    }
+    
+    
+    
+    
+    
 
      private func getPosts(){
-              FirestoreService.manager.getAllPosts { (result) in
+        FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
                   DispatchQueue.main.async {
                       switch result{
                       case .failure(let error):
@@ -98,19 +149,21 @@ class ProfileVC: UIViewController {
                           print(data.count)
                       }
                   }
-              }
-            
         }
+    }
 
 }
 
 
 extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("i got \(userPost.count) faved hikes")
         
         return userPost.count
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -120,9 +173,14 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 200, height: 300)
     }
+    
+    
+    
+    
 }
 
 

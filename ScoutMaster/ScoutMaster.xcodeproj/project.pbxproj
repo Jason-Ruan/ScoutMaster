@@ -10,7 +10,6 @@
 		05DF1D996894DBE6E00321B5 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
 		080E1C9B23E4734500EF94A6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		08CA29FF23F305CF00F8DECD /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CA29FE23F305CF00F8DECD /* Secrets.swift */; };
 		3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */; };
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
@@ -39,6 +38,7 @@
 		4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3BB23F1C60100501EB3 /* FireStorage.swift */; };
 		4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3BD23F1D08C00501EB3 /* Posts.swift */; };
 		4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */; };
+		4EA3D3C623F3223600501EB3 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3C523F3223600501EB3 /* Secrets.swift */; };
 		4EB921E123E8895E0013B245 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E023E8895E0013B245 /* SignUpVC.swift */; };
 		4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB921E223E88A9C0013B245 /* String+Validations.swift */; };
 		5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267F35A23E4D10800B7ACA0 /* TrailCell.swift */; };
@@ -74,7 +74,6 @@
 /* Begin PBXFileReference section */
 		01A5028CDEC1704483C0073E /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
-		08CA29FE23F305CF00F8DECD /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		13A34422FE0BAB1A2892F98C /* Pods-ScoutMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
@@ -109,6 +108,7 @@
 		4EA3D3BB23F1C60100501EB3 /* FireStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStorage.swift; sourceTree = "<group>"; };
 		4EA3D3BD23F1D08C00501EB3 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaveHikeCVC.swift; sourceTree = "<group>"; };
+		4EA3D3C523F3223600501EB3 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		4EB921E023E8895E0013B245 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4EB921E223E88A9C0013B245 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		5267F35A23E4D10800B7ACA0 /* TrailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailCell.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		08CA29FD23F3049300F8DECD /* Secrets */ = {
 			isa = PBXGroup;
 			children = (
-				08CA29FE23F305CF00F8DECD /* Secrets.swift */,
+				4EA3D3C523F3223600501EB3 /* Secrets.swift */,
 			);
 			path = Secrets;
 			sourceTree = "<group>";
@@ -657,6 +657,7 @@
 				4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */,
 				3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */,
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
+				4EA3D3C623F3223600501EB3 /* Secrets.swift in Sources */,
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
@@ -669,7 +670,6 @@
 				52B152D823E0A651007C9BF6 /* AppError.swift in Sources */,
 				5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
-				08CA29FF23F305CF00F8DECD /* Secrets.swift in Sources */,
 				3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */,
 				4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
