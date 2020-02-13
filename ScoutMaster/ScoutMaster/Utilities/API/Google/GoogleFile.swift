@@ -65,4 +65,24 @@ struct Bounds: Codable {
 // MARK: - Location
 struct Location: Codable {
     let lat, lng: Double
+    
+    static func getGeoCode(searchString: String, completionHandler: @escaping (Result<Location, AppError>) -> () ) {
+        let urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=new+york&key=\(Secrets.google_key)"
+        NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
+            switch result {
+            case .failure(let error):
+                completionHandler(.failure(error))
+            case .success(let data):
+                do {
+                    let geoCode = try JSONDecoder().decode(Location.self, from: data)
+                    completionHandler(.success(geoCode))
+                } catch let error {
+                    print(error)
+                    
+                    completionHandler(.failure(.badJSONError))                }
+            }
+        }
+    }
+    
+    
 }

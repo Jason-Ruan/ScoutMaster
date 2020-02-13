@@ -10,8 +10,10 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
-        yourName.frame = CGRect (x: 0, y: 45, width: 415, height: 50)
-        yourName.text = "Hey Scout"
+        yourName.frame = CGRect (x: 0, y: 45, width: 415, height: 150)
+        yourName.text = "Hey Scout,\n\nExplore the best hiking trails and routes.\n"
+        yourName.numberOfLines = 0
+        yourName.font = yourName.font.withSize(20)
         return yourName
     }()
     
