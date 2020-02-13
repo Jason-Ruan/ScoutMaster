@@ -10,12 +10,12 @@ import Foundation
 
 // MARK: - Welcome
 struct Welcome: Codable {
-    let results: [Result]
+    let results: [Resul]
     let status: String
 }
 
 // MARK: - Result
-struct Result: Codable {
+struct Resul: Codable {
     let addressComponents: [AddressComponent]
     let formattedAddress: String
     let geometry: Geo
