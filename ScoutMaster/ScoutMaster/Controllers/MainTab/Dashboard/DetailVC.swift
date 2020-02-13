@@ -49,7 +49,7 @@ class DetailVC: UIViewController {
     }()
     
     lazy var mapView: MGLMapView = {
-        let mv = MGLMapView()
+        let mv = MGLMapView(frame: view.bounds)
         mv.delegate = self
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mv.styleURL = MGLStyle.darkStyleURL
