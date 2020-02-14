@@ -117,7 +117,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     }
     
     private func loadData() {
-        Trail.getTrails(lat: 41.3406907, long: -76.2594981) { (result) in
+        Trail.getTrails(lat: 40.668, long: -73.9738) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
@@ -140,9 +140,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
             self.collectionView.topAnchor.constraint(equalTo: self.filterLabel.bottomAnchor, constant: 20),
             self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
             self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -100)
-            
-//            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     
@@ -175,8 +173,6 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
             self.nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30),
             self.nameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
             self.nameLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10)
-            
-//            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
         ])
         
     }
@@ -221,6 +217,17 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "trailCell", for: indexPath) as! TrailCell
         let selectedTrail = HPTrails[indexPath.row]
         cell.configureCell(trail: selectedTrail)
+        ImageHelper.shared.fetchImage(urlString: selectedTrail.imgMedium) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                print(error)
+                case .success(let pic):
+                    cell.image.image = pic
+                }
+            }
+          
+        }
         return cell
     }
     
