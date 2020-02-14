@@ -80,6 +80,17 @@ class DetailVC: UIViewController {
         return tv
     }()
     
+    lazy var startButton: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(segueToMap), for: .touchUpInside)
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
+        button.layer.cornerRadius = 15
+        button.titleLabel?.text = "Start"
+        button.titleLabel?.textColor = .white
+        button.setTitle("Start", for: .normal)
+        return button
+    }()
+    
     
     lazy var favoriteButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
@@ -118,6 +129,16 @@ class DetailVC: UIViewController {
     
     //MARK: - Private Functions
     
+    @objc private func segueToMap() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                               else { return }
+        if let tabBarController = window.rootViewController as? MainTabBarViewController {
+               tabBarController.selectedIndex = 1
+           }
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func setUpViews() {
         view.addSubview(nameLabel)
         view.addSubview(locationLabel)
@@ -126,6 +147,7 @@ class DetailVC: UIViewController {
         view.addSubview(trailDetailsTextView)
         view.addSubview(favoriteButton)
         view.addSubview(weatherButton)
+        view.addSubview(startButton)
         
         constrainViews()
     }
@@ -186,6 +208,13 @@ class DetailVC: UIViewController {
             weatherButton.widthAnchor.constraint(equalToConstant: 30),
             weatherButton.heightAnchor.constraint(equalToConstant: 30)
         ])
+        
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            startButton.widthAnchor.constraint(equalToConstant: 90),
+            startButton.heightAnchor.constraint(equalToConstant: 50),
+            startButton.bottomAnchor.constraint(equalTo: mapView.topAnchor, constant: -5),
+            startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)])
         
     }
     
