@@ -52,10 +52,10 @@ class DetailVC: UIViewController {
         let mv = MGLMapView(frame: view.bounds)
         mv.delegate = self
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mv.styleURL = MGLStyle.darkStyleURL
+        mv.styleURL = MGLStyle.lightStyleURL
         if let trail = self.trail {
             //            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
-            mv.setCenter(CLLocationCoordinate2D(latitude: 40.8720442, longitude: -73.9256923), zoomLevel: 14, animated: false)
+            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
         }
         return mv
     }()
@@ -215,7 +215,7 @@ extension DetailVC: MGLMapViewDelegate {
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "blue-trail", ofType: "geojson")
+            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
             let url = URL(fileURLWithPath: jsonPath!)
             
             do {
@@ -261,6 +261,8 @@ extension DetailVC: MGLMapViewDelegate {
             switch annotation.title {
             case "Blue Trail":
                 return .systemBlue
+            case "Prospect Park Trail Loop":
+                return .systemOrange
             default:
                 return .white
             }
