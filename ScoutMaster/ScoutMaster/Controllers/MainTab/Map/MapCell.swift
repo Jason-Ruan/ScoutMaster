@@ -60,9 +60,9 @@ class MapCell: UICollectionViewCell {
         case 2:
         self.iconImage.image = UIImage(systemName: "thermometer.sun")
         case 3:
-        self.iconImage.image = UIImage(named: "camp")
-        case 4:
         self.iconImage.image = UIImage(systemName: "map")
+        case 4:
+        self.iconImage.image = UIImage(systemName: "camp")
         
         default:
             self.iconImage.image = nil

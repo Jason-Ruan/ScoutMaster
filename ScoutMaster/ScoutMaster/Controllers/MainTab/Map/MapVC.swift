@@ -32,7 +32,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     lazy var mapView: MGLMapView = {
         let mv = MGLMapView(frame: view.bounds)
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mv.styleURL = MGLStyle.darkStyleURL
+        mv.styleURL = MGLStyle.lightStyleURL
         mv.userTrackingMode = .followWithHeading
         return mv
     }()
@@ -53,7 +53,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 40.8720442, longitude: -73.9256923), zoomLevel: 14, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -160,7 +160,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
 
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "blue-trail", ofType: "geojson")
+            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
             let url = URL(fileURLWithPath: jsonPath!)
 
             do {
@@ -198,7 +198,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     //MARK: CV Delegate Methods
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 9
+         return 6
      }
      
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -215,7 +215,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = indexPath.row
         switch tag {
-        case 4:
+        case 3:
         present(MapSettings.toggleMapStyle(mapView: mapView), animated: true)
         default:
             return
@@ -248,6 +248,8 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             switch annotation.title {
             case "Blue Trail":
                 return .systemBlue
+            case "Prospect Park Trail Loop":
+                return .systemOrange
             default:
                 return .white
         }

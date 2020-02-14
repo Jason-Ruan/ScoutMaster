@@ -23,13 +23,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = DashboardVC()
         
-        /*
+        
         if FirebaseAuthService.manager.currentUser != nil {
             window?.rootViewController = MainTabBarViewController()
         } else {
             window?.rootViewController = MainTabBarViewController()
         }
- */
+ 
         
         window?.makeKeyAndVisible()
         

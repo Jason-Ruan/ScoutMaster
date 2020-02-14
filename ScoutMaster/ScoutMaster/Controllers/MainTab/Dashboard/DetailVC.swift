@@ -52,10 +52,10 @@ class DetailVC: UIViewController {
         let mv = MGLMapView(frame: view.bounds)
         mv.delegate = self
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mv.styleURL = MGLStyle.darkStyleURL
+        mv.styleURL = MGLStyle.lightStyleURL
         if let trail = self.trail {
             //            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
-            mv.setCenter(CLLocationCoordinate2D(latitude: 40.8720442, longitude: -73.9256923), zoomLevel: 14, animated: false)
+            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
         }
         return mv
     }()
@@ -78,6 +78,17 @@ class DetailVC: UIViewController {
         tv.font = tv.font?.withSize(20)
         tv.adjustsFontForContentSizeCategory = true
         return tv
+    }()
+    
+    lazy var startButton: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(segueToMap), for: .touchUpInside)
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
+        button.layer.cornerRadius = 15
+        button.titleLabel?.text = "Start"
+        button.titleLabel?.textColor = .white
+        button.setTitle("Start", for: .normal)
+        return button
     }()
     
     
@@ -118,6 +129,16 @@ class DetailVC: UIViewController {
     
     //MARK: - Private Functions
     
+    @objc private func segueToMap() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                               else { return }
+        if let tabBarController = window.rootViewController as? MainTabBarViewController {
+               tabBarController.selectedIndex = 1
+           }
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func setUpViews() {
         view.addSubview(nameLabel)
         view.addSubview(locationLabel)
@@ -126,6 +147,7 @@ class DetailVC: UIViewController {
         view.addSubview(trailDetailsTextView)
         view.addSubview(favoriteButton)
         view.addSubview(weatherButton)
+        view.addSubview(startButton)
         
         constrainViews()
     }
@@ -187,6 +209,13 @@ class DetailVC: UIViewController {
             weatherButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            startButton.widthAnchor.constraint(equalToConstant: 90),
+            startButton.heightAnchor.constraint(equalToConstant: 50),
+            startButton.bottomAnchor.constraint(equalTo: mapView.topAnchor, constant: -5),
+            startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)])
+        
     }
     
 }
@@ -215,7 +244,7 @@ extension DetailVC: MGLMapViewDelegate {
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "blue-trail", ofType: "geojson")
+            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
             let url = URL(fileURLWithPath: jsonPath!)
             
             do {
@@ -261,6 +290,8 @@ extension DetailVC: MGLMapViewDelegate {
             switch annotation.title {
             case "Blue Trail":
                 return .systemBlue
+            case "Prospect Park Trail Loop":
+                return .systemOrange
             default:
                 return .white
             }
