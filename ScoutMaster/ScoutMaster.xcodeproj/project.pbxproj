@@ -14,6 +14,7 @@
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
 		3A00771023F62AE500FE1CE6 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A00770F23F62AE500FE1CE6 /* Secrets.swift */; };
 		3A00771323F635F600FE1CE6 /* SoftEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A00771223F635F600FE1CE6 /* SoftEffect.swift */; };
+		3A00771523F6466B00FE1CE6 /* prospectparkloop.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
 		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
@@ -81,6 +82,7 @@
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		3A00770F23F62AE500FE1CE6 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		3A00771223F635F600FE1CE6 /* SoftEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftEffect.swift; sourceTree = "<group>"; };
+		3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = prospectparkloop.geojson; sourceTree = "<group>"; };
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */,
+				3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */,
 				3A999E0C23DF6EA0008DBC60 /* LocationData.swift */,
 				3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */,
 				3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */,
@@ -546,6 +549,7 @@
 				3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */,
 				3A999DBE23DF58AD008DBC60 /* Assets.xcassets in Resources */,
 				3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */,
+				3A00771523F6466B00FE1CE6 /* prospectparkloop.geojson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
