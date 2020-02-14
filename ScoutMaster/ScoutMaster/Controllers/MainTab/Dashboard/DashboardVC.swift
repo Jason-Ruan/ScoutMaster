@@ -10,12 +10,10 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
-        yourName.frame = CGRect (x: 0, y: 45, width: 415, height: 50)
-        yourName.text = """
-        Hey Scout,
-        
-        Explore the best hiking trails and routes.
-        """
+        yourName.frame = CGRect (x: 0, y: 45, width: 415, height: 150)
+        yourName.text = "Hey Scout,\n\nExplore the best hiking trails and routes.\n"
+        yourName.numberOfLines = 0
+        yourName.font = yourName.font.withSize(20)
         return yourName
     }()
     
@@ -87,7 +85,9 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
             self.collectionView.topAnchor.constraint(equalTo: self.searchItBar.bottomAnchor, constant: 5),
             self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
             self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
+            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            
+//            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
         ])
     }
     
@@ -95,10 +95,10 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         self.searchItBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.searchItBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 200),
-            self.searchItBar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.searchItBar.heightAnchor.constraint(equalToConstant: 30),
-            self.searchItBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50)
+            self.searchItBar.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor),
+            self.searchItBar.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            self.searchItBar.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+            self.searchItBar.bottomAnchor.constraint(equalTo: self.collectionView.topAnchor)
         ])
     }
     
@@ -107,10 +107,12 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         
         NSLayoutConstraint.activate([
             
-            self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
-            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
+            self.nameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.nameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            self.nameLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+            self.nameLabel.bottomAnchor.constraint(equalTo: self.searchItBar.topAnchor)
+            
+//            self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height / 2)
         ])
         
     }
