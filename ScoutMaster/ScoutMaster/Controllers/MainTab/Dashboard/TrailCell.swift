@@ -12,15 +12,23 @@ class TrailCell: UICollectionViewCell {
     
     lazy var name: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 17)
-        label.textAlignment = .center
+        label.font = UIFont(name: "Baskerville", size: 22)
+        label.textAlignment = .left
+        label.textColor = .white
         return label
     }()
     
-//    lazy var image: UIImageView = {
-//        let imageView = UIImageView()
-//        return imageView
-//    }()
+    lazy var image: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .clear
+        return imageView
+    }()
+    
+    lazy var infoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .init(white: 0.3, alpha: 0.7)
+        return view
+    }()
     
 //    lazy var vStack: UIStackView = {
 //        let stackView = UIStackView(arrangedSubviews: [name, image])
@@ -35,8 +43,9 @@ class TrailCell: UICollectionViewCell {
         
         setUpCellAppearance()
         
-        self.contentView.addSubview(name)
-//        self.contentView.addSubview(image)
+        self.contentView.addSubview(image)
+        self.contentView.addSubview(infoView)
+        infoView.addSubview(name)
 //        self.contentView.addSubview(vStack)
         
         addConstraints()
@@ -51,44 +60,55 @@ class TrailCell: UICollectionViewCell {
     }
     
     private func addConstraints() {
+        setImageConstraints()
         setNameConstraints()
-//        setImageConstraints()
-//        setNameStackViewConstraints()
+        setInfoViewConstraints()
     }
     
     func configureCell(trail: Trail){
-        backgroundColor = .systemTeal
+        backgroundColor = .white
         name.text = "\(trail.name)"
     }
     
     private func setUpCellAppearance() {
-        self.layer.cornerRadius = 8.0
+        self.layer.cornerRadius = 40
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.masksToBounds = true
     }
     
+    
+    
     private func setNameConstraints() {
         self.name.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.name.topAnchor.constraint(equalTo: self.name.topAnchor),
-            self.name.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5),
-            self.name.trailingAnchor.constraint(equalTo: self.name.trailingAnchor, constant: 5),
+            self.name.leadingAnchor.constraint(equalTo: self.infoView.leadingAnchor, constant: 5),
+            self.name.trailingAnchor.constraint(equalTo: self.infoView.trailingAnchor, constant: -5),
             self.name.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-//    private func setImageConstraints() {
-//        self.image.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            self.image.topAnchor.constraint(equalTo: self.name.bottomAnchor, constant: 5),
-//            self.image.heightAnchor.constraint(equalToConstant: 100),
-//            self.image.widthAnchor.constraint(equalToConstant: 100),
-//            self.image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-//        ])
-//    }
+    private func setInfoViewConstraints() {
+           self.infoView.translatesAutoresizingMaskIntoConstraints = false
+           
+           NSLayoutConstraint.activate([
+               self.infoView.leadingAnchor.constraint(equalTo: self.image.leadingAnchor),
+               self.infoView.trailingAnchor.constraint(equalTo: self.image.trailingAnchor),
+               self.infoView.heightAnchor.constraint(equalToConstant: 100),
+               self.infoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+           ])
+       }
+       
+    
+    private func setImageConstraints() {
+        self.image.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.image.topAnchor.constraint(equalTo: contentView.topAnchor),
+            self.image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            self.image.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+        ])
+    }
     
 //    private func setNameStackViewConstraints() {
 //        self.vStack.translatesAutoresizingMaskIntoConstraints = false
