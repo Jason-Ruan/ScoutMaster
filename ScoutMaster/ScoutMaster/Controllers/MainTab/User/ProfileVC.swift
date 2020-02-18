@@ -14,7 +14,7 @@ class ProfileVC: UIViewController {
 //    MARK: DATA
     var user = AppUser(from: FirebaseAuthService.manager.currentUser!)
     
-    var userPost = [Post] () {
+    var userPost = [FavedHikes] () {
         didSet {
             faveHikesCollection.reloadData()
         }
@@ -63,7 +63,7 @@ class ProfileVC: UIViewController {
         faveHikesCollection.delegate = self
         faveHikesCollection.dataSource = self
         view.backgroundColor = .white
-        getPosts()
+        getfaved()
         addSubview()
         addConstraints()
     }
@@ -137,7 +137,7 @@ class ProfileVC: UIViewController {
     
     
 
-     private func getPosts(){
+     private func getfaved(){
         FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
                   DispatchQueue.main.async {
                       switch result{
@@ -169,7 +169,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faveCell", for: indexPath) as? FaveHikeCVC else {return UICollectionViewCell()}
         let data = userPost[indexPath.row]
-        cell.configureCell(post: data)
+//        cell.configureCell(post: data)
         return cell
     }
     

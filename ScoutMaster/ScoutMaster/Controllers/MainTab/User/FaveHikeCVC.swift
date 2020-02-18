@@ -43,8 +43,9 @@ class FaveHikeCVC: UICollectionViewCell {
             ].forEach{$0.isActive = true}
     }
     
-    func configureCell(post: Post) {
-        FirebaseStorage.postManager.getImages(profileUrl: post.imageUrl!) { (result) in
+    /*
+    func configureCell(post: FavedHikes) {
+        FirebaseStorage.postManager.getImages(profileUrl: post.img) { (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -52,7 +53,7 @@ class FaveHikeCVC: UICollectionViewCell {
                 self.userFavedImages.image = UIImage(data: imageData)
             }
         }
-        FirestoreService.manager.getUserFromPost(creatorID: post.creatorID) { (result) in
+        FirestoreService.manager.getUserFromPost(creatorID: <#T##String#>, completion: <#T##(Result<AppUser, Error>) -> ()#>) { (result) in
             DispatchQueue.main.async {
                 switch result{
                 case .failure(let error):
@@ -63,6 +64,7 @@ class FaveHikeCVC: UICollectionViewCell {
             }
         }
     }
+ */
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

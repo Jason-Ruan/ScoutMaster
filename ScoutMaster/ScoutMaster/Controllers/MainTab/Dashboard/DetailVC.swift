@@ -82,8 +82,12 @@ class DetailVC: UIViewController {
     
     
     lazy var favoriteButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
+        let button = UIButton()
         button.setImage(UIImage.init(systemName: "heart"), for: .normal)
+        button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+
+//        self.button = UIButton.ButtonType.system;, targetViewController(forAction: self, sender: #selector())
+        
         return button
     }()
     
@@ -95,7 +99,7 @@ class DetailVC: UIViewController {
     
     
     //MARK: - Private Properties
-    var trail: Trail?
+    var trail: Trail!
     
     var coordinates = [CLLocationCoordinate2D]()
     
@@ -114,6 +118,27 @@ class DetailVC: UIViewController {
         setUpViews()
         drawTrailPolyline()
     }
+    
+//    MARK: Objective C
+    @objc func faveTrail() {
+        
+        guard let user = FirebaseAuthService.manager.currentUser else {
+            print("Error- no current user")
+            return
+        }
+        // to be done: set parameters
+        let newFaveTrail = FavedHikes(id: trail.id, name: trail.name, type: trail.type, summary: trail.summary, difficulty: trail.difficulty, location: trail.location, url: trail.url, img: trail.imgMedium, length: trail.length, ascent: trail.ascent, descent: trail.descent, high: trail.high, low: trail.low, longitude: trail.longitude, latitude: trail.latitude)
+        FirestoreService.manager.createFaveHikes(post: newFaveTrail) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(()):
+                print("yes")
+                self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            }
+        }
+    }
+    
     
     
     //MARK: - Private Functions
@@ -273,3 +298,33 @@ extension DetailVC: MGLMapViewDelegate {
     }
     
 }
+
+/*
+extension DetailVC: ButtonPressed {
+    
+    /*
+    
+    func buttonPressed(tag: Int) {
+        print(tag)
+        /*
+        let indexSelected = IndexPath(row: tag, section: 0)
+        let select = thingsTableView.cellForRow(at: indexSelected) as! ThingsCustomTVC
+        */
+        
+        let ticketData = eventData[tag]
+        let fireThing = FavedEvents(imageData: ticketData.images.first?.url ?? "", objectName: ticketData.name, objectSecondary: ticketData.dates.start.localDate, objectID: ticketData.id, creatorID: user.uid)
+        
+        FirestoreService.manager.createfave(faved: fireThing) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(()):
+                print("yes")
+            select.buttonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            }
+        }
+    
+    }
+ */
+}
+ */
