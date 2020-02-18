@@ -198,7 +198,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     //MARK: CV Delegate Methods
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 6
+         return 5
      }
      
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -215,7 +215,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = indexPath.row
         switch tag {
-        case 3:
+        case 4:
         present(MapSettings.toggleMapStyle(mapView: mapView), animated: true)
         default:
             return
