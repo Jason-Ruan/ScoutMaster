@@ -215,6 +215,10 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = indexPath.row
         switch tag {
+        case 0:
+            let addvc = MapSettings.toggleAddButton(mapView: mapView, coordinates: mapView.userLocation!.coordinate)
+            addvc.modalPresentationStyle = .automatic
+            present(addvc, animated: true)
         case 4:
         present(MapSettings.toggleMapStyle(mapView: mapView), animated: true)
         default:

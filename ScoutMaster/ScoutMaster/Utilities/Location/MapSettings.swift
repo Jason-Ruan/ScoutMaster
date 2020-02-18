@@ -45,5 +45,11 @@ class MapSettings {
         
     return actionSheet
 }
+    
+    static func toggleAddButton(mapView: MGLMapView, coordinates: CLLocationCoordinate2D) -> UIViewController {
+        
+        return AddPointVC()
+        
+    }
 
 }
