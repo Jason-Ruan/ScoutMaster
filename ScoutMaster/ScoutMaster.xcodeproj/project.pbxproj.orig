@@ -38,6 +38,7 @@
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
+		4E6BF23C23F5F31A00C59E04 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BF23B23F5F31A00C59E04 /* Secrets.swift */; };
 		4E6BF23E23F5F57F00C59E04 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BF23D23F5F57F00C59E04 /* Protocols.swift */; };
 		4E6BF24023F5F68D00C59E04 /* FavedHikes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BF23F23F5F68D00C59E04 /* FavedHikes.swift */; };
 		4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3D3BB23F1C60100501EB3 /* FireStorage.swift */; };
@@ -171,7 +172,11 @@
 		08CA29FD23F3049300F8DECD /* Secrets */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				4E6BF23B23F5F31A00C59E04 /* Secrets.swift */,
+=======
 				3A00770F23F62AE500FE1CE6 /* Secrets.swift */,
+>>>>>>> dev
 			);
 			path = Secrets;
 			sourceTree = "<group>";
