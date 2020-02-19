@@ -47,6 +47,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         }
     }
     
+    var addPopUp: UIView = {
+        let popUp = AddPointView()
+        popUp.backgroundColor = .white
+        popUp.layer.cornerRadius = 50
+        return popUp
+    }()
+    
     var coordinates = [CLLocationCoordinate2D]()
     
     
@@ -61,6 +68,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         constrainMap()
         constrainCV()
         constrainLocationButton()
+        constrainAddPopUp()
         
     }
     
@@ -98,6 +106,50 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                mapView.widthAnchor.constraint(equalTo: view.widthAnchor)])
        
        }
+    
+    func constrainAddPopUp(){
+        view.addSubview(addPopUp)
+        addPopUp.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        addPopUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        hidePopUpTopAnchorConstraint,
+        addPopUp.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
+        addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
+    }
+    
+    lazy var hidePopUpTopAnchorConstraint: NSLayoutConstraint = {
+        return addPopUp.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    }()
+    
+    lazy var showPopUpTopAnchorConstraint: NSLayoutConstraint = {
+        return addPopUp.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+    }()
+    
+   func configurePopUp(popUp: UIView){
+    guard let popUp = popUp as? AddPointView else { return }
+    switch popUp.shown {
+        case false:
+            UIView.animate(withDuration: 0.3) {
+                self.hidePopUpTopAnchorConstraint.isActive = false
+                self.showPopUpTopAnchorConstraint.isActive = true
+                self.view.layoutIfNeeded()
+                popUp.shown = true
+            }
+            
+        case true:
+            UIView.animate(withDuration: 0.3) {
+                self.hidePopUpTopAnchorConstraint.isActive = true
+                self.showPopUpTopAnchorConstraint.isActive = false
+                self.view.layoutIfNeeded()
+                popUp.shown = false
+
+            }
+
+        }
+        
+    }
+    
+    
     
     
     //MARK: UI Methods
@@ -216,9 +268,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         let tag = indexPath.row
         switch tag {
         case 0:
-            let addvc = MapSettings.toggleAddButton(mapView: mapView, coordinates: mapView.userLocation!.coordinate)
-            addvc.modalPresentationStyle = .automatic
-            present(addvc, animated: true)
+         configurePopUp(popUp: addPopUp)
         case 4:
         present(MapSettings.toggleMapStyle(mapView: mapView), animated: true)
         default:
@@ -229,10 +279,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         
     }
     
-    
-    
-    
-     
 
     //MARK: MV Delegate Methods
     
@@ -274,4 +320,5 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
 }
+
 

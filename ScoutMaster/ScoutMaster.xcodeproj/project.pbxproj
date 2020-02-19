@@ -34,7 +34,7 @@
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
 		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
 		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
-		3AE92FD923FC791F009D7AD0 /* AddPointVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92FD823FC791F009D7AD0 /* AddPointVC.swift */; };
+		3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */; };
 		3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
@@ -109,7 +109,7 @@
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "blue-trail.geojson"; sourceTree = "<group>"; };
-		3AE92FD823FC791F009D7AD0 /* AddPointVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPointVC.swift; sourceTree = "<group>"; };
+		3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPoint.swift; sourceTree = "<group>"; };
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -362,7 +362,7 @@
 				3A999E0C23DF6EA0008DBC60 /* LocationData.swift */,
 				3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */,
 				3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */,
-				3AE92FD823FC791F009D7AD0 /* AddPointVC.swift */,
+				3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -682,9 +682,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */,
-				3AE92FD923FC791F009D7AD0 /* AddPointVC.swift in Sources */,
 				4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */,
 				3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */,
+				3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */,
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
