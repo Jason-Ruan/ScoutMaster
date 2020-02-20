@@ -34,19 +34,7 @@ class ProfileVC: UIViewController {
         name.text = "Hello Scout!"
         return name
     }()
-    
-    /*
-    lazy var statsCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-            cv.backgroundColor = .lightGray
-//          cv.register(mainVC.self, forCellWithReuseIdentifier: "mainCell")
-//            cv.dataSource = self
-//            cv.delegate = self
-        return cv
-    }()
- */
+
     
     lazy var faveHikesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,6 +45,19 @@ class ProfileVC: UIViewController {
         return cv
     }()
     
+     /*
+        lazy var statsCollection: UICollectionView = {
+            let layout = UICollectionViewFlowLayout()
+                layout.scrollDirection = .vertical
+            let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+                cv.backgroundColor = .lightGray
+    //          cv.register(mainVC.self, forCellWithReuseIdentifier: "mainCell")
+    //            cv.dataSource = self
+    //            cv.delegate = self
+            return cv
+        }()
+     */
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,9 +67,26 @@ class ProfileVC: UIViewController {
         getfaved()
         addSubview()
         addConstraints()
+        print(user.uid)
     }
     
 // MARK: PRIVATE FUNCS
+    
+    
+    private func getfaved(){
+           FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
+                     DispatchQueue.main.async {
+                         switch result{
+                         case .failure(let error):
+                             print(error)
+                         case .success(let data):
+                             self.userPost = data
+    
+                             print(data.count)
+                         }
+                     }
+           }
+       }
     
     private func addSubview() {
         view.addSubview(faveHikesCollection)
@@ -107,7 +125,7 @@ class ProfileVC: UIViewController {
     
     
     private func constrainFaveCollectionView(){
-        view.addSubview(faveHikesCollection)
+
         faveHikesCollection.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
@@ -137,20 +155,7 @@ class ProfileVC: UIViewController {
     
     
 
-     private func getfaved(){
-        FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
-                  DispatchQueue.main.async {
-                      switch result{
-                      case .failure(let error):
-                          print(error)
-                      case .success(let data):
-                          self.userPost = data
- 
-                          print(data.count)
-                      }
-                  }
-        }
-    }
+     
 
 }
 
@@ -169,13 +174,26 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faveCell", for: indexPath) as? FaveHikeCVC else {return UICollectionViewCell()}
         let data = userPost[indexPath.row]
+        cell.userFavedTrailName.text = data.name
+        
+        ImageHelper.shared.fetchImage(urlString: data.img!) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    cell.userFavedImages.image = UIImage(named: "alps")
+                case .success(let img):
+                    cell.userFavedImages.image = img
+                }
+            }
+        }
+
 //        cell.configureCell(post: data)
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 300)
+        return CGSize(width: 380, height: 400)
     }
     
     

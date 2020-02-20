@@ -25,9 +25,10 @@ struct FavedHikes: Codable {
     var low: Int
     var longitude: Double
     var latitude: Double
+    var creatorId: String
 
     
-    init(id: Int, name: String, type: String, summary: String, difficulty: String, location: String, url: String, img: String?, length: Double, ascent: Int, descent: Int, high: Int, low: Int, longitude: Double, latitude: Double) {
+    init(id: Int, name: String, type: String, summary: String, difficulty: String, location: String, url: String, img: String?, length: Double, ascent: Int, descent: Int, high: Int, low: Int, longitude: Double, latitude: Double, creatorId: String) {
         self.id = id
         self.name = name
         self.type = type
@@ -43,6 +44,7 @@ struct FavedHikes: Codable {
         self.low = low
         self.longitude = longitude
         self.latitude = latitude
+        self.creatorId = creatorId
     }
     
     init?(from dict: [String: Any], id: String) {
@@ -57,10 +59,11 @@ struct FavedHikes: Codable {
             let length = dict["length"] as? Double,
             let ascent = dict["ascent"] as? Int,
             let descent = dict["descent"] as? Int,
-            let high = dict["type"] as? Int,
-            let low = dict["summary"] as? Int,
+            let high = dict["high"] as? Int,
+            let low = dict["low"] as? Int,
             let longitude = dict["longitude"] as? Double,
-            let latitude = dict["latitude"] as? Double else { return nil }
+            let latitude = dict["latitude"] as? Double,
+            let creatorId = dict["creatorId"] as? String else { return nil }
         
         self.id = id
         self.name = name
@@ -77,6 +80,7 @@ struct FavedHikes: Codable {
         self.low = low
         self.longitude = longitude
         self.latitude = latitude
+        self.creatorId = creatorId
     }
 
 
@@ -98,6 +102,7 @@ struct FavedHikes: Codable {
             "low": self.low,
             "longitude": self.longitude,
             "latitude": self.latitude,
+            "creatorId": self.creatorId
             
         ]
     }

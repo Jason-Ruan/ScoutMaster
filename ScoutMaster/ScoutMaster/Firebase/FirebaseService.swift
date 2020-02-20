@@ -133,7 +133,7 @@ class FirestoreService {
     }
     
     func getUserFaved(userId: String, completion: @escaping(Result<[FavedHikes], Error>) -> () ) {
-       db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: userId).getDocuments { (snapshot, error) in
+       db.collection(FireStoreCollections.posts.rawValue).whereField("creatorId", isEqualTo: userId).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else {
