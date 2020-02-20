@@ -49,8 +49,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     var addPopUp: UIView = {
         let popUp = AddPointView()
-        popUp.backgroundColor = .white
-        popUp.layer.cornerRadius = 50
         return popUp
     }()
     
