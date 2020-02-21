@@ -8,6 +8,9 @@
 
 import Foundation
 
+//var longitude: Double = ()
+//var latitude: Double = ()
+
 // MARK: - Welcome
 struct Welcome: Codable {
     let results: [Resultt]
@@ -67,7 +70,7 @@ struct Location: Codable {
     let lat, lng: Double
     
     static func getGeoCode(searchString: String, completionHandler: @escaping (Result<Location, AppError>) -> () ) {
-        let urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=new+york&key=\(Secrets.google_key)"
+        let urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=\(searchString)&key=\(Secrets.google_key)"
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
@@ -83,6 +86,19 @@ struct Location: Codable {
             }
         }
     }
+    
+//    func loadGeoCoordinates() {
+//        self.getGeoCode(searchString: DashboardVC.sear) { (result) in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .failure(let error):
+//                    print(error)
+//                case .success(let hikingProjectAPI):
+//                    self.HPTrails = hikingProjectAPI
+//                }
+//            }
+//        }
+//    }
     
     
 }

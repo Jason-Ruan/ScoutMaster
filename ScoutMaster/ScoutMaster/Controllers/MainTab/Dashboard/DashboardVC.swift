@@ -1,12 +1,14 @@
 import UIKit
 
-class DashboardVC: UIViewController, UISearchBarDelegate {
+class DashboardVC: UIViewController, UITextFieldDelegate {
     
     var HPTrails = [Trail]() {
         didSet {
             collectionView.reloadData()
         }
     }
+    var longitude: Double = 0.0
+    var latitude: Double = 0.0
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
@@ -106,6 +108,33 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         setProfileImageConstraints()
         setFilterButtonConstraints()
         
+    }
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if string == "" {
+//            print("test")
+//        }
+//        return false
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("do this now bitches")
+        return true
+    }
+    
+    func loadGeoCoordinates() {
+        Location.getGeoCode(searchString: searchItBar.text ?? "") { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let theGeoCode):
+                    self.latitude = theGeoCode.lat
+                    self.longitude = theGeoCode.lng
+                }
+            }
+        }
+        print(searchItBar.text!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
