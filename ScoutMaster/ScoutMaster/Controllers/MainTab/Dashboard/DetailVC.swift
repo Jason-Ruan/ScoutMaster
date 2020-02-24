@@ -9,9 +9,89 @@
 import UIKit
 import Mapbox
 
-class DetailVC: UIViewController {
+class DetailVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     //MARK: - UI Objects
+    lazy var mapView: MGLMapView = {
+        let mv = MGLMapView(frame: view.bounds)
+        mv.delegate = self
+        mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mv.styleURL = MGLStyle.darkStyleURL
+        if let trail = self.trail {
+            //            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
+            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
+        }
+        return mv
+    }()
+    
+    lazy var trailDetailsTextView: UITextView = {
+        let tv = UITextView()
+        tv.isEditable = false
+        if let trail = self.trail {
+            var trailDifficulty: String = ""
+            
+            switch trail.difficulty {
+            case "green":
+                trailDifficulty = "Easy"
+            case "greenBlue":
+                trailDifficulty = "Easy/Intermediate"
+            case "blue":
+                trailDifficulty = "Intermediate"
+            case "blueBlack":
+                trailDifficulty = "Intermediate/Difficult"
+            case "black":
+                trailDifficulty = "Difficult"
+            case "blackBlack":
+                trailDifficulty = "Extremely Difficult"
+            default:
+                trailDifficulty = "Unknown"
+            }
+            
+            tv.text = """
+            Difficulty: \(trailDifficulty)
+            Distance: \(trail.length) miles
+            Ascent: \(trail.ascent) ft
+            Descent: \(trail.descent) ft
+            Peak: \(trail.high) ft
+            Condition: \(trail.conditionDetails ?? "")
+            """
+        }
+        tv.backgroundColor = .clear
+        tv.textColor = .white
+        tv.font = tv.font?.withSize(16)
+        tv.adjustsFontForContentSizeCategory = true
+        tv.isScrollEnabled = false
+        tv.sizeToFit()
+        return tv
+    }()
+    
+    lazy var favoriteButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
+        button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
+        button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var weatherButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
+        button.setImage(UIImage.init(systemName: "cloud", withConfiguration: imageConfig), for: .normal)
+        button.addTarget(self, action: #selector(loadWeather), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var startButton: UIButton = {
+        var button = UIButton()
+        button.addTarget(self, action: #selector(segueToMap), for: .touchUpInside)
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
+        button.layer.cornerRadius = 15
+        button.titleLabel?.text = "Start"
+        button.titleLabel?.textColor = .white
+        button.setTitle("Start", for: .normal)
+        return button
+    }()
+    
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         if let trail = self.trail {
@@ -22,6 +102,12 @@ class DetailVC: UIViewController {
             label.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
         }
         return label
+    }()
+    
+    lazy var locationSymbolImageView: UIImageView = {
+        let iv = UIImageView(image: UIImage(systemName: "location.fill"))
+        iv.image = iv.image?.withTintColor(.white, renderingMode: .alwaysTemplate)
+        return iv
     }()
     
     lazy var locationLabel: UILabel = {
@@ -48,66 +134,6 @@ class DetailVC: UIViewController {
         return tv
     }()
     
-    lazy var mapView: MGLMapView = {
-        let mv = MGLMapView(frame: view.bounds)
-        mv.delegate = self
-        mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mv.styleURL = MGLStyle.lightStyleURL
-        if let trail = self.trail {
-            //            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
-            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
-        }
-        return mv
-    }()
-    
-    lazy var trailDetailsTextView: UITextView = {
-        let tv = UITextView()
-        tv.isEditable = false
-        if let trail = self.trail {
-            tv.text = """
-            Difficulty: \(trail.difficulty)
-            Distance: \(trail.length) miles
-            Ascent: \(trail.ascent) ft
-            Descent: \(trail.descent) ft
-            Peak: \(trail.high) ft
-            Condition: \(trail.conditionDetails ?? "")
-            """
-        }
-        tv.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
-        tv.textColor = .white
-        tv.font = tv.font?.withSize(20)
-        tv.adjustsFontForContentSizeCategory = true
-        return tv
-    }()
-    
-    lazy var startButton: UIButton = {
-        var button = UIButton()
-        button.addTarget(self, action: #selector(segueToMap), for: .touchUpInside)
-        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
-        button.layer.cornerRadius = 15
-        button.titleLabel?.text = "Start"
-        button.titleLabel?.textColor = .white
-        button.setTitle("Start", for: .normal)
-        return button
-    }()
-    
-    
-    lazy var favoriteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage.init(systemName: "heart"), for: .normal)
-        button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-
-//        self.button = UIButton.ButtonType.system;, targetViewController(forAction: self, sender: #selector())
-        
-        return button
-    }()
-    
-    lazy var weatherButton: UIButton = {
-        let button = UIButton(type: UIButton.ButtonType.system)
-        button.setImage(UIImage.init(systemName: "cloud"), for: .normal)
-        return button
-    }()
-    
     
     //MARK: - Private Properties
     var trail: Trail!
@@ -122,6 +148,8 @@ class DetailVC: UIViewController {
         }
     }
     
+    var scrollView: UIScrollView!
+    
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +158,7 @@ class DetailVC: UIViewController {
         drawTrailPolyline()
     }
     
-//    MARK: Objective C
+    //    MARK: - Objective-C Methods
     @objc func faveTrail() {
         
         guard let user = FirebaseAuthService.manager.currentUser else {
@@ -151,86 +179,85 @@ class DetailVC: UIViewController {
         }
     }
     
+    @objc func loadWeather() {
+        guard let trail = self.trail else {return}
+        DispatchQueue.main.async {
+            DarkSky.getWeather(lat: trail.latitude, long: trail.longitude) { (result) in
+                switch result {
+                case .success(let sevenDayForecast):
+                    print("got weather")
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    @objc private func segueToMap() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+            else { return }
+        if let tabBarController = window.rootViewController as? MainTabBarViewController {
+            tabBarController.selectedIndex = 1
+        }
+        dismiss(animated: true, completion: nil)
+    }
     
     
     //MARK: - Private Functions
     
-    @objc private func segueToMap() {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                               let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
-                               else { return }
-        if let tabBarController = window.rootViewController as? MainTabBarViewController {
-               tabBarController.selectedIndex = 1
-           }
-        dismiss(animated: true, completion: nil)
-    }
-    
     private func setUpViews() {
-        view.addSubview(nameLabel)
-        view.addSubview(locationLabel)
-        view.addSubview(summaryTextView)
-        view.addSubview(mapView)
-        view.addSubview(trailDetailsTextView)
-        view.addSubview(favoriteButton)
-        view.addSubview(weatherButton)
-        view.addSubview(startButton)
+        scrollView = UIScrollView(frame: view.bounds)
+        scrollView.delegate = self
+        scrollView.backgroundColor = .black
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
+        
+        scrollView.addSubview(mapView)
+        scrollView.addSubview(trailDetailsTextView)
+        //        scrollView.addSubview(toolBar)
+        scrollView.addSubview(favoriteButton)
+        scrollView.addSubview(weatherButton)
+        
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(locationSymbolImageView)
+        scrollView.addSubview(locationLabel)
+        
+        scrollView.addSubview(summaryTextView)
+        scrollView.addSubview(startButton)
+        
+        view.addSubview(scrollView)
         
         constrainViews()
     }
     
     private func constrainViews() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            nameLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            nameLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
-            nameLabel.heightAnchor.constraint(equalToConstant: 75)
-        ])
-        
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            locationLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            locationLabel.widthAnchor.constraint(equalToConstant: view.frame.width),
-            locationLabel.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        summaryTextView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
-            summaryTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            summaryTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 75)
-        ])
         
         mapView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 50),
-            mapView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            mapView.widthAnchor.constraint(equalToConstant: view.frame.width),
-            mapView.heightAnchor.constraint(equalToConstant: view.frame.height / 2)
+            mapView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            mapView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            mapView.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
+            mapView.heightAnchor.constraint(equalToConstant: scrollView.frame.height / 2.5)
         ])
         
         trailDetailsTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            trailDetailsTextView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor),
-            trailDetailsTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            trailDetailsTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
-            trailDetailsTextView.heightAnchor.constraint(equalToConstant: 200)
+            trailDetailsTextView.topAnchor.constraint(equalTo: mapView.topAnchor),
+            trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
         ])
         
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            favoriteButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor),
-            favoriteButton.leadingAnchor.constraint(equalTo: locationLabel.leadingAnchor, constant: 30),
+            favoriteButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
+            favoriteButton.trailingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -5),
             favoriteButton.widthAnchor.constraint(equalToConstant: 30),
             favoriteButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         weatherButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            weatherButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor),
-            weatherButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor),
+            weatherButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
+            weatherButton.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 5),
             weatherButton.widthAnchor.constraint(equalToConstant: 30),
             weatherButton.heightAnchor.constraint(equalToConstant: 30)
         ])
@@ -239,8 +266,41 @@ class DetailVC: UIViewController {
         NSLayoutConstraint.activate([
             startButton.widthAnchor.constraint(equalToConstant: 90),
             startButton.heightAnchor.constraint(equalToConstant: 50),
-            startButton.bottomAnchor.constraint(equalTo: mapView.topAnchor, constant: -5),
-            startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)])
+            startButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
+            startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: weatherButton.bottomAnchor, constant: 20),
+            nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+            nameLabel.widthAnchor.constraint(equalToConstant: scrollView.frame.width - 15),
+            nameLabel.heightAnchor.constraint(equalToConstant: 75)
+        ])
+        
+        locationSymbolImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            locationSymbolImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            locationSymbolImageView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            locationSymbolImageView.widthAnchor.constraint(equalToConstant: 15),
+            locationSymbolImageView.heightAnchor.constraint(equalToConstant: 15)
+        ])
+        
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            locationLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            locationLabel.leadingAnchor.constraint(equalTo: locationSymbolImageView.trailingAnchor),
+            locationLabel.widthAnchor.constraint(equalToConstant: scrollView.frame.width - 15),
+            locationLabel.heightAnchor.constraint(equalToConstant: 15)
+        ])
+        
+        summaryTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            summaryTextView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
+            summaryTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            summaryTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            summaryTextView.heightAnchor.constraint(equalToConstant: 75)
+        ])
         
     }
     
@@ -313,13 +373,21 @@ extension DetailVC: MGLMapViewDelegate {
         
         // Give our polyline a unique color by checking for its `title` property
         if annotation is MGLPolyline {
-            switch annotation.title {
-            case "Blue Trail":
-                return .systemBlue
-            case "Prospect Park Trail Loop":
-                return .systemOrange
-            default:
-                return .white
+            if let trail = trail {
+                switch trail.difficulty {
+                case "green":
+                    return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
+                case "greenBlue":
+                    return #colorLiteral(red: 0.1686150432, green: 0.8940697312, blue: 0.9647199512, alpha: 1)
+                case "blue":
+                    return #colorLiteral(red: 0.1324204504, green: 0.1454157829, blue: 1, alpha: 1)
+                case "blueBlack":
+                    return #colorLiteral(red: 0.2521547079, green: 0.2470324337, blue: 0.5169785023, alpha: 1)
+                case "black":
+                    return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                default:
+                    return .white
+                }
             }
         }
         return .white
