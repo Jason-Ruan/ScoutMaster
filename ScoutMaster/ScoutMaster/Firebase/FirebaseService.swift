@@ -103,7 +103,7 @@ class FirestoreService {
 //MARK: Posts
 
 
-    func createPost(post: Post, completion: @escaping (Result<(), Error>) -> ()) {
+    func createFaveHikes(post: FavedHikes, completion: @escaping (Result<(), Error>) -> ()) {
         var fields = post.fieldsDict
         fields["dateCreated"] = Date()
         db.collection(FireStoreCollections.posts.rawValue).addDocument(data: fields) { (error) in
@@ -115,21 +115,7 @@ class FirestoreService {
         }
     }
     
-    func getAllPosts( completion: @escaping (Result<[Post], Error>) -> ()) {
-    db.collection(FireStoreCollections.posts.rawValue).getDocuments {(snapshot, error) in
-        if let error = error {
-            completion(.failure(error))
-        } else {
-            let posts = snapshot?.documents.compactMap({ (snapshot) -> Post? in
-                let postID = snapshot.documentID
-                let post = Post(from: snapshot.data(), id: postID)
-                return post
-            })
-            completion(.success(posts!))
-            print("hey jude")
-        }
-    }
-    }
+    
     
     func getUserFromPost(creatorID: String, completion: @escaping (Result<AppUser,Error>) -> ()) {
         db.collection(FireStoreCollections.users.rawValue).document(creatorID).getDocument { (snapshot, error)  in
@@ -145,11 +131,26 @@ class FirestoreService {
             }
         }
     }
+    
+    func getUserFaved(userId: String, completion: @escaping(Result<[FavedHikes], Error>) -> () ) {
+       db.collection(FireStoreCollections.posts.rawValue).whereField("creatorId", isEqualTo: userId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let posts = snapshot?.documents.compactMap({ (snapshot) -> FavedHikes? in
+                    let postId = snapshot.documentID
+                    let post = FavedHikes(from: snapshot.data(), id: postId)
+                    return post
+                })
+                completion(.success(posts ?? []))
+            }
+        }
+    }
 
     
-
+/*
 //    MARK: Faves
-       /*
+       
        
        func createfave(faved: FavedEvents, completion: @escaping (Result<(), Error>) -> ()) {
            let fields = faved.fieldsDict
@@ -162,6 +163,7 @@ class FirestoreService {
                }
            }
        }
+    
        
        func getUserFaved(userId: String, completion: @escaping(Result<[FavedEvents], Error>) -> () ) {
            db.collection(FireStoreCollections.posts.rawValue).whereField("creatorID", isEqualTo: userId).getDocuments { (snapshot, error) in
