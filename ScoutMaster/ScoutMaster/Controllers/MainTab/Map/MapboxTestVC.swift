@@ -149,9 +149,9 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     @objc func loadWeather() {
         guard let trail = self.trail else {return}
         DispatchQueue.main.async {
-            DarkSky.getWeather(lat: trail.latitude, long: trail.longitude) { (result) in
+            WeatherForecast.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
                 switch result {
-                case .success(let sevenDayForecast):
+                case .success(let _):
                     print("got weather")
                 case .failure(let error):
                     print(error)
