@@ -29,13 +29,15 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }()
     
     
-    lazy var mapView: MGLMapView = {
-        let mv = MGLMapView(frame: view.bounds)
-        mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mv.styleURL = MGLStyle.lightStyleURL
-        mv.userTrackingMode = .followWithHeading
-        return mv
-    }()
+    var mapView = MapSettings.customMap
+    
+//    lazy var mapView: MGLMapView = {
+//        let mv = MGLMapView(frame: view.bounds)
+//        mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        mv.styleURL = MGLStyle.lightStyleURL
+//        mv.userTrackingMode = .followWithHeading
+//        return mv
+//    }()
 
 
     var newCoords: [(Double,Double)]! {
@@ -71,6 +73,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     //MARK: Constraint Methods
+    
     
     func constrainLocationButton(){
         view.addSubview(locationButton)
@@ -123,7 +126,8 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         return addPopUp.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
     }()
     
-   func configurePopUp(popUp: UIView){
+    
+   func showAddAnotationPopUp(popUp: UIView){
     guard let popUp = popUp as? AddPointView else { return }
     switch popUp.shown {
         case false:
@@ -266,9 +270,9 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         let tag = indexPath.row
         switch tag {
         case 0:
-         configurePopUp(popUp: addPopUp)
+        showAddAnotationPopUp(popUp: addPopUp)
         case 4:
-        present(MapSettings.toggleMapStyle(mapView: mapView), animated: true)
+        present(MapSettings.toggleMapStyle(), animated: true)
         default:
             return
         }
