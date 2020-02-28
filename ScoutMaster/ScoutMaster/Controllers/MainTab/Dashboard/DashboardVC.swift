@@ -7,8 +7,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             collectionView.reloadData()
         }
     }
-    var longitude: Double = 0.0
-    var latitude: Double = 0.0
+    var longitude: Double = 40.668
+    var latitude: Double = -73.9738
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
@@ -27,6 +27,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         searchIt.attributedPlaceholder = NSMutableAttributedString(string: "   Search...", attributes: [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor.black])
         
         searchIt.layer.cornerRadius = 25
+        //had to detail color to test to device
+        searchIt.textColor = .black
         searchIt.backgroundColor = .white
         searchIt.textAlignment = .center
         searchIt.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -36,6 +38,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         searchIt.layer.masksToBounds = false
         searchIt.autocorrectionType = .no
         //        searchIt.addSoftUIEffectForView()
+        searchIt.delegate = self
         return searchIt
     }()
     
@@ -118,7 +121,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
 //    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("do this now bitches")
+        loadGeoCoordinates()
+        textField.resignFirstResponder()
         return true
     }
     
@@ -127,10 +131,13 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
-                    print(error)
+                    print("a")
+                    print(error.localizedDescription)
                 case .success(let theGeoCode):
-                    self.latitude = theGeoCode.lat
-                    self.longitude = theGeoCode.lng
+                    print("b")
+                    self.latitude = theGeoCode.lng ?? -73.972
+                    self.longitude = theGeoCode.lat ?? 40.668
+                    print(self.latitude)
                 }
             }
         }
@@ -146,7 +153,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     }
     
     private func loadData() {
-        Trail.getTrails(lat: 40.668, long: -73.9738) { (result) in
+        Trail.getTrails(lat: longitude, long: latitude) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
