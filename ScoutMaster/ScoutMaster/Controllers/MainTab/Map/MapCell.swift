@@ -54,16 +54,11 @@ class MapCell: UICollectionViewCell {
     func setIconForIndex(index: Int) {
         switch index {
         case 0:
-            self.iconImage.image = UIImage(systemName: "plus.circle")
-        case 1:
             self.iconImage.image = UIImage(systemName: "mappin.circle")
+        case 1:
+            self.iconImage.image = UIImage(systemName: "thermometer.sun")
         case 2:
-        self.iconImage.image = UIImage(systemName: "thermometer.sun")
-        case 3:
         self.iconImage.image = UIImage(systemName: "staroflife")
-        case 4:
-        self.iconImage.image = UIImage(systemName: "map")
-        
         default:
             self.iconImage.image = nil
         }

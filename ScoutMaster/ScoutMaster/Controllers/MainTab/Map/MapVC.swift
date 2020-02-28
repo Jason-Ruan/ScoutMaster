@@ -1,9 +1,7 @@
 import UIKit
 import Mapbox
 
-class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
- 
-    
+class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, AddPointViewDelegate {
     
    //MARK: Variables
     
@@ -28,17 +26,18 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         return button
     }()
     
+    lazy var addAnnotationButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
+        button.layer.cornerRadius = 25
+        button.tintColor = .white
+        button.setBackgroundImage(UIImage(systemName: "plus.circle"), for: .normal)
+        button.addTarget(self, action: #selector(showAddAnotationPopUp(sender:)), for: .touchUpInside)
+        return button
+    }()
+    
     
     var mapView = MapSettings.customMap
-    
-//    lazy var mapView: MGLMapView = {
-//        let mv = MGLMapView(frame: view.bounds)
-//        mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        mv.styleURL = MGLStyle.lightStyleURL
-//        mv.userTrackingMode = .followWithHeading
-//        return mv
-//    }()
-
 
     var newCoords: [(Double,Double)]! {
         didSet {
@@ -49,8 +48,9 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         }
     }
     
-    var addPopUp: UIView = {
+    lazy var addPopUp: AddPointView = {
         let popUp = AddPointView()
+        popUp.delegate = self as? AddPointViewDelegate
         return popUp
     }()
     
@@ -68,6 +68,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         constrainMap()
         constrainCV()
         constrainLocationButton()
+        constrainAddAnnotationButton()
         constrainAddPopUp()
         
     }
@@ -84,14 +85,23 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             locationButton.heightAnchor.constraint(equalToConstant: 50),
             locationButton.widthAnchor.constraint(equalToConstant: 50)])
     }
+    func constrainAddAnnotationButton(){
+        view.addSubview(addAnnotationButton)
+        addAnnotationButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            addAnnotationButton.topAnchor.constraint(equalTo: locationButton.bottomAnchor, constant: 10),
+            addAnnotationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
+            addAnnotationButton.heightAnchor.constraint(equalToConstant: 50),
+            addAnnotationButton.widthAnchor.constraint(equalToConstant: 50)])
+    }
     
     func constrainCV(){
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
             collectionView.heightAnchor.constraint(equalToConstant: 100)])
     
     }
@@ -127,31 +137,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }()
     
     
-   func showAddAnotationPopUp(popUp: UIView){
-    guard let popUp = popUp as? AddPointView else { return }
-    switch popUp.shown {
-        case false:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = false
-                self.showPopUpTopAnchorConstraint.isActive = true
-                self.view.layoutIfNeeded()
-                popUp.shown = true
-            }
-            
-        case true:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = true
-                self.showPopUpTopAnchorConstraint.isActive = false
-                self.view.layoutIfNeeded()
-                popUp.shown = false
-
-            }
-
-        }
-        
-    }
-    
-    
     
     
     //MARK: UI Methods
@@ -169,7 +154,36 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
 
     
     //MARK: Private Methods
+    func dismissAddPointView() {
+    switchAnimationAddPopUp()
+    }
     
+    @objc func showAddAnotationPopUp(sender: UIButton){
+   switchAnimationAddPopUp()
+        
+    }
+    
+    private func switchAnimationAddPopUp(){
+    switch addPopUp.shown {
+           case false:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = false
+                   self.showPopUpTopAnchorConstraint.isActive = true
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = true
+               }
+               
+           case true:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = true
+                   self.showPopUpTopAnchorConstraint.isActive = false
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = false
+
+               }
+
+           }
+    }
     @objc func locationButtonTapped(sender: UIButton) {
     var mode: MGLUserTrackingMode
     switch (mapView.userTrackingMode) {
@@ -187,6 +201,8 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     mapView.userTrackingMode = mode
     mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
     }
+    
+    
     
     private func getCoordinates(data: Data){
         do {
@@ -252,7 +268,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     //MARK: CV Delegate Methods
     
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 5
+         return 3
      }
      
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -267,19 +283,10 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let tag = indexPath.row
-        switch tag {
-        case 0:
-        showAddAnotationPopUp(popUp: addPopUp)
-        case 4:
-        present(MapSettings.toggleMapStyle(), animated: true)
-        default:
-            return
-        }
-        
-        
-        
+    
     }
+    
+   
     
 
     //MARK: MV Delegate Methods
@@ -314,6 +321,10 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     func mapView(_ mapView: MGLMapView, didChange mode: MGLUserTrackingMode, animated: Bool) {
+    
+    }
+    
+    func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         setLocationTint()
     }
 

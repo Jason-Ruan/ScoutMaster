@@ -7,9 +7,17 @@
 //
 import UIKit
 
+
+protocol AddPointViewDelegate: AnyObject {
+    func dismissAddPointView()
+    
+}
+
 class AddPointView: UIView {
     
     var shown = true
+    
+    weak var delegate: AddPointViewDelegate?
     
     lazy var titleField: UITextField = {
         var tf = UITextField()
@@ -24,6 +32,21 @@ class AddPointView: UIView {
            tf.placeholder = "Add Title for Annotation"
            return tf
        }()
+    
+    lazy var cancelButton: UIButton = {
+        var button = UIButton()
+        button.setBackgroundImage(UIImage(systemName: "xmark.circle"), for: .normal)
+        button.showsTouchWhenHighlighted = true
+        button.addTarget(self, action: #selector(cancelTouched(sender:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func cancelTouched(sender: UIButton) {
+        titleField.text = nil
+        descField.text = nil
+        print("getting here")
+        delegate?.dismissAddPointView()
+}
     
     //initWithFrame to init view from code
       override init(frame: CGRect) {
@@ -40,6 +63,7 @@ class AddPointView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = 50
         constrainTitleField()
+        constrainCancelButton()
     
     }
     
@@ -62,6 +86,16 @@ class AddPointView: UIView {
             titleField.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
             titleField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             titleField.trailingAnchor.constraint(equalTo: self.trailingAnchor)])
+    }
+    
+    func constrainCancelButton(){
+        self.addSubview(cancelButton)
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cancelButton.heightAnchor.constraint(equalToConstant: 30),
+            cancelButton.widthAnchor.constraint(equalToConstant: 30),
+            cancelButton.trailingAnchor.constraint(equalTo: titleField.trailingAnchor, constant: -10),
+            cancelButton.bottomAnchor.constraint(equalTo: titleField.topAnchor, constant: -3)])
     }
     
     

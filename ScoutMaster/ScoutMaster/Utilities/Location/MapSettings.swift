@@ -9,6 +9,8 @@
 import Foundation
 import Mapbox
 
+
+
 class MapSettings {
     
     //add mapview as property to not call mapview as a parameter on each function
