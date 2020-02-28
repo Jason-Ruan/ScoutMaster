@@ -8,6 +8,7 @@
 
 import UIKit
 import Mapbox
+import Reachability
 
 class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
@@ -59,9 +60,11 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         mv.delegate = self
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mv.styleURL = MGLStyle.darkStyleURL
-        if let trail = self.trail {
-            mv.setCenter(CLLocationCoordinate2D(latitude: 40.8720442, longitude: -73.9256923), zoomLevel: 14, animated: false)
+        if let trail = self.trail, let latitude = mv.userLocation?.coordinate.latitude, let longitude = mv.userLocation?.coordinate.longitude {
+            mv.setCenter(CLLocationCoordinate2D(latitude: latitude, longitude: longitude), zoomLevel: 14, animated: false)
         }
+        mv.showsUserLocation = true
+        mv.userTrackingMode = .followWithHeading
         return mv
     }()
     
@@ -136,12 +139,17 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     var scrollView: UIScrollView!
     
+    var userTraversedCoordinates: [CLLocationCoordinate2D] = []
+    
+    let reachability = try? Reachability()
+    
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setUpViews()
-        drawTrailPolyline()
+        //        drawTrailPolyline()
+        startReachability()
     }
     
     
@@ -151,7 +159,7 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         DispatchQueue.main.async {
             WeatherForecast.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
                 switch result {
-                case .success(let _):
+                case .success:
                     print("got weather")
                 case .failure(let error):
                     print(error)
@@ -250,6 +258,38 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         
     }
     
+    func startReachability() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        do{
+            guard let reachability = self.reachability else { return }
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+    }
+    
+    @objc func reachabilityChanged(note: Notification) {
+        
+        let reachability = note.object as! Reachability
+        
+        switch reachability.connection {
+        case .wifi:
+            showAlertController(message: "Reachable via WiFi")
+        case .cellular:
+            showAlertController(message: "Reachable via Cellular")
+        case .unavailable:
+            showAlertController(message: "Network not reachable")
+        default:
+            showAlertController(message: "Network status unknown")
+        }
+    }
+    
+    func stopReachability() {
+        guard let reachability = self.reachability else { return }
+        reachability.stopNotifier()
+        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
+    }
+    
 }
 
 
@@ -273,36 +313,11 @@ extension MapboxTestVC: MGLMapViewDelegate {
     
     
     func drawTrailPolyline() {
-        // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        DispatchQueue.global(qos: .background).async(execute: {
-            // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "blue-trail", ofType: "geojson")
-            let url = URL(fileURLWithPath: jsonPath!)
-            
-            do {
-                // Convert the file contents to a shape collection feature object
-                let data = try Data(contentsOf: url)
-                self.getCoordinates(data: data)
-                guard let shapeCollectionFeature = try MGLShape(data: data, encoding: String.Encoding.utf8.rawValue) as? MGLShapeCollectionFeature else {
-                    fatalError("Could not cast to specified MGLShapeCollectionFeature")
-                }
-                
-                if let polyline = shapeCollectionFeature.shapes.first as? MGLPolylineFeature {
-                    // Optionally set the title of the polyline, which can be used for:
-                    //  - Callout view
-                    //  - Object identification
-                    polyline.title = polyline.attributes["name"] as? String
-                    // Add the annotation on the main thread
-                    DispatchQueue.main.async(execute: {
-                        // Unowned reference to self to prevent retain cycle
-                        [unowned self] in
-                        self.mapView.addAnnotation(polyline)
-                    })
-                }
-                
-            } catch {
-                print("GeoJSON parsing failed")
-            }})
+        let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(polyline)
+        }
+        
     }
     
     //MARK: - MV Delegates
@@ -343,4 +358,26 @@ extension MapboxTestVC: MGLMapViewDelegate {
         return true
     }
     
+    func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
+        
+        if let userCoord = userLocation?.coordinate {
+            self.userTraversedCoordinates.append(userCoord)
+        }
+        
+        if self.userTraversedCoordinates.count >= 2 {
+            drawTrailPolyline()
+        }
+        
+    }
+
+    
+}
+
+
+extension MapboxTestVC {
+    func showAlertController(message: String) {
+        let alertController = UIAlertController(title: "Network Status Changed", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
 }
