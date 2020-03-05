@@ -58,7 +58,7 @@ class MapSettings {
     actionSheet.addAction(cancel)
         
     return actionSheet
-}
+    }
  
     
 

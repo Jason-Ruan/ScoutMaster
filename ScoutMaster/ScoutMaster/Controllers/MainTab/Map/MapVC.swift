@@ -1,9 +1,11 @@
 import UIKit
 import Mapbox
+import MapboxAnnotationExtension
 
 class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, AddPointViewDelegate {
     
-   //MARK: Variables
+    
+    //MARK: Variables
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,8 +39,19 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }()
     
     
+    lazy var recordTrailButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 25
+        button.backgroundColor = .systemRed
+        button.tintColor = .white
+        button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
+        return button
+    }()
+    
+    
     var mapView = MapSettings.customMap
-
+    
+    
     var newCoords: [(Double,Double)]! {
         didSet {
             print(newCoords!)
@@ -50,11 +63,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     lazy var addPopUp: AddPointView = {
         let popUp = AddPointView()
-        popUp.delegate = self as? AddPointViewDelegate
+        popUp.delegate = self
         return popUp
     }()
     
     var coordinates = [CLLocationCoordinate2D]()
+    
+    var pointsOfInterest = [CLLocationCoordinate2D]()
     
     
     //MARK: Lifecycle
@@ -69,8 +84,9 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         constrainCV()
         constrainLocationButton()
         constrainAddAnnotationButton()
+        constrainRecordTrailButton()
         constrainAddPopUp()
-        
+        //        circleAnnotationController = MGLCircleAnnotationController.init(mapView: self.mapView)
     }
     
     //MARK: Constraint Methods
@@ -95,6 +111,16 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             addAnnotationButton.widthAnchor.constraint(equalToConstant: 50)])
     }
     
+    func constrainRecordTrailButton(){
+        view.addSubview(recordTrailButton)
+        recordTrailButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            recordTrailButton.topAnchor.constraint(equalTo: addAnnotationButton.bottomAnchor, constant: 10),
+            recordTrailButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
+            recordTrailButton.heightAnchor.constraint(equalToConstant: 50),
+            recordTrailButton.widthAnchor.constraint(equalToConstant: 50)])
+    }
+    
     func constrainCV(){
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,29 +129,29 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
             collectionView.heightAnchor.constraint(equalToConstant: 100)])
-    
+        
     }
     
     func constrainMap(){
-           view.addSubview(mapView)
-           mapView.translatesAutoresizingMaskIntoConstraints = false
-           NSLayoutConstraint.activate([
+        view.addSubview(mapView)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 30),
-               mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-               mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-               mapView.topAnchor.constraint(equalTo: view.topAnchor),
-               mapView.widthAnchor.constraint(equalTo: view.widthAnchor)])
-       
-       }
+            mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapView.widthAnchor.constraint(equalTo: view.widthAnchor)])
+        
+    }
     
     func constrainAddPopUp(){
         view.addSubview(addPopUp)
         addPopUp.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-        addPopUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        hidePopUpTopAnchorConstraint,
-        addPopUp.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
-        addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
+            addPopUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hidePopUpTopAnchorConstraint,
+            addPopUp.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
+            addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
     }
     
     lazy var hidePopUpTopAnchorConstraint: NSLayoutConstraint = {
@@ -137,69 +163,53 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }()
     
     
-    
-    
-    //MARK: UI Methods
-    
-    func setLocationTint(){
-        let center = mapView.centerCoordinate
-        let user = mapView.userLocation!.coordinate
-        if center.latitude == user.latitude && center.longitude == user.longitude {
-            locationButton.alpha = 1
-        } else {
-            locationButton.alpha = 0.3
-   
-    }
-    }
-
-    
     //MARK: Private Methods
     func dismissAddPointView() {
-    switchAnimationAddPopUp()
+        switchAnimationAddPopUp()
     }
     
     @objc func showAddAnotationPopUp(sender: UIButton){
-   switchAnimationAddPopUp()
+        switchAnimationAddPopUp()
         
     }
     
     private func switchAnimationAddPopUp(){
-    switch addPopUp.shown {
-           case false:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = false
-                   self.showPopUpTopAnchorConstraint.isActive = true
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = true
-               }
-               
-           case true:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = true
-                   self.showPopUpTopAnchorConstraint.isActive = false
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = false
-
-               }
-
-           }
+        switch addPopUp.shown {
+        case false:
+            UIView.animate(withDuration: 0.3) {
+                self.hidePopUpTopAnchorConstraint.isActive = false
+                self.showPopUpTopAnchorConstraint.isActive = true
+                self.view.layoutIfNeeded()
+                self.addPopUp.shown = true
+            }
+            
+        case true:
+            UIView.animate(withDuration: 0.3) {
+                self.hidePopUpTopAnchorConstraint.isActive = true
+                self.showPopUpTopAnchorConstraint.isActive = false
+                self.view.layoutIfNeeded()
+                self.addPopUp.shown = false
+                
+            }
+            
+        }
     }
     @objc func locationButtonTapped(sender: UIButton) {
-    var mode: MGLUserTrackingMode
-    switch (mapView.userTrackingMode) {
-    case .none:
-    mode = .follow
-    case .follow:
-    mode = .followWithHeading
-    case .followWithHeading:
-    mode = .followWithCourse
-    case .followWithCourse:
-    mode = .none
-    @unknown default:
-    fatalError("Unknown user tracking mode")
-    }
-    mapView.userTrackingMode = mode
-    mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
+        var mode: MGLUserTrackingMode
+        switch (mapView.userTrackingMode) {
+        case .none:
+            mode = .follow
+        case .follow:
+            mode = .followWithHeading
+        case .followWithHeading:
+            mode = .followWithCourse
+        case .followWithCourse:
+            mode = .none
+        @unknown default:
+            fatalError("Unknown user tracking mode")
+        }
+        mapView.userTrackingMode = mode
+        mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
     }
     
     
@@ -208,31 +218,39 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         do {
             var coords = [(Double,Double)]()
             let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
-                     for i in rawCoords {
-                             coords.append((i[1],i[0]))
-                         
-                     }
-                     newCoords = coords
-                     print("got coordinates")
-}
+            for i in rawCoords {
+                coords.append((i[1],i[0]))
+                
+            }
+            newCoords = coords
+            print("got coordinates")
+        }
         catch {
             print("error, could not decode geoJSON")
         }
     }
     
     
-   
+    func addPointOfInterest() {
+        let point = MGLPointAnnotation()
+        point.coordinate = mapView.userLocation!.coordinate
+        point.title = addPopUp.titleField.text
+        pointsOfInterest.append(point.coordinate)
+        mapView.addAnnotation(point)
+    }
     
-
+    
+    
+    
     //MARK: Visual Map Data
     func drawTrailPolyline() {
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
-
+        
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
             let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
             let url = URL(fileURLWithPath: jsonPath!)
-
+            
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)
@@ -240,7 +258,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                 guard let shapeCollectionFeature = try MGLShape(data: data, encoding: String.Encoding.utf8.rawValue) as? MGLShapeCollectionFeature else {
                     fatalError("Could not cast to specified MGLShapeCollectionFeature")
                 }
-
+                
                 if let polyline = shapeCollectionFeature.shapes.first as? MGLPolylineFeature {
                     // Optionally set the title of the polyline, which can be used for:
                     //  - Callout view
@@ -259,23 +277,23 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             } catch {
                 print("GeoJSON parsing failed")
             }
-
+            
         })
-
+        
     }
     
     
     //MARK: CV Delegate Methods
     
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return 3
-     }
-     
-     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mapCell", for: indexPath) as? MapCell else { return UICollectionViewCell() }
         cell.setIconForIndex(index: indexPath.row)
         return cell
-     }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 70, height: 70)
@@ -283,53 +301,56 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
+        
     }
     
-   
     
-
+    
+    
     //MARK: MV Delegate Methods
     
-    func mapView(_ mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
-        return 0.8
-    }
-
+    
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         // Set the line width for polyline annotations
         return 4.0
     }
-
+    
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
-
-        // Give our polyline a unique color by checking for its `title` property
-        if annotation is MGLPolyline {
-            switch annotation.title {
-            case "Blue Trail":
-                return .systemBlue
-            case "Prospect Park Trail Loop":
-                return .systemOrange
-            default:
-                return .white
+        return .systemBlue
+    }
+    
+    
+    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
+    }
+    
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        // Assign a reuse identifier to be used by both of the annotation views, taking advantage of their similarities.
+        let reuseIdentifier = "reusableDotView"
+        // For better performance, always try to reuse existing annotations.
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        
+        // If there’s no reusable annotation view available, initialize a new one.
+        if annotationView == nil {
+            annotationView = MGLAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            annotationView?.layer.cornerRadius = (annotationView?.frame.size.width)! / 2
+            annotationView?.layer.borderWidth = 4.0
+            annotationView?.layer.borderColor = UIColor.white.cgColor
+            annotationView!.backgroundColor = UIColor(red: 0.03, green: 0.80, blue: 0.69, alpha: 1.0)
         }
-}
-        return .white
-}
+        
+        return annotationView
+    }
+    
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-    return true
+        return true
     }
     
-    func mapView(_ mapView: MGLMapView, didChange mode: MGLUserTrackingMode, animated: Bool) {
     
-    }
     
-    func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
-        setLocationTint()
-    }
-
     
-   
     
     
 }

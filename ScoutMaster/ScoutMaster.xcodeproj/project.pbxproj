@@ -34,6 +34,7 @@
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
 		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
 		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
+		3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */; };
 		3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */; };
 		3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
@@ -109,6 +110,7 @@
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "blue-trail.geojson"; sourceTree = "<group>"; };
+		3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPoint.swift; sourceTree = "<group>"; };
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 		3A999E0523DF5D36008DBC60 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				3ACBC603240EF10600A7E7C5 /* Persistence */,
 				3A00771123F635DD00FE1CE6 /* UI Extensions */,
 				52B152DC23E0C9A8007C9BF6 /* API */,
 				52B152D923E0C97E007C9BF6 /* Firebase */,
@@ -365,6 +368,14 @@
 				3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */,
 			);
 			path = Location;
+			sourceTree = "<group>";
+		};
+		3ACBC603240EF10600A7E7C5 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		4E6610D423E3739B00846CB4 /* Firebase */ = {
@@ -716,6 +727,7 @@
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				080E1C9B23E4734500EF94A6 /* (null) in Sources */,
 				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
+				3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */,
 				3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */,
 				080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */,
 			);
