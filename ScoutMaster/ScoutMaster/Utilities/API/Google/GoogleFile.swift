@@ -30,11 +30,14 @@ struct Location: Codable {
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
+                print("c")
                 completionHandler(.failure(error))
+                
             case .success(let data):
+                print("d")
                 do {
-                    let geoCode = try JSONDecoder().decode(Location.self, from: data)
-                    completionHandler(.success(geoCode))
+                    let geoCode = try JSONDecoder().decode(Outside.self, from: data)
+                    completionHandler(.success(geoCode.results[0].geometry.location))
                 } catch let error {
                     print(error)
                     completionHandler(.failure(.badJSONError))                }

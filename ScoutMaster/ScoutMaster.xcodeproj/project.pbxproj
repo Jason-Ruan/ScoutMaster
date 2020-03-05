@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05DF1D996894DBE6E00321B5 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
-		080E1C9B23E4734500EF94A6 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		080E1C9B23E4734500EF94A6 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		0D965CB6B3A011C0B1E1BEC6 /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */; };
 		3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */; };
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
 		3A00771323F635F600FE1CE6 /* SoftEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A00771223F635F600FE1CE6 /* SoftEffect.swift */; };
@@ -33,7 +33,6 @@
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
 		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
 		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
-		3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 		4E1CD8AC23FC9EA000724918 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1CD8AB23FC9EA000724918 /* Secrets.swift */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
@@ -56,7 +55,8 @@
 		52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */; };
 		52B152F423E3936B007C9BF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B152F323E3936B007C9BF6 /* GoogleService-Info.plist */; };
 		52B152F523E3937F007C9BF6 /* ScoutMasterUITests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DD223DF58AE008DBC60 /* ScoutMasterUITests.xctest */; };
-		7203AAF63B8D66EF26731238 /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */; };
+		6446E3CD422B5D26FDF55849 /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7E4F0D33D850CE5ED6BBD1 /* Pods_ScoutMaster.framework */; };
+		9F58CC40489E5E3F38736F9D /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3321CC94AFFA3AA928AEB5 /* Pods_ScoutMaster_ScoutMasterUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,9 +77,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01A5028CDEC1704483C0073E /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
-		13A34422FE0BAB1A2892F98C /* Pods-ScoutMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.debug.xcconfig"; sourceTree = "<group>"; };
+		1B33429CD402F55EAA5FEC22 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		3A00771223F635F600FE1CE6 /* SoftEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftEffect.swift; sourceTree = "<group>"; };
@@ -120,6 +119,7 @@
 		4EA3D3C123F30DF000501EB3 /* FaveHikeCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaveHikeCVC.swift; sourceTree = "<group>"; };
 		4EB921E023E8895E0013B245 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		4EB921E223E88A9C0013B245 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		4F3321CC94AFFA3AA928AEB5 /* Pods_ScoutMaster_ScoutMasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster_ScoutMasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		523BE1CD23F3401F006761A6 /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
 		523D98B823F5BB76007EF639 /* GoogleFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleFile.swift; sourceTree = "<group>"; };
 		5267F35A23E4D10800B7ACA0 /* TrailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailCell.swift; sourceTree = "<group>"; };
@@ -130,13 +130,13 @@
 		52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyFile.swift; sourceTree = "<group>"; };
 		52B152E623E0E9D8007C9BF6 /* ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		52B152F323E3936B007C9BF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster_ScoutMasterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		731255956801D36A5C2D0DD3 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BAD78B67EE959390FA025D87 /* Pods-ScoutMasterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.release.xcconfig"; sourceTree = "<group>"; };
-		DDE6B74DDA839949F9DA928E /* Pods-ScoutMasterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F1DD3175B2007CD0579A9551 /* Pods-ScoutMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.release.xcconfig"; sourceTree = "<group>"; };
-		FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63203ECFEE05AB6EC52B7996 /* Pods-ScoutMasterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMasterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89BEEEC1DEB13BC05A77021C /* Pods-ScoutMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.debug.xcconfig"; sourceTree = "<group>"; };
+		98583C72840D538BA7034646 /* Pods-ScoutMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster.release.xcconfig"; sourceTree = "<group>"; };
+		AF7F5E33EB3CB052417BD65F /* Pods-ScoutMasterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMasterTests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMasterTests/Pods-ScoutMasterTests.release.xcconfig"; sourceTree = "<group>"; };
+		B3EAEC57A7610C85F802A41C /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		FA7E4F0D33D850CE5ED6BBD1 /* Pods_ScoutMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoutMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05DF1D996894DBE6E00321B5 /* Pods_ScoutMaster.framework in Frameworks */,
+				6446E3CD422B5D26FDF55849 /* Pods_ScoutMaster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7203AAF63B8D66EF26731238 /* Pods_ScoutMasterTests.framework in Frameworks */,
+				0D965CB6B3A011C0B1E1BEC6 /* Pods_ScoutMasterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EE8B9B0ECABC26C48F173D0 /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */,
+				9F58CC40489E5E3F38736F9D /* Pods_ScoutMaster_ScoutMasterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,12 +178,12 @@
 		2999A720D047E1FF4E4642E4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13A34422FE0BAB1A2892F98C /* Pods-ScoutMaster.debug.xcconfig */,
-				F1DD3175B2007CD0579A9551 /* Pods-ScoutMaster.release.xcconfig */,
-				01A5028CDEC1704483C0073E /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */,
-				731255956801D36A5C2D0DD3 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */,
-				DDE6B74DDA839949F9DA928E /* Pods-ScoutMasterTests.debug.xcconfig */,
-				BAD78B67EE959390FA025D87 /* Pods-ScoutMasterTests.release.xcconfig */,
+				89BEEEC1DEB13BC05A77021C /* Pods-ScoutMaster.debug.xcconfig */,
+				98583C72840D538BA7034646 /* Pods-ScoutMaster.release.xcconfig */,
+				B3EAEC57A7610C85F802A41C /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */,
+				1B33429CD402F55EAA5FEC22 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */,
+				63203ECFEE05AB6EC52B7996 /* Pods-ScoutMasterTests.debug.xcconfig */,
+				AF7F5E33EB3CB052417BD65F /* Pods-ScoutMasterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -204,7 +204,7 @@
 				3A999DD523DF58AE008DBC60 /* ScoutMasterUITests */,
 				3A999DAF23DF58AC008DBC60 /* Products */,
 				2999A720D047E1FF4E4642E4 /* Pods */,
-				DCE124F12CFD9147237C8D82 /* Frameworks */,
+				689ED15B92246C31FD2CDAE3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,12 +431,12 @@
 			path = DarkSky;
 			sourceTree = "<group>";
 		};
-		DCE124F12CFD9147237C8D82 /* Frameworks */ = {
+		689ED15B92246C31FD2CDAE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A38817B1C8BC15E705E6950D /* Pods_ScoutMaster.framework */,
-				6FD36AC838291A554A4C151A /* Pods_ScoutMaster_ScoutMasterUITests.framework */,
-				FAA392E12FA4CE1FD3BA6E71 /* Pods_ScoutMasterTests.framework */,
+				FA7E4F0D33D850CE5ED6BBD1 /* Pods_ScoutMaster.framework */,
+				4F3321CC94AFFA3AA928AEB5 /* Pods_ScoutMaster_ScoutMasterUITests.framework */,
+				64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -448,11 +448,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A999DDB23DF58AE008DBC60 /* Build configuration list for PBXNativeTarget "ScoutMaster" */;
 			buildPhases = (
-				BBD921487AA62F70B395D594 /* [CP] Check Pods Manifest.lock */,
+				16650EFE4BBDA78B08CED5DF /* [CP] Check Pods Manifest.lock */,
 				3A999DAA23DF58AC008DBC60 /* Sources */,
 				3A999DAB23DF58AC008DBC60 /* Frameworks */,
 				3A999DAC23DF58AC008DBC60 /* Resources */,
-				0AA178C5553C4C2364214215 /* [CP] Embed Pods Frameworks */,
+				6872482A4B22D7512D2730B3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -467,7 +467,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A999DDE23DF58AE008DBC60 /* Build configuration list for PBXNativeTarget "ScoutMasterTests" */;
 			buildPhases = (
-				1D8B931AA45745DA36117D60 /* [CP] Check Pods Manifest.lock */,
+				D0A6EBC42DC9C1578ADAB13A /* [CP] Check Pods Manifest.lock */,
 				3A999DC323DF58AE008DBC60 /* Sources */,
 				3A999DC423DF58AE008DBC60 /* Frameworks */,
 				3A999DC523DF58AE008DBC60 /* Resources */,
@@ -486,11 +486,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A999DE123DF58AE008DBC60 /* Build configuration list for PBXNativeTarget "ScoutMasterUITests" */;
 			buildPhases = (
-				09A7845886D6BD18E8ECFC1B /* [CP] Check Pods Manifest.lock */,
+				4ACAAAD0511E3817305DD29B /* [CP] Check Pods Manifest.lock */,
 				3A999DCE23DF58AE008DBC60 /* Sources */,
 				3A999DCF23DF58AE008DBC60 /* Frameworks */,
 				3A999DD023DF58AE008DBC60 /* Resources */,
-				647D24693B44FEEAA5F55E59 /* [CP] Embed Pods Frameworks */,
+				D818D20C43CB40A712C2EDCC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -577,7 +577,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		09A7845886D6BD18E8ECFC1B /* [CP] Check Pods Manifest.lock */ = {
+		16650EFE4BBDA78B08CED5DF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ScoutMaster-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4ACAAAD0511E3817305DD29B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -599,7 +621,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0AA178C5553C4C2364214215 /* [CP] Embed Pods Frameworks */ = {
+		6872482A4B22D7512D2730B3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -616,7 +638,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScoutMaster/Pods-ScoutMaster-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1D8B931AA45745DA36117D60 /* [CP] Check Pods Manifest.lock */ = {
+		D0A6EBC42DC9C1578ADAB13A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -638,7 +660,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		647D24693B44FEEAA5F55E59 /* [CP] Embed Pods Frameworks */ = {
+		D818D20C43CB40A712C2EDCC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -653,28 +675,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BBD921487AA62F70B395D594 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ScoutMaster-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -718,7 +718,7 @@
 				4E6BF24023F5F68D00C59E04 /* FavedHikes.swift in Sources */,
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				4E6BF23E23F5F57F00C59E04 /* Protocols.swift in Sources */,
-				080E1C9B23E4734500EF94A6 /* (null) in Sources */,
+				080E1C9B23E4734500EF94A6 /* BuildFile in Sources */,
 				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
 				3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */,
 				080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */,
@@ -892,7 +892,7 @@
 		};
 		3A999DDC23DF58AE008DBC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13A34422FE0BAB1A2892F98C /* Pods-ScoutMaster.debug.xcconfig */;
+			baseConfigurationReference = 89BEEEC1DEB13BC05A77021C /* Pods-ScoutMaster.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -911,7 +911,7 @@
 		};
 		3A999DDD23DF58AE008DBC60 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1DD3175B2007CD0579A9551 /* Pods-ScoutMaster.release.xcconfig */;
+			baseConfigurationReference = 98583C72840D538BA7034646 /* Pods-ScoutMaster.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -930,7 +930,7 @@
 		};
 		3A999DDF23DF58AE008DBC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DDE6B74DDA839949F9DA928E /* Pods-ScoutMasterTests.debug.xcconfig */;
+			baseConfigurationReference = 63203ECFEE05AB6EC52B7996 /* Pods-ScoutMasterTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -953,7 +953,7 @@
 		};
 		3A999DE023DF58AE008DBC60 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAD78B67EE959390FA025D87 /* Pods-ScoutMasterTests.release.xcconfig */;
+			baseConfigurationReference = AF7F5E33EB3CB052417BD65F /* Pods-ScoutMasterTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -976,7 +976,7 @@
 		};
 		3A999DE223DF58AE008DBC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A5028CDEC1704483C0073E /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */;
+			baseConfigurationReference = B3EAEC57A7610C85F802A41C /* Pods-ScoutMaster-ScoutMasterUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -997,7 +997,7 @@
 		};
 		3A999DE323DF58AE008DBC60 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 731255956801D36A5C2D0DD3 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */;
+			baseConfigurationReference = 1B33429CD402F55EAA5FEC22 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

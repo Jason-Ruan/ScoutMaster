@@ -7,8 +7,18 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             collectionView.reloadData()
         }
     }
-    var longitude: Double = 40.668
-    var latitude: Double = -73.9738
+    var longitude: Double = 40.668 {
+        didSet {
+            
+        }
+    }
+    var latitude: Double = -73.9738 {
+        didSet {
+            
+        }
+    }
+    
+    var newText = ""
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
@@ -52,10 +62,12 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return collectionView
     }()
     
-    lazy var filterLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Nearby"
-        label.font = UIFont.init(name: "Baskerville", size: 25)
+    lazy var filterLabel: UIButton = {
+        let label = UIButton()
+        label.setTitle("Nearby", for: .normal)
+//        label.font = UIFont.init(name: "Baskerville", size: 25)
+        label.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        label.setTitleColor(.black, for: .normal)
         return label
     }()
     
@@ -121,13 +133,22 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
 //    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        for char in searchItBar.text ?? "" {
+            if char == " " {
+            continue
+            }
+            newText += String(char)
+        }
         loadGeoCoordinates()
         textField.resignFirstResponder()
+        print(newText)
+        newText = ""
         return true
     }
     
     func loadGeoCoordinates() {
-        Location.getGeoCode(searchString: searchItBar.text ?? "") { (result) in
+        Location.getGeoCode(searchString: newText ) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
@@ -137,6 +158,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
                     print("b")
                     self.latitude = theGeoCode.lng ?? -73.972
                     self.longitude = theGeoCode.lat ?? 40.668
+                    self.loadData()
                     print(self.latitude)
                 }
             }
@@ -272,9 +294,48 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailVC = DetailVC()
+        let detailVC = MapboxTestVC()
         detailVC.trail = HPTrails[indexPath.row]
         present(detailVC, animated: true, completion: nil)
         
     }
+}
+
+class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource {
+    
+    var dropDownOptions = [String]()
+    var tableView = UITableView()
+    
+    
+    
+    override init(frame: CGRect) {
+    super.init(frame: frame)
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.addSubview(tableView)
+        
+        tableView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+         tableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+         tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dropDownOptions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        cell.textLabel?.text = dropDownOptions[indexPath.row]
+        return cell
+    }
+    
+    
 }
