@@ -257,6 +257,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - ReachabilitySwift (5.0.0)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -264,6 +265,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Mapbox-iOS-SDK (~> 5.6.1)
   - MapboxAnnotationExtension (= 0.0.1-beta.1)
+  - ReachabilitySwift
 
 SPEC REPOS:
   trunk:
@@ -288,6 +290,7 @@ SPEC REPOS:
     - MapboxAnnotationExtension
     - MapboxMobileEvents
     - nanopb
+    - ReachabilitySwift
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -311,7 +314,8 @@ SPEC CHECKSUMS:
   MapboxAnnotationExtension: d66de5561562c9d940153c0135725e671407b781
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
 
-PODFILE CHECKSUM: d77404414ac11d9a7bc2430bc6a3885dc88461f6
+PODFILE CHECKSUM: 99e3d1704396fad41832330b5cb55f1da7d09bf5
 
 COCOAPODS: 1.8.4
