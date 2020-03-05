@@ -56,14 +56,9 @@ class MapCell: UICollectionViewCell {
         case 0:
             self.iconImage.image = UIImage(systemName: "mappin.circle")
         case 1:
-            self.iconImage.image = UIImage(systemName: "exclamationmark.octagon")
+            self.iconImage.image = UIImage(systemName: "thermometer.sun")
         case 2:
-        self.iconImage.image = UIImage(systemName: "thermometer.sun")
-        case 3:
-        self.iconImage.image = UIImage(systemName: "map")
-        case 4:
-        self.iconImage.image = UIImage(systemName: "camp")
-        
+        self.iconImage.image = UIImage(systemName: "staroflife")
         default:
             self.iconImage.image = nil
         }
