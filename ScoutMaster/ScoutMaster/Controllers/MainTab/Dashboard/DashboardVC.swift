@@ -1,12 +1,24 @@
 import UIKit
 
-class DashboardVC: UIViewController, UISearchBarDelegate {
+class DashboardVC: UIViewController, UITextFieldDelegate {
     
     var HPTrails = [Trail]() {
         didSet {
             collectionView.reloadData()
         }
     }
+    var longitude: Double = 40.668 {
+        didSet {
+            
+        }
+    }
+    var latitude: Double = -73.9738 {
+        didSet {
+            
+        }
+    }
+    
+    var newText = ""
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
@@ -25,6 +37,8 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         searchIt.attributedPlaceholder = NSMutableAttributedString(string: "   Search...", attributes: [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor.black])
         
         searchIt.layer.cornerRadius = 25
+        //had to detail color to test to device
+        searchIt.textColor = .black
         searchIt.backgroundColor = .white
         searchIt.textAlignment = .center
         searchIt.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -34,6 +48,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         searchIt.layer.masksToBounds = false
         searchIt.autocorrectionType = .no
         //        searchIt.addSoftUIEffectForView()
+        searchIt.delegate = self
         return searchIt
     }()
     
@@ -47,10 +62,12 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         return collectionView
     }()
     
-    lazy var filterLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Nearby"
-        label.font = UIFont.init(name: "Baskerville", size: 25)
+    lazy var filterLabel: UIButton = {
+        let label = UIButton()
+        label.setTitle("Nearby", for: .normal)
+//        label.font = UIFont.init(name: "Baskerville", size: 25)
+        label.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        label.setTitleColor(.black, for: .normal)
         return label
     }()
     
@@ -108,6 +125,47 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
         
     }
     
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if string == "" {
+//            print("test")
+//        }
+//        return false
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        for char in searchItBar.text ?? "" {
+            if char == " " {
+            continue
+            }
+            newText += String(char)
+        }
+        loadGeoCoordinates()
+        textField.resignFirstResponder()
+        print(newText)
+        newText = ""
+        return true
+    }
+    
+    func loadGeoCoordinates() {
+        Location.getGeoCode(searchString: newText ) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    print("a")
+                    print(error.localizedDescription)
+                case .success(let theGeoCode):
+                    print("b")
+                    self.latitude = theGeoCode.lng ?? -73.972
+                    self.longitude = theGeoCode.lat ?? 40.668
+                    self.loadData()
+                    print(self.latitude)
+                }
+            }
+        }
+        print(searchItBar.text!)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         profileImage.layer.cornerRadius = 35
@@ -117,7 +175,7 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     }
     
     private func loadData() {
-        Trail.getTrails(lat: 40.668, long: -73.9738) { (result) in
+        Trail.getTrails(lat: longitude, long: latitude) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
@@ -236,9 +294,48 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailVC = DetailVC()
+        let detailVC = MapboxTestVC()
         detailVC.trail = HPTrails[indexPath.row]
         present(detailVC, animated: true, completion: nil)
         
     }
+}
+
+class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource {
+    
+    var dropDownOptions = [String]()
+    var tableView = UITableView()
+    
+    
+    
+    override init(frame: CGRect) {
+    super.init(frame: frame)
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.addSubview(tableView)
+        
+        tableView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+         tableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+         tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dropDownOptions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        cell.textLabel?.text = dropDownOptions[indexPath.row]
+        return cell
+    }
+    
+    
 }

@@ -8,81 +8,48 @@
 
 import Foundation
 
-// MARK: - Welcome
-struct Welcome: Codable {
-    let results: [Resultt]
-    let status: String
+struct Outside: Codable {
+    var results: [GeoCode]
 }
 
-// MARK: - Result
-struct Resultt: Codable {
-    let addressComponents: [AddressComponent]
-    let formattedAddress: String
-    let geometry: Geo
-    let placeID: String
-    let types: [String]
-
-    enum CodingKeys: String, CodingKey {
-        case addressComponents = "address_components"
-        case formattedAddress = "formatted_address"
-        case geometry
-        case placeID = "place_id"
-        case types
-    }
+struct GeoCode: Codable {
+    var geometry: Geo
+    
 }
 
-// MARK: - AddressComponent
-struct AddressComponent: Codable {
-    let longName, shortName: String
-    let types: [String]
-
-    enum CodingKeys: String, CodingKey {
-        case longName = "long_name"
-        case shortName = "short_name"
-        case types
-    }
-}
-
-// MARK: - Geometry
 struct Geo: Codable {
-    let bounds: Bounds
-    let location: Location
-    let locationType: String
-    let viewport: Bounds
-
-    enum CodingKeys: String, CodingKey {
-        case bounds, location
-        case locationType = "location_type"
-        case viewport
-    }
+    var location: Location
 }
 
-// MARK: - Bounds
-struct Bounds: Codable {
-    let northeast, southwest: Location
-}
-
-// MARK: - Location
 struct Location: Codable {
-    let lat, lng: Double
+    var lat: Double?
+    var lng: Double?
     
     static func getGeoCode(searchString: String, completionHandler: @escaping (Result<Location, AppError>) -> () ) {
-        let urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=new+york&key=\(Secrets.google_key)"
+        let urlStr = "https://maps.googleapis.com/maps/api/geocode/json?address=\(searchString)&key=\(Secrets.google_key)"
         NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
             switch result {
             case .failure(let error):
+                print("c")
                 completionHandler(.failure(error))
+                
             case .success(let data):
+                print("d")
                 do {
-                    let geoCode = try JSONDecoder().decode(Location.self, from: data)
-                    completionHandler(.success(geoCode))
+                    let geoCode = try JSONDecoder().decode(Outside.self, from: data)
+                    completionHandler(.success(geoCode.results[0].geometry.location))
                 } catch let error {
                     print(error)
-                    
                     completionHandler(.failure(.badJSONError))                }
             }
         }
     }
     
-    
 }
+
+
+    
+
+    
+
+
