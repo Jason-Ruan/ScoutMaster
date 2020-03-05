@@ -16,6 +16,20 @@ class FaveHikeCVC: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var userFavedTrailName: UILabel = {
+       let name = UILabel()
+        name.font = UIFont(name: "Baskerville", size: 22)
+        name.textAlignment = .left
+        name.textColor = .white
+        return name
+    }()
+    
+    lazy var infoView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .init(white: 0.3, alpha: 0.7)
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
@@ -26,25 +40,51 @@ class FaveHikeCVC: UICollectionViewCell {
     
     private func addViews(){
         contentView.addSubview(userFavedImages)
+        contentView.addSubview(infoView)
+        contentView.addSubview(userFavedTrailName)
         
     }
     
     private func addConstraints(){
         constrainImageView()
+        setInfoViewConstraints()
+        constrainName()
         
     }
     
     private func constrainImageView(){
-        userFavedImages.translatesAutoresizingMaskIntoConstraints = false
-        [userFavedImages.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
-         userFavedImages.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
-         userFavedImages.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.50),
-         userFavedImages.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -44)
-            ].forEach{$0.isActive = true}
+       self.userFavedImages.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.userFavedImages.topAnchor.constraint(equalTo: contentView.topAnchor),
+            self.userFavedImages.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            self.userFavedImages.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+        ])
     }
     
-    func configureCell(post: Post) {
-        FirebaseStorage.postManager.getImages(profileUrl: post.imageUrl!) { (result) in
+    private func setInfoViewConstraints() {
+        self.infoView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.infoView.leadingAnchor.constraint(equalTo: self.userFavedImages.leadingAnchor),
+            self.infoView.trailingAnchor.constraint(equalTo: self.userFavedImages.trailingAnchor),
+            self.infoView.heightAnchor.constraint(equalToConstant: 100),
+            self.infoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+    
+    private func constrainName() {
+        self.userFavedTrailName.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.userFavedTrailName.leadingAnchor.constraint(equalTo: self.infoView.leadingAnchor, constant: 5),
+            self.userFavedTrailName.trailingAnchor.constraint(equalTo: self.infoView.trailingAnchor, constant: -5),
+            self.userFavedTrailName.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    /*
+    func configureCell(post: FavedHikes) {
+        FirebaseStorage.postManager.getImages(profileUrl: post.img) { (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -52,7 +92,7 @@ class FaveHikeCVC: UICollectionViewCell {
                 self.userFavedImages.image = UIImage(data: imageData)
             }
         }
-        FirestoreService.manager.getUserFromPost(creatorID: post.creatorID) { (result) in
+        FirestoreService.manager.getUserFromPost(creatorID: <#T##String#>, completion: <#T##(Result<AppUser, Error>) -> ()#>) { (result) in
             DispatchQueue.main.async {
                 switch result{
                 case .failure(let error):
@@ -63,6 +103,7 @@ class FaveHikeCVC: UICollectionViewCell {
             }
         }
     }
+ */
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
