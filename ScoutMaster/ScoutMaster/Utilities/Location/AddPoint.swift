@@ -60,10 +60,10 @@ class AddPointView: UIView {
     }()
     
     @objc func submitTouched(sender: UIButton) {
-        titleField.text = nil
-        descField.text = nil
         delegate?.addPointOfInterest()
         print("submitted POI")
+        titleField.text = nil
+        descField.text = nil
         delegate?.dismissAddPointView()
     }
     

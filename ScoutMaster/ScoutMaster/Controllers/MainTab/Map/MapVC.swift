@@ -34,7 +34,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         button.layer.cornerRadius = 25
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "plus.circle"), for: .normal)
-        button.addTarget(self, action: #selector(showAddAnotationPopUp(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showAddPointView(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -48,9 +48,14 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         return button
     }()
     
+    lazy var addPopUp: AddPointView = {
+           let popUp = AddPointView()
+           popUp.delegate = self
+           return popUp
+       }()
     
+    //MARK: Map Properties
     var mapView = MapSettings.customMap
-    
     
     var newCoords: [(Double,Double)]! {
         didSet {
@@ -61,15 +66,14 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         }
     }
     
-    lazy var addPopUp: AddPointView = {
-        let popUp = AddPointView()
-        popUp.delegate = self
-        return popUp
-    }()
     
     var coordinates = [CLLocationCoordinate2D]()
     
-    var pointsOfInterest = [CLLocationCoordinate2D]()
+    var pointsOfInterest = [CLLocationCoordinate2D]() {
+        didSet {
+          
+        }
+    }
     
     
     //MARK: Lifecycle
@@ -86,7 +90,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         constrainAddAnnotationButton()
         constrainRecordTrailButton()
         constrainAddPopUp()
-        //        circleAnnotationController = MGLCircleAnnotationController.init(mapView: self.mapView)
     }
     
     //MARK: Constraint Methods
@@ -168,7 +171,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         switchAnimationAddPopUp()
     }
     
-    @objc func showAddAnotationPopUp(sender: UIButton){
+    @objc func showAddPointView(sender: UIButton){
         switchAnimationAddPopUp()
         
     }
@@ -182,18 +185,16 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                 self.view.layoutIfNeeded()
                 self.addPopUp.shown = true
             }
-            
         case true:
             UIView.animate(withDuration: 0.3) {
                 self.hidePopUpTopAnchorConstraint.isActive = true
                 self.showPopUpTopAnchorConstraint.isActive = false
                 self.view.layoutIfNeeded()
                 self.addPopUp.shown = false
-                
             }
-            
         }
     }
+    
     @objc func locationButtonTapped(sender: UIButton) {
         var mode: MGLUserTrackingMode
         switch (mapView.userTrackingMode) {
@@ -212,15 +213,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
     }
     
-    
-    
+
     private func getCoordinates(data: Data){
         do {
             var coords = [(Double,Double)]()
             let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
             for i in rawCoords {
                 coords.append((i[1],i[0]))
-                
             }
             newCoords = coords
             print("got coordinates")
@@ -229,8 +228,12 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             print("error, could not decode geoJSON")
         }
     }
+
     
     
+    
+    
+    //MARK: Visual Map Data
     func addPointOfInterest() {
         let point = MGLPointAnnotation()
         point.coordinate = mapView.userLocation!.coordinate
@@ -239,13 +242,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         mapView.addAnnotation(point)
     }
     
-    
-    
-    
-    //MARK: Visual Map Data
     func drawTrailPolyline() {
-        // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
             let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
@@ -261,8 +258,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                 
                 if let polyline = shapeCollectionFeature.shapes.first as? MGLPolylineFeature {
                     // Optionally set the title of the polyline, which can be used for:
-                    //  - Callout view
-                    //  - Object identification
                     polyline.title = polyline.attributes["name"] as? String
                     // Add the annotation on the main thread
                     DispatchQueue.main.async(execute: {
@@ -272,8 +267,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                     })
                     
                 }
-                
-                
             } catch {
                 print("GeoJSON parsing failed")
             }
@@ -308,10 +301,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
     //MARK: MV Delegate Methods
-    
-    
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
-        // Set the line width for polyline annotations
         return 4.0
     }
     
@@ -325,12 +315,8 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        // Assign a reuse identifier to be used by both of the annotation views, taking advantage of their similarities.
         let reuseIdentifier = "reusableDotView"
-        // For better performance, always try to reuse existing annotations.
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
-        // If there’s no reusable annotation view available, initialize a new one.
         if annotationView == nil {
             annotationView = MGLAnnotationView(reuseIdentifier: reuseIdentifier)
             annotationView?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
