@@ -2,10 +2,10 @@ import UIKit
 import Mapbox
 import MapboxAnnotationExtension
 
-class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, AddPointViewDelegate {
+class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AddPointViewDelegate {
     
     
-    //MARK: Variables
+    //MARK: UI Variables
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,7 +34,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         button.layer.cornerRadius = 25
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "plus.circle"), for: .normal)
-        button.addTarget(self, action: #selector(showAddAnotationPopUp(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showAddPointView(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -42,15 +42,28 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     lazy var recordTrailButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 25
-        button.backgroundColor = .systemRed
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
+        button.addTarget(self, action: #selector(recordTrailPrompt(button:)), for: .touchUpInside)
         return button
     }()
     
+    lazy var addPopUp: AddPointView = {
+           let popUp = AddPointView()
+           popUp.delegate = self
+           return popUp
+       }()
+    
+    
+    //MARK: Properties
+    var trail: Trail? {
+        didSet{
+            drawTrailPolyline()
+        }
+    }
     
     var mapView = MapSettings.customMap
-    
     
     var newCoords: [(Double,Double)]! {
         didSet {
@@ -61,37 +74,46 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         }
     }
     
-    lazy var addPopUp: AddPointView = {
-        let popUp = AddPointView()
-        popUp.delegate = self
-        return popUp
-    }()
-    
     var coordinates = [CLLocationCoordinate2D]()
     
-    var pointsOfInterest = [CLLocationCoordinate2D]()
+    var userTraversedCoordinates: [CLLocationCoordinate2D] = []
+    
+    var pointsOfInterest = [PointOfInterest]() {
+        didSet {
+            self.pointsOfInterest.forEach { (point) in
+                let poi = MGLPointAnnotation()
+                poi.coordinate = CLLocationCoordinate2D(latitude: point.lat, longitude: point.long)
+                poi.title = point.title
+                mapView.addAnnotation(poi)
+                POIAnnotations.append(poi)
+            }
+        }
+    }
+    
+    var POIAnnotations = [MGLAnnotation]()
+    
+    var POIShown = true
+    
+    var recordingStatus = false
     
     
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
-        drawTrailPolyline()
         constrainMap()
         constrainCV()
         constrainLocationButton()
         constrainAddAnnotationButton()
         constrainRecordTrailButton()
         constrainAddPopUp()
-        //        circleAnnotationController = MGLCircleAnnotationController.init(mapView: self.mapView)
+        getPointsOfInterest()
     }
     
     //MARK: Constraint Methods
-    
-    
     func constrainLocationButton(){
         view.addSubview(locationButton)
         locationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -164,36 +186,123 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
     //MARK: Private Methods
-    func dismissAddPointView() {
-        switchAnimationAddPopUp()
+    
+    private func getCoordinatesFromJSON(data: Data){
+           do {
+               var coords = [(Double,Double)]()
+               let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
+               for i in rawCoords {
+                   coords.append((i[1],i[0]))
+               }
+               newCoords = coords
+               print("got coordinates")
+           }
+           catch {
+               print("error, could not decode geoJSON")
+           }
+       }
+    func showAlertController(title: String?, message: String?, actions: [UIAlertAction]) -> UIAlertController {
+        let alertController = UIAlertController(title: title , message: message, preferredStyle: .alert)
+        actions.forEach { (action) in
+            alertController.addAction(action)
+        }
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        return alertController
     }
     
-    @objc func showAddAnotationPopUp(sender: UIButton){
-        switchAnimationAddPopUp()
-        
-    }
     
-    private func switchAnimationAddPopUp(){
-        switch addPopUp.shown {
+    //MARK: Trail Recording Methods
+    @objc func recordTrailPrompt(button: UIButton){
+        switch recordingStatus {
         case false:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = false
-                self.showPopUpTopAnchorConstraint.isActive = true
-                self.view.layoutIfNeeded()
-                self.addPopUp.shown = true
-            }
+            let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
+            //record trail method goes here
+                self.recordingStatus = true
+            })
+            let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
+            present(alertController, animated: true, completion: nil)
             
         case true:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = true
-                self.showPopUpTopAnchorConstraint.isActive = false
-                self.view.layoutIfNeeded()
-                self.addPopUp.shown = false
-                
+            print("stop recording prompt goes here")
+            let action = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+                //save or discard trail here, add images, title , description then persist
+                //maybe a custom uiview to add these properties visually
+                self.recordingStatus = false
             }
-            
+            let alertController = showAlertController(title: "End Recording?", message: nil, actions: [action])
+            present(alertController,animated: true)
+        }
+           
+    }
+    
+    
+    //MARK: Points Of Interest Methods
+    private func getPointsOfInterest() {
+        var poi = [PointOfInterest]()
+        do {
+            try poi = POIPersistenceHelper.manager.getItems()
+        } catch {
+            print("unable to fetch points of interest")
+        }
+        self.pointsOfInterest = poi
+    }
+    
+    private func hidePointsOfInterest(){
+        guard mapView.annotations != nil else { return }
+        mapView.removeAnnotations(POIAnnotations)
+    }
+    
+    private func togglePOI(){
+        switch POIShown {
+        case true:
+            hidePointsOfInterest()
+            POIShown = false
+        case false:
+            getPointsOfInterest()
+            POIShown = true
         }
     }
+    
+    func addPointOfInterest() {
+        let current = mapView.userLocation!.coordinate
+        do {
+            try POIPersistenceHelper.manager.save(newItem: PointOfInterest(lat: Double(current.latitude), long: Double(current.longitude), type: "Default", title: addPopUp.titleField.text ?? "", desc: addPopUp.descField.text ?? ""))
+        } catch {
+            print("error, could not save POI")
+        }
+      
+    }
+    
+    func dismissAddPointView() {
+           switchAnimationAddPopUp()
+       }
+       
+       @objc func showAddPointView(sender: UIButton){
+           switchAnimationAddPopUp()
+           
+       }
+       
+       private func switchAnimationAddPopUp(){
+           switch addPopUp.shown {
+           case false:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = false
+                   self.showPopUpTopAnchorConstraint.isActive = true
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = true
+               }
+           case true:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = true
+                   self.showPopUpTopAnchorConstraint.isActive = false
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = false
+               }
+           }
+       }
+
+    //MARK: Visual Map Methods
+    
     @objc func locationButtonTapped(sender: UIButton) {
         var mode: MGLUserTrackingMode
         switch (mapView.userTrackingMode) {
@@ -212,40 +321,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
     }
     
-    
-    
-    private func getCoordinates(data: Data){
-        do {
-            var coords = [(Double,Double)]()
-            let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
-            for i in rawCoords {
-                coords.append((i[1],i[0]))
-                
-            }
-            newCoords = coords
-            print("got coordinates")
-        }
-        catch {
-            print("error, could not decode geoJSON")
-        }
-    }
-    
-    
-    func addPointOfInterest() {
-        let point = MGLPointAnnotation()
-        point.coordinate = mapView.userLocation!.coordinate
-        point.title = addPopUp.titleField.text
-        pointsOfInterest.append(point.coordinate)
-        mapView.addAnnotation(point)
-    }
-    
-    
-    
-    
-    //MARK: Visual Map Data
     func drawTrailPolyline() {
-        // Parsing GeoJSON can be CPU intensive, do it on a background thread
-        
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
             let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
@@ -254,15 +330,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)
-                self.getCoordinates(data: data)
+                self.getCoordinatesFromJSON(data: data)
                 guard let shapeCollectionFeature = try MGLShape(data: data, encoding: String.Encoding.utf8.rawValue) as? MGLShapeCollectionFeature else {
                     fatalError("Could not cast to specified MGLShapeCollectionFeature")
                 }
                 
                 if let polyline = shapeCollectionFeature.shapes.first as? MGLPolylineFeature {
                     // Optionally set the title of the polyline, which can be used for:
-                    //  - Callout view
-                    //  - Object identification
                     polyline.title = polyline.attributes["name"] as? String
                     // Add the annotation on the main thread
                     DispatchQueue.main.async(execute: {
@@ -272,8 +346,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                     })
                     
                 }
-                
-                
             } catch {
                 print("GeoJSON parsing failed")
             }
@@ -282,9 +354,18 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         
     }
     
+    func drawUserTrailPolyline() {
+    let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
+        polyline.title = "user"
+    DispatchQueue.main.async {
+        self.mapView.addAnnotation(polyline)
+    }
+    }
     
+}
     //MARK: CV Delegate Methods
-    
+
+extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
@@ -301,22 +382,33 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        switch indexPath.row {
+        case 0:
+        print("poi toggled")
+        self.togglePOI()
+        default:
+            return
+        }
     }
+}
     
     
     
     
     //MARK: MV Delegate Methods
-    
-    
+extension MapVC: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
-        // Set the line width for polyline annotations
         return 4.0
     }
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
-        return .systemBlue
+        switch annotation.title {
+        case "user":
+            return .systemGreen
+        default:
+           return .systemBlue
+        }
+       
     }
     
     
@@ -325,17 +417,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        // Assign a reuse identifier to be used by both of the annotation views, taking advantage of their similarities.
         let reuseIdentifier = "reusableDotView"
-        // For better performance, always try to reuse existing annotations.
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
-        // If there’s no reusable annotation view available, initialize a new one.
         if annotationView == nil {
             annotationView = MGLAnnotationView(reuseIdentifier: reuseIdentifier)
-            annotationView?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            annotationView?.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
             annotationView?.layer.cornerRadius = (annotationView?.frame.size.width)! / 2
-            annotationView?.layer.borderWidth = 4.0
+            annotationView?.layer.borderWidth = 2.0
             annotationView?.layer.borderColor = UIColor.white.cgColor
             annotationView!.backgroundColor = UIColor(red: 0.03, green: 0.80, blue: 0.69, alpha: 1.0)
         }
@@ -348,6 +436,15 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         return true
     }
     
+    func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
+        if let userCoord = userLocation?.coordinate {
+                   self.userTraversedCoordinates.append(userCoord)
+               }
+               
+               if self.userTraversedCoordinates.count >= 2 {
+                   drawUserTrailPolyline()
+               }
+    }
     
     
     
