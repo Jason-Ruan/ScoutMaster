@@ -87,7 +87,7 @@
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		3A00771223F635F600FE1CE6 /* SoftEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftEffect.swift; sourceTree = "<group>"; };
 		3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = prospectparkloop.geojson; sourceTree = "<group>"; };
-		3A164A912412E40800EF6A19 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../Utilities/Networking/Secrets.swift; sourceTree = "<group>"; };
+		3A164A912412E40800EF6A19 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../Secrets/Secrets.swift; sourceTree = "<group>"; };
 		3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPersistenceHelper.swift; sourceTree = "<group>"; };
 		3A164A95241689F800EF6A19 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		3A164A972416CB2700EF6A19 /* MyTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrail.swift; sourceTree = "<group>"; };
