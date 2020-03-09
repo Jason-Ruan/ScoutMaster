@@ -15,6 +15,10 @@
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
 		3A00771323F635F600FE1CE6 /* SoftEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A00771223F635F600FE1CE6 /* SoftEffect.swift */; };
 		3A00771523F6466B00FE1CE6 /* prospectparkloop.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */; };
+		3A164A922412E40800EF6A19 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A912412E40800EF6A19 /* Secrets.swift */; };
+		3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */; };
+		3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A95241689F800EF6A19 /* PointOfInterest.swift */; };
+		3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A972416CB2700EF6A19 /* MyTrail.swift */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
 		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
@@ -29,14 +33,12 @@
 		3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF323DF5B1A008DBC60 /* DetailVC.swift */; };
 		3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */; };
 		3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF823DF5B79008DBC60 /* MapVC.swift */; };
-		3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0123DF5C7B008DBC60 /* ModelOne.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
 		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
 		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
 		3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */; };
 		3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */; };
-		4E1CD8AC23FC9EA000724918 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1CD8AB23FC9EA000724918 /* Secrets.swift */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
 		4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D723E373D300846CB4 /* FirebaseService.swift */; };
 		4E6610DC23E37D3400846CB4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610DB23E37D3400846CB4 /* User.swift */; };
@@ -87,6 +89,10 @@
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		3A00771223F635F600FE1CE6 /* SoftEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftEffect.swift; sourceTree = "<group>"; };
 		3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = prospectparkloop.geojson; sourceTree = "<group>"; };
+		3A164A912412E40800EF6A19 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../Secrets/Secrets.swift; sourceTree = "<group>"; };
+		3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPersistenceHelper.swift; sourceTree = "<group>"; };
+		3A164A95241689F800EF6A19 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
+		3A164A972416CB2700EF6A19 /* MyTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrail.swift; sourceTree = "<group>"; };
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,14 +113,12 @@
 		3A999DF323DF5B1A008DBC60 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		3A999DF823DF5B79008DBC60 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		3A999E0123DF5C7B008DBC60 /* ModelOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelOne.swift; sourceTree = "<group>"; };
 		3A999E0723DF6E52008DBC60 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "blue-trail.geojson"; sourceTree = "<group>"; };
 		3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPoint.swift; sourceTree = "<group>"; };
-		4E1CD8AB23FC9EA000724918 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
 		4E6610D723E373D300846CB4 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		4E6610DB23E37D3400846CB4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -176,7 +180,7 @@
 		08CA29FD23F3049300F8DECD /* Secrets */ = {
 			isa = PBXGroup;
 			children = (
-				4E1CD8AB23FC9EA000724918 /* Secrets.swift */,
+				3A164A912412E40800EF6A19 /* Secrets.swift */,
 			);
 			path = Secrets;
 			sourceTree = "<group>";
@@ -333,7 +337,6 @@
 		3A999E0023DF5C5A008DBC60 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3A999E0123DF5C7B008DBC60 /* ModelOne.swift */,
 				4E6BF23F23F5F68D00C59E04 /* FavedHikes.swift */,
 				4E6610DB23E37D3400846CB4 /* User.swift */,
 				4EA3D3BD23F1D08C00501EB3 /* Posts.swift */,
@@ -382,6 +385,9 @@
 			isa = PBXGroup;
 			children = (
 				3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */,
+				3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */,
+				3A164A95241689F800EF6A19 /* PointOfInterest.swift */,
+				3A164A972416CB2700EF6A19 /* MyTrail.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -702,14 +708,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */,
+				3A164A922412E40800EF6A19 /* Secrets.swift in Sources */,
 				4E6610D823E373D300846CB4 /* FirebaseService.swift in Sources */,
 				3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */,
 				3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */,
 				3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */,
 				4E6610DC23E37D3400846CB4 /* User.swift in Sources */,
+				3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
 				080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */,
+				3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */,
 				4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */,
 				4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */,
 				523BE1CE23F34020006761A6 /* DashboardVC.swift in Sources */,
@@ -721,8 +730,8 @@
 				5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
 				3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */,
+				3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */,
 				4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */,
-				4E1CD8AC23FC9EA000724918 /* Secrets.swift in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
 				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
 				4EB921E123E8895E0013B245 /* SignUpVC.swift in Sources */,
@@ -738,7 +747,6 @@
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				4E6BF23E23F5F57F00C59E04 /* Protocols.swift in Sources */,
 				080E1C9B23E4734500EF94A6 /* (null) in Sources */,
-				3A999E0223DF5C7B008DBC60 /* ModelOne.swift in Sources */,
 				3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */,
 				3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */,
 				080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */,
