@@ -69,9 +69,14 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     var coordinates = [CLLocationCoordinate2D]()
     
-    var pointsOfInterest = [CLLocationCoordinate2D]() {
+    var pointsOfInterest = [PointOfInterest]() {
         didSet {
-          
+            self.pointsOfInterest.forEach { (point) in
+                let poi = MGLPointAnnotation()
+                poi.coordinate = CLLocationCoordinate2D(latitude: point.lat, longitude: point.long)
+                poi.title = point.title
+                mapView.addAnnotation(poi)
+            }
         }
     }
     
@@ -79,6 +84,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        (40.652106, -73.971206)
         mapView.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
@@ -90,6 +96,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         constrainAddAnnotationButton()
         constrainRecordTrailButton()
         constrainAddPopUp()
+        getPointsOfInterest()
     }
     
     //MARK: Constraint Methods
@@ -228,6 +235,16 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             print("error, could not decode geoJSON")
         }
     }
+    
+    private func getPointsOfInterest() {
+        var poi = [PointOfInterest]()
+        do {
+            try poi = POIPersistenceHelper.manager.getItems()
+        } catch {
+            print("unable to fetch points of interest")
+        }
+        self.pointsOfInterest = poi
+    }
 
     
     
@@ -235,11 +252,13 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     //MARK: Visual Map Data
     func addPointOfInterest() {
-        let point = MGLPointAnnotation()
-        point.coordinate = mapView.userLocation!.coordinate
-        point.title = addPopUp.titleField.text
-        pointsOfInterest.append(point.coordinate)
-        mapView.addAnnotation(point)
+        let current = mapView.userLocation!.coordinate
+        do {
+            try POIPersistenceHelper.manager.save(newItem: PointOfInterest(lat: Double(current.latitude), long: Double(current.longitude), type: "Default", title: addPopUp.titleField.text ?? "", desc: addPopUp.descField.text ?? ""))
+        } catch {
+            print("error, could not save POI")
+        }
+      
     }
     
     func drawTrailPolyline() {
@@ -319,9 +338,9 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         if annotationView == nil {
             annotationView = MGLAnnotationView(reuseIdentifier: reuseIdentifier)
-            annotationView?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            annotationView?.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
             annotationView?.layer.cornerRadius = (annotationView?.frame.size.width)! / 2
-            annotationView?.layer.borderWidth = 4.0
+            annotationView?.layer.borderWidth = 2.0
             annotationView?.layer.borderColor = UIColor.white.cgColor
             annotationView!.backgroundColor = UIColor(red: 0.03, green: 0.80, blue: 0.69, alpha: 1.0)
         }

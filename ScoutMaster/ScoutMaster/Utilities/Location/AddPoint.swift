@@ -20,6 +20,13 @@ class AddPointView: UIView {
     
     weak var delegate: AddPointViewDelegate?
     
+    lazy var mainLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Add Trail Marker"
+        label.textColor = .black
+        return label
+    }()
+    
     lazy var titleField: UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .gray
@@ -31,6 +38,7 @@ class AddPointView: UIView {
         var tf = UITextField()
         tf.backgroundColor = .gray
         tf.placeholder = "Description..."
+        tf.isUserInteractionEnabled = true
         return tf
     }()
     
@@ -54,6 +62,7 @@ class AddPointView: UIView {
         button.backgroundColor = .clear
         button.setTitle("Submit", for: .normal)
         button.tintColor = .systemBlue
+        button.setTitleColor(.systemBlue, for: .normal)
         button.showsTouchWhenHighlighted = true
         button.addTarget(self, action: #selector(submitTouched(sender:)), for: .touchUpInside)
         return button
@@ -82,8 +91,10 @@ class AddPointView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = 50
         constrainTitleField()
+        constrainDescField()
         constrainCancelButton()
         constrainSubmitButton()
+        constrainMainLabel()
         
     }
     
@@ -100,12 +111,12 @@ class AddPointView: UIView {
     
     func constrainDescField(){
         self.addSubview(descField)
-        titleField.translatesAutoresizingMaskIntoConstraints = false
+        descField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleField.heightAnchor.constraint(equalToConstant: 100),
-            titleField.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
-            titleField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            titleField.trailingAnchor.constraint(equalTo: self.trailingAnchor)])
+            descField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 5),
+            descField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            descField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            descField.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
     }
     
     func constrainCancelButton(){
@@ -123,9 +134,20 @@ class AddPointView: UIView {
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             submitButton.heightAnchor.constraint(equalToConstant: 30),
-            submitButton.widthAnchor.constraint(equalToConstant: 40),
+            submitButton.widthAnchor.constraint(equalToConstant: 60),
             submitButton.trailingAnchor.constraint(equalTo: titleField.trailingAnchor, constant: -10),
             submitButton.bottomAnchor.constraint(equalTo: titleField.topAnchor, constant: -3)])
+    }
+    
+    func constrainMainLabel() {
+        self.addSubview(mainLabel)
+        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mainLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            mainLabel.heightAnchor.constraint(equalToConstant: 30),
+            mainLabel.widthAnchor.constraint(equalToConstant: 150),
+            mainLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10)
+        ])
     }
     
 }
