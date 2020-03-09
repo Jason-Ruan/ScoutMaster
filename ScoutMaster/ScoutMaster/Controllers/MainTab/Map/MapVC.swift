@@ -45,6 +45,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         button.backgroundColor = .init(white: 0.2, alpha: 0.8)
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
+        button.addTarget(self, action: #selector(recordTrailPrompt(button:)), for: .touchUpInside)
         return button
     }()
     
@@ -92,6 +93,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var POIAnnotations = [MGLAnnotation]()
     
     var POIShown = true
+    
+    var recordingStatus = false
     
     
     //MARK: Lifecycle
@@ -198,6 +201,39 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
                print("error, could not decode geoJSON")
            }
        }
+    func showAlertController(title: String?, message: String?, actions: [UIAlertAction]) -> UIAlertController {
+        let alertController = UIAlertController(title: title , message: message, preferredStyle: .alert)
+        actions.forEach { (action) in
+            alertController.addAction(action)
+        }
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        return alertController
+    }
+    
+    
+    //MARK: Trail Recording Methods
+    @objc func recordTrailPrompt(button: UIButton){
+        switch recordingStatus {
+        case false:
+            let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
+            //record trail method goes here
+                self.recordingStatus = true
+            })
+            let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
+            present(alertController, animated: true, completion: nil)
+            
+        case true:
+            print("stop recording prompt goes here")
+            let action = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+                //save or discard trail here, add images, title , description then persist
+                //maybe a custom uiview to add these properties visually
+                self.recordingStatus = false
+            }
+            let alertController = showAlertController(title: "End Recording?", message: nil, actions: [action])
+            present(alertController,animated: true)
+        }
+           
+    }
     
     
     //MARK: Points Of Interest Methods
