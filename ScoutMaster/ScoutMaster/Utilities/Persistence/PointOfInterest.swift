@@ -7,6 +7,19 @@
 //
 
 import Foundation
-struct PointOfInterest {
+
+struct PointOfInterest: Codable {
+    
+    let lat: Double
+    let long: Double
+    let type: String
+    
+    var id: String {
+        let new = "\(lat)\(long)"
+        return new.replacingOccurrences(of: "-", with: "")
+    }
+    
+    
+  
     
 }

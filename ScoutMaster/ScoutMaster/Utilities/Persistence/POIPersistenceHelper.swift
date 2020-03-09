@@ -25,6 +25,6 @@ struct POIPersistenceHelper {
 
     }
 
-    private let persistenceHelper = PersistenceHelper<POI>(fileName: "pointsOfInterest.plist")
+    private let persistenceHelper = PersistenceHelper<PointOfInterest>(fileName: "pointsOfInterest.plist")
     private init() {}
 }
