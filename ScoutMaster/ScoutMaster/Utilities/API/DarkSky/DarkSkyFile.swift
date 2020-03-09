@@ -40,47 +40,12 @@ struct WeatherForecast: Codable {
         let icon: String?
         let data: [DayForecastDetails]?
         let alerts: [AlertsWrapper]?
-        
-        struct DayForecastDetails: Codable {
-            let time: Int?
-            let summary: String?
-            let icon: String?
-            let sunriseTime: Int?
-            let sunsetTime: Int?
-            let precipIntensityMax: Double?
-            let precipProbability: Double?
-            let precipType: String?
-            let temperatureHigh: Double?
-            let temperatureLow: Double?
-            let apparentTemperatureHigh: Double?
-            let windSpeed: Double?
-            let humidity: Double?
-            let cloudCover: Double?
-            let visibility: Double?
-        }
-
     }
 
     struct HourlyForecast: Codable {
         let summary: String?
         let icon: String?
         let data: [HourForecastDetails]?
-        
-         struct HourForecastDetails: Codable {
-             let time: Int?
-             let summary: String?
-             let icon: String?
-             let precipIntensity: Double?
-             let precipProbability: Double?
-             let precipType: String?
-             let temperature: Double?
-             let apparentTemperature: Double?
-             let humidity: Double?
-             let windSpeed: Double?
-             let cloudCover: Double?
-             let visibility: Double?
-         }
-        
     }
 
     struct AlertsWrapper: Codable {
@@ -94,6 +59,35 @@ struct WeatherForecast: Codable {
     
 }
 
+struct DayForecastDetails: Codable {
+    let time: Int?
+    let summary: String?
+    let icon: String?
+    let sunriseTime: Int?
+    let sunsetTime: Int?
+    let precipIntensityMax: Double?
+    let precipProbability: Double?
+    let precipType: String?
+    let temperatureHigh: Double?
+    let temperatureLow: Double?
+    let apparentTemperatureHigh: Double?
+    let windSpeed: Double?
+    let humidity: Double?
+    let cloudCover: Double?
+    let visibility: Double?
+}
 
-
-
+struct HourForecastDetails: Codable {
+    let time: Int?
+    let summary: String?
+    let icon: String?
+    let precipIntensity: Double?
+    let precipProbability: Double?
+    let precipType: String?
+    let temperature: Double?
+    let apparentTemperature: Double?
+    let humidity: Double?
+    let windSpeed: Double?
+    let cloudCover: Double?
+    let visibility: Double?
+}
