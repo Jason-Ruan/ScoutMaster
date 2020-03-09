@@ -123,6 +123,21 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         return toolbar
     }()
     
+    lazy var weatherCollectionView: UICollectionView = {
+        let cvLayout = UICollectionViewFlowLayout()
+        cvLayout.scrollDirection = .horizontal
+        cvLayout.minimumInteritemSpacing = 5
+        
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: view.frame.width / 7, height: view.frame.height / 10), collectionViewLayout: cvLayout)
+        
+        cv.backgroundColor = .blue
+        cv.register(WeatherCell.self, forCellWithReuseIdentifier: "weatherCell")
+        cv.delegate = self
+        cv.dataSource = self
+        
+        return cv
+    }()
+    
     
     //MARK: - Private Properties
     var trail: Trail?
@@ -143,13 +158,22 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     let reachability = try? Reachability()
     
+    var weatherForecast: [DayForecastDetails]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.weatherCollectionView.reloadData()
+            }
+        }
+    }
+    
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .cyan
         setUpViews()
         //        drawTrailPolyline()
-        startReachability()
+        //        startReachability()
+        loadWeather()
     }
     
     
@@ -159,8 +183,8 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         DispatchQueue.main.async {
             WeatherForecast.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
                 switch result {
-                case .success:
-                    print("got weather")
+                case .success (let forecast):
+                    self.weatherForecast = forecast.daily?.data
                 case .failure(let error):
                     print(error)
                 }
@@ -181,15 +205,16 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         scrollView.backgroundColor = .black
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
         
-        scrollView.addSubview(mapView)
-        scrollView.addSubview(trailDetailsTextView)
-        scrollView.addSubview(toolBar)
+//        scrollView.addSubview(mapView)
+//        scrollView.addSubview(trailDetailsTextView)
+//        scrollView.addSubview(toolBar)
         
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(locationSymbolImageView)
         scrollView.addSubview(locationLabel)
         
         scrollView.addSubview(summaryTextView)
+        scrollView.addSubview(weatherCollectionView)
         
         view.addSubview(scrollView)
         
@@ -198,31 +223,31 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     private func constrainViews() {
         
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            mapView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            mapView.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
-            mapView.heightAnchor.constraint(equalToConstant: scrollView.frame.height / 2.5)
-        ])
+//        mapView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            mapView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+//            mapView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+//            mapView.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
+//            mapView.heightAnchor.constraint(equalToConstant: scrollView.frame.height / 2.5)
+//        ])
+//
+//        trailDetailsTextView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            trailDetailsTextView.topAnchor.constraint(equalTo: mapView.topAnchor),
+//            trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
+//        ])
         
-        trailDetailsTextView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            trailDetailsTextView.topAnchor.constraint(equalTo: mapView.topAnchor),
-            trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
-        ])
-        
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toolBar.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
-            toolBar.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            toolBar.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
-            toolBar.heightAnchor.constraint(equalToConstant: 40)
-        ])
+//        toolBar.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            toolBar.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
+//            toolBar.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+//            toolBar.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
+//            toolBar.heightAnchor.constraint(equalToConstant: 40)
+//        ])
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: toolBar.bottomAnchor, constant: 10),
+            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             nameLabel.widthAnchor.constraint(equalToConstant: scrollView.frame.width - 15),
             nameLabel.heightAnchor.constraint(equalToConstant: 75)
@@ -252,7 +277,13 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
             summaryTextView.heightAnchor.constraint(equalToConstant: 75)
         ])
         
-        
+        weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherCollectionView.topAnchor.constraint(equalTo: summaryTextView.bottomAnchor),
+            weatherCollectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            weatherCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            weatherCollectionView.heightAnchor.constraint(equalToConstant: 200)
+        ])
         
         
         
@@ -369,8 +400,26 @@ extension MapboxTestVC: MGLMapViewDelegate {
         }
         
     }
-
     
+    
+}
+
+extension MapboxTestVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.weatherForecast?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCell else { return WeatherCell() }
+        if let dailyWeatherForecaseDetails = self.weatherForecast?[indexPath.row] {
+            cell.dayForecast = dailyWeatherForecaseDetails
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.height)
+    }
 }
 
 
