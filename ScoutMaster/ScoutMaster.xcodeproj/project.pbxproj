@@ -17,6 +17,7 @@
 		3A164A922412E40800EF6A19 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A912412E40800EF6A19 /* Secrets.swift */; };
 		3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */; };
 		3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A95241689F800EF6A19 /* PointOfInterest.swift */; };
+		3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A972416CB2700EF6A19 /* MyTrail.swift */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
 		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
@@ -89,6 +90,7 @@
 		3A164A912412E40800EF6A19 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../Utilities/Networking/Secrets.swift; sourceTree = "<group>"; };
 		3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPersistenceHelper.swift; sourceTree = "<group>"; };
 		3A164A95241689F800EF6A19 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
+		3A164A972416CB2700EF6A19 /* MyTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrail.swift; sourceTree = "<group>"; };
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */,
 				3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */,
 				3A164A95241689F800EF6A19 /* PointOfInterest.swift */,
+				3A164A972416CB2700EF6A19 /* MyTrail.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				5267F35B23E4D10800B7ACA0 /* TrailCell.swift in Sources */,
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
 				3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */,
+				3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */,
 				4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
 				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,

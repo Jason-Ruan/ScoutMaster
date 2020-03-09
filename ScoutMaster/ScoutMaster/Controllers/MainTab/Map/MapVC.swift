@@ -2,10 +2,10 @@ import UIKit
 import Mapbox
 import MapboxAnnotationExtension
 
-class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, AddPointViewDelegate {
+class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AddPointViewDelegate {
     
     
-    //MARK: Variables
+    //MARK: UI Variables
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -42,7 +42,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     lazy var recordTrailButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 25
-        button.backgroundColor = .systemRed
+        button.backgroundColor = .init(white: 0.2, alpha: 0.8)
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
         return button
@@ -54,7 +54,14 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
            return popUp
        }()
     
-    //MARK: Map Properties
+    
+    //MARK: Properties
+    var trail: Trail? {
+        didSet{
+            drawTrailPolyline()
+        }
+    }
+    
     var mapView = MapSettings.customMap
     
     var newCoords: [(Double,Double)]! {
@@ -66,8 +73,9 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         }
     }
     
-    
     var coordinates = [CLLocationCoordinate2D]()
+    
+    var userTraversedCoordinates: [CLLocationCoordinate2D] = []
     
     var pointsOfInterest = [PointOfInterest]() {
         didSet {
@@ -76,20 +84,23 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
                 poi.coordinate = CLLocationCoordinate2D(latitude: point.lat, longitude: point.long)
                 poi.title = point.title
                 mapView.addAnnotation(poi)
+                POIAnnotations.append(poi)
             }
         }
     }
+    
+    var POIAnnotations = [MGLAnnotation]()
+    
+    var POIShown = true
     
     
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        (40.652106, -73.971206)
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
-        drawTrailPolyline()
         constrainMap()
         constrainCV()
         constrainLocationButton()
@@ -100,8 +111,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     //MARK: Constraint Methods
-    
-    
     func constrainLocationButton(){
         view.addSubview(locationButton)
         locationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -174,33 +183,89 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     
     
     //MARK: Private Methods
-    func dismissAddPointView() {
-        switchAnimationAddPopUp()
+    
+    private func getCoordinatesFromJSON(data: Data){
+           do {
+               var coords = [(Double,Double)]()
+               let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
+               for i in rawCoords {
+                   coords.append((i[1],i[0]))
+               }
+               newCoords = coords
+               print("got coordinates")
+           }
+           catch {
+               print("error, could not decode geoJSON")
+           }
+       }
+    
+    
+    //MARK: Points Of Interest Methods
+    private func getPointsOfInterest() {
+        var poi = [PointOfInterest]()
+        do {
+            try poi = POIPersistenceHelper.manager.getItems()
+        } catch {
+            print("unable to fetch points of interest")
+        }
+        self.pointsOfInterest = poi
     }
     
-    @objc func showAddPointView(sender: UIButton){
-        switchAnimationAddPopUp()
-        
+    private func hidePointsOfInterest(){
+        guard mapView.annotations != nil else { return }
+        mapView.removeAnnotations(POIAnnotations)
     }
     
-    private func switchAnimationAddPopUp(){
-        switch addPopUp.shown {
-        case false:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = false
-                self.showPopUpTopAnchorConstraint.isActive = true
-                self.view.layoutIfNeeded()
-                self.addPopUp.shown = true
-            }
+    private func togglePOI(){
+        switch POIShown {
         case true:
-            UIView.animate(withDuration: 0.3) {
-                self.hidePopUpTopAnchorConstraint.isActive = true
-                self.showPopUpTopAnchorConstraint.isActive = false
-                self.view.layoutIfNeeded()
-                self.addPopUp.shown = false
-            }
+            hidePointsOfInterest()
+            POIShown = false
+        case false:
+            getPointsOfInterest()
+            POIShown = true
         }
     }
+    
+    func addPointOfInterest() {
+        let current = mapView.userLocation!.coordinate
+        do {
+            try POIPersistenceHelper.manager.save(newItem: PointOfInterest(lat: Double(current.latitude), long: Double(current.longitude), type: "Default", title: addPopUp.titleField.text ?? "", desc: addPopUp.descField.text ?? ""))
+        } catch {
+            print("error, could not save POI")
+        }
+      
+    }
+    
+    func dismissAddPointView() {
+           switchAnimationAddPopUp()
+       }
+       
+       @objc func showAddPointView(sender: UIButton){
+           switchAnimationAddPopUp()
+           
+       }
+       
+       private func switchAnimationAddPopUp(){
+           switch addPopUp.shown {
+           case false:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = false
+                   self.showPopUpTopAnchorConstraint.isActive = true
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = true
+               }
+           case true:
+               UIView.animate(withDuration: 0.3) {
+                   self.hidePopUpTopAnchorConstraint.isActive = true
+                   self.showPopUpTopAnchorConstraint.isActive = false
+                   self.view.layoutIfNeeded()
+                   self.addPopUp.shown = false
+               }
+           }
+       }
+
+    //MARK: Visual Map Methods
     
     @objc func locationButtonTapped(sender: UIButton) {
         var mode: MGLUserTrackingMode
@@ -220,47 +285,6 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
     }
     
-
-    private func getCoordinates(data: Data){
-        do {
-            var coords = [(Double,Double)]()
-            let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
-            for i in rawCoords {
-                coords.append((i[1],i[0]))
-            }
-            newCoords = coords
-            print("got coordinates")
-        }
-        catch {
-            print("error, could not decode geoJSON")
-        }
-    }
-    
-    private func getPointsOfInterest() {
-        var poi = [PointOfInterest]()
-        do {
-            try poi = POIPersistenceHelper.manager.getItems()
-        } catch {
-            print("unable to fetch points of interest")
-        }
-        self.pointsOfInterest = poi
-    }
-
-    
-    
-    
-    
-    //MARK: Visual Map Data
-    func addPointOfInterest() {
-        let current = mapView.userLocation!.coordinate
-        do {
-            try POIPersistenceHelper.manager.save(newItem: PointOfInterest(lat: Double(current.latitude), long: Double(current.longitude), type: "Default", title: addPopUp.titleField.text ?? "", desc: addPopUp.descField.text ?? ""))
-        } catch {
-            print("error, could not save POI")
-        }
-      
-    }
-    
     func drawTrailPolyline() {
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
@@ -270,7 +294,7 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)
-                self.getCoordinates(data: data)
+                self.getCoordinatesFromJSON(data: data)
                 guard let shapeCollectionFeature = try MGLShape(data: data, encoding: String.Encoding.utf8.rawValue) as? MGLShapeCollectionFeature else {
                     fatalError("Could not cast to specified MGLShapeCollectionFeature")
                 }
@@ -294,9 +318,18 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         
     }
     
+    func drawUserTrailPolyline() {
+    let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
+        polyline.title = "user"
+    DispatchQueue.main.async {
+        self.mapView.addAnnotation(polyline)
+    }
+    }
     
+}
     //MARK: CV Delegate Methods
-    
+
+extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
@@ -313,19 +346,33 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        switch indexPath.row {
+        case 0:
+        print("poi toggled")
+        self.togglePOI()
+        default:
+            return
+        }
     }
+}
     
     
     
     
     //MARK: MV Delegate Methods
+extension MapVC: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         return 4.0
     }
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
-        return .systemBlue
+        switch annotation.title {
+        case "user":
+            return .systemGreen
+        default:
+           return .systemBlue
+        }
+       
     }
     
     
@@ -353,6 +400,15 @@ class MapVC: UIViewController, MGLMapViewDelegate, UICollectionViewDelegate, UIC
         return true
     }
     
+    func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
+        if let userCoord = userLocation?.coordinate {
+                   self.userTraversedCoordinates.append(userCoord)
+               }
+               
+               if self.userTraversedCoordinates.count >= 2 {
+                   drawUserTrailPolyline()
+               }
+    }
     
     
     
