@@ -111,9 +111,9 @@ class DashboardVC: UIViewController, UISearchBarDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         profileImage.layer.cornerRadius = 35
-                     profileImage.clipsToBounds = true
-                     profileImage.layer.borderWidth = 3.0
-                     profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.clipsToBounds = true
+        profileImage.layer.borderWidth = 3.0
+        profileImage.layer.borderColor = UIColor.white.cgColor
     }
     
     private func loadData() {

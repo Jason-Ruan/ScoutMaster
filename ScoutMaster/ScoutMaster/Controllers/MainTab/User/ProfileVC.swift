@@ -20,6 +20,12 @@ class ProfileVC: UIViewController {
         }
     }
     
+    var userStats =  [UserStats] () {
+        didSet {
+            statsCollection.reloadData()
+        }
+    }
+    
     
 //    MARK: UI OBJECTS
     
@@ -45,24 +51,24 @@ class ProfileVC: UIViewController {
         return cv
     }()
     
-     /*
+
         lazy var statsCollection: UICollectionView = {
             let layout = UICollectionViewFlowLayout()
                 layout.scrollDirection = .vertical
             let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-                cv.backgroundColor = .lightGray
-    //          cv.register(mainVC.self, forCellWithReuseIdentifier: "mainCell")
-    //            cv.dataSource = self
-    //            cv.delegate = self
+            cv.backgroundColor = .lightGray
+            cv.register(userStatsCVC.self, forCellWithReuseIdentifier: "userStatCell")
             return cv
         }()
-     */
+
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         faveHikesCollection.delegate = self
         faveHikesCollection.dataSource = self
+        statsCollection.delegate = self
+        statsCollection.dataSource = self
         view.backgroundColor = .white
         getfaved()
         addSubview()
@@ -90,12 +96,14 @@ class ProfileVC: UIViewController {
     
     private func addSubview() {
         view.addSubview(faveHikesCollection)
+        view.addSubview(statsCollection)
         view.addSubview(userImage)
         view.addSubview(userName)
     }
     
     private func addConstraints(){
         constrainFaveCollectionView()
+        constrainStatsCollection()
         profileimageConstraint()
         profileNameConstraint()
         
@@ -128,10 +136,17 @@ class ProfileVC: UIViewController {
 
         faveHikesCollection.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 550),
             faveHikesCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50),
             faveHikesCollection.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
+    }
+    
+    private func constrainStatsCollection(){
+        statsCollection.translatesAutoresizingMaskIntoConstraints = false
+        [statsCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+         statsCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -300),
+         statsCollection.widthAnchor.constraint(equalTo: view.widthAnchor)].forEach {$0.isActive = true}
     }
     
     private func profileimageConstraint() {
@@ -164,14 +179,27 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        var numOfItems = 0
+        
+        if collectionView == faveHikesCollection {
+            
         print("i got \(userPost.count) faved hikes")
         
-        return userPost.count
+        numOfItems = userPost.count
+            
+        } else {
+            numOfItems = 5
+        }
+        
+        return numOfItems
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
+        if collectionView == faveHikesCollection {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faveCell", for: indexPath) as? FaveHikeCVC else {return UICollectionViewCell()}
         let data = userPost[indexPath.row]
         cell.userFavedTrailName.text = data.name
@@ -187,8 +215,14 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             }
         }
 
-//        cell.configureCell(post: data)
         return cell
+        } else {
+            guard let statCell = collectionView.dequeueReusableCell(withReuseIdentifier: "userStatCell", for: indexPath) as? userStatsCVC else {return UICollectionViewCell()}
+//            let statData = userStats[indexPath.row]
+            
+            statCell.StatLabel.text = "someStats"
+            return statCell
+        }
     }
     
     

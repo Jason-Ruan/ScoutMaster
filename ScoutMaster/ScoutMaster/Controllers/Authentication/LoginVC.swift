@@ -47,11 +47,23 @@ class LoginVC: UIViewController {
     lazy var signUpButton: UIButton = {
         let signUp = UIButton()
         signUp.backgroundColor = .white
-        signUp.setTitleColor(.blue, for: .normal)
+        signUp.setTitleColor(.purple, for: .normal)
         signUp.setTitle("sign up", for: .normal)
         signUp.addTarget(self, action: #selector(showSignUp), for: .touchUpInside)
         return signUp
        }()
+    
+    lazy var logoImage: UIImageView = {
+        let icon = UIImageView()
+        icon.backgroundColor = .clear
+        icon.contentMode = .scaleAspectFill
+        icon.image = UIImage(named: "logo")
+        icon.layer.cornerRadius = 35
+        icon.clipsToBounds = true
+        icon.layer.borderWidth = 3.0
+        icon.layer.borderColor = UIColor.white.cgColor
+        return icon
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +80,16 @@ class LoginVC: UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(signUpButton)
         view.addSubview(loginButton)
+        view.addSubview(logoImage)
     }
                 
     private func constraints() {
-
+        
         emailTextConstraint()
         passwordTextConstraint()
         signUpContraint()
         loginContraint()
+        logoImageConstraints()
     }
             
     private func emailTextConstraint() {
@@ -111,18 +125,27 @@ class LoginVC: UIViewController {
         loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -275)].forEach{$0.isActive = true}
     }
+    
+    private func logoImageConstraints(){
+        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 175),
+            logoImage.heightAnchor.constraint(equalToConstant: 70),
+            logoImage.widthAnchor.constraint(equalToConstant: 70),
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)])
+    }
             
 //    MARK: Objective C
             
             
     @objc func validateFields() {
         guard emailTextField.hasText, passwordTextField.hasText else {
-            loginButton.backgroundColor = .darkGray
+            loginButton.backgroundColor = .lightGray
             loginButton.isEnabled = false
             return
         }
         loginButton.isEnabled = true
-        loginButton.backgroundColor = .darkGray
+        loginButton.backgroundColor = .lightGray
         }
             
                
