@@ -32,20 +32,20 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             var trailDifficulty: String = ""
             
             switch trail.difficulty {
-            case "green":
-                trailDifficulty = "Easy"
-            case "greenBlue":
-                trailDifficulty = "Easy/Intermediate"
-            case "blue":
-                trailDifficulty = "Intermediate"
-            case "blueBlack":
-                trailDifficulty = "Intermediate/Difficult"
-            case "black":
-                trailDifficulty = "Difficult"
-            case "blackBlack":
-                trailDifficulty = "Extremely Difficult"
-            default:
-                trailDifficulty = "Unknown"
+                case "green":
+                    trailDifficulty = "Easy"
+                case "greenBlue":
+                    trailDifficulty = "Easy/Intermediate"
+                case "blue":
+                    trailDifficulty = "Intermediate"
+                case "blueBlack":
+                    trailDifficulty = "Intermediate/Difficult"
+                case "black":
+                    trailDifficulty = "Difficult"
+                case "blackBlack":
+                    trailDifficulty = "Extremely Difficult"
+                default:
+                    trailDifficulty = "Unknown"
             }
             
             tv.text = """
@@ -54,7 +54,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             Ascent: \(trail.ascent) ft
             Descent: \(trail.descent) ft
             Peak: \(trail.high) ft
-            Condition: \(trail.conditionDetails ?? "")
+            Condition: \(trail.conditionDetails ?? "N/A")
             """
         }
         tv.backgroundColor = .clear
@@ -74,12 +74,34 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    lazy var weatherButton: UIButton = {
+    lazy var webLinkButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
-        button.setImage(UIImage.init(systemName: "cloud", withConfiguration: imageConfig), for: .normal)
-        button.addTarget(self, action: #selector(loadWeather), for: .touchUpInside)
+        button.setImage(UIImage.init(systemName: "safari", withConfiguration: imageConfig), for: .normal)
+        button.addTarget(self, action: #selector(openTrailLink), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var buttonStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.distribution = .fillProportionally
+        sv.alignment = .center
+        sv.spacing = 10
+        
+        sv.addArrangedSubview(self.favoriteButton)
+        let favLabel = UILabel()
+        favLabel.text = "Favorite"
+        favLabel.textColor = .systemBlue
+        sv.addArrangedSubview(favLabel)
+        
+        sv.addArrangedSubview(self.webLinkButton)
+        let webLabel = UILabel()
+        webLabel.text = "Website"
+        webLabel.textColor = .systemBlue
+        sv.addArrangedSubview(webLabel)
+        
+        return sv
     }()
     
     lazy var startButton: UIButton = {
@@ -133,6 +155,31 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             tv.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
         }
         return tv
+    }()
+    
+    lazy var weatherCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 5
+        
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 2), collectionViewLayout: layout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.register(WeatherCell.self, forCellWithReuseIdentifier: "weatherCell")
+        
+        cv.backgroundColor = .clear
+        
+        return cv
+    }()
+    
+    lazy var forecastSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl()
+        sc.insertSegment(withTitle: "Daily", at: 0, animated: true)
+        sc.insertSegment(withTitle: "Hourly", at: 1, animated: true)
+        sc.selectedSegmentIndex = 0
+        sc.backgroundColor = .lightGray
+        sc.addTarget(self, action: #selector(tappedForecastSegmentControl), for: .valueChanged)
+        return sc
     }()
     
     
