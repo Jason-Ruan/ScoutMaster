@@ -460,18 +460,18 @@ extension DetailVC: MGLMapViewDelegate {
         if annotation is MGLPolyline {
             if let trail = trail {
                 switch trail.difficulty {
-                case "green":
-                    return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
-                case "greenBlue":
-                    return #colorLiteral(red: 0.1686150432, green: 0.8940697312, blue: 0.9647199512, alpha: 1)
-                case "blue":
-                    return #colorLiteral(red: 0.1324204504, green: 0.1454157829, blue: 1, alpha: 1)
-                case "blueBlack":
-                    return #colorLiteral(red: 0.2521547079, green: 0.2470324337, blue: 0.5169785023, alpha: 1)
-                case "black":
-                    return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                default:
-                    return .white
+                    case "green":
+                        return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
+                    case "greenBlue":
+                        return #colorLiteral(red: 0.1686150432, green: 0.8940697312, blue: 0.9647199512, alpha: 1)
+                    case "blue":
+                        return #colorLiteral(red: 0.1324204504, green: 0.1454157829, blue: 1, alpha: 1)
+                    case "blueBlack":
+                        return #colorLiteral(red: 0.2521547079, green: 0.2470324337, blue: 0.5169785023, alpha: 1)
+                    case "black":
+                        return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                    default:
+                        return .white
                 }
             }
         }
@@ -484,32 +484,107 @@ extension DetailVC: MGLMapViewDelegate {
     
 }
 
-/*
-extension DetailVC: ButtonPressed {
-    
-    /*
-    
-    func buttonPressed(tag: Int) {
-        print(tag)
-        /*
-        let indexSelected = IndexPath(row: tag, section: 0)
-        let select = thingsTableView.cellForRow(at: indexSelected) as! ThingsCustomTVC
-        */
-        
-        let ticketData = eventData[tag]
-        let fireThing = FavedEvents(imageData: ticketData.images.first?.url ?? "", objectName: ticketData.name, objectSecondary: ticketData.dates.start.localDate, objectID: ticketData.id, creatorID: user.uid)
-        
-        FirestoreService.manager.createfave(faved: fireThing) { (result) in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(()):
-                print("yes")
-            select.buttonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
+
+//MARK: - CollectionView Methods
+extension DetailVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch selectedForecast {
+            case .daily:
+                return forecastDetails?.daily?.data?.count ?? 0
+            case .hourly:
+                return forecastDetails?.hourly?.data?.count ?? 0
+            case .none:
+                return 0
         }
-    
     }
- */
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCell else { return WeatherCell() }
+        switch selectedForecast {
+            case .daily:
+                cell.forecastType = .daily
+                let dayForecast = forecastDetails?.daily?.data?[indexPath.row]
+                cell.dateLabel.text = convertTimeToDate(forecastType: .daily, time: dayForecast?.time ?? 0)
+                cell.weatherIconImageView.image = getWeatherIcon(named: dayForecast?.icon ?? "")
+                cell.weatherSummaryLabel.text = dayForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                cell.lowTemperature.text = """
+                Low
+                \(dayForecast?.temperatureLow?.description ?? "N/A")\u{00B0}
+                """
+                
+                cell.highTemperature.text = """
+                High
+                \(dayForecast?.temperatureLow?.description  ?? "N/A")\u{00B0}
+                """
+                return cell
+            case .hourly:
+                cell.forecastType = .hourly
+                let hourlyForecast = forecastDetails?.hourly?.data?[indexPath.row]
+                cell.dateLabel.text = convertTimeToDate(forecastType: .hourly, time: hourlyForecast?.time ?? 0)
+                cell.weatherIconImageView.image = getWeatherIcon(named: hourlyForecast?.icon ?? "")
+                cell.weatherSummaryLabel.text = hourlyForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                cell.lowTemperature.text = """
+                \(hourlyForecast?.temperature?.description ?? "N/A")\u{00B0}
+                """
+                if let precipitationChance = hourlyForecast?.precipProbability {
+                    cell.highTemperature.text = """
+                    Precip
+                    \(String(format: "%.0f", precipitationChance * 100))%
+                    """
+            }
+            default:
+                return cell
+        }
+        
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width / 3, height: collectionView.frame.height * 0.9)
+    }
+    
+    private func convertTimeToDate(forecastType: ForecastType, time: Int) -> String {
+        let dateInput = Date(timeIntervalSinceNow: TimeInterval(exactly: time) ?? 0)
+        let formatter = DateFormatter()
+        switch forecastType {
+            case .daily:
+                formatter.dateFormat = "E M/d"
+            case .hourly:
+                formatter.dateFormat = "E h a"
+        }
+        formatter.locale = .current
+        return formatter.string(from: dateInput)
+    }
+    
+    private func getWeatherIcon(named: String) -> UIImage {
+        switch named {
+            case "clear-day":
+                return UIImage(systemName: "sun.max.fill")!
+            case "clear-night":
+                return UIImage(systemName: "moon.fill")!
+            case "wind":
+                return UIImage(systemName: "wind")!
+            case "rain":
+                return UIImage(systemName: "cloud.rain.fill")!
+            case "sleet":
+                return UIImage(systemName: "cloud.sleet.fill")!
+            case "snow":
+                return UIImage(systemName: "cloud.snow.fill")!
+            case "fog":
+                return UIImage(systemName: "cloud.fog.fill")!
+            case "cloudy":
+                return UIImage(systemName: "cloud.fill")!
+            case "hail":
+                return UIImage(systemName: "cloud.hail.fill")!
+            case "thunderstorm":
+                return UIImage(systemName: "cloud.bolt.rain.fill")!
+            case "tornado":
+                return UIImage(systemName: "tornado")!
+            default:
+                return UIImage(systemName: "cloud.sun.fill")!
+        }
+    }
+    
+    
 }
- */
