@@ -75,20 +75,20 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
             var trailDifficulty: String = ""
             
             switch trail.difficulty {
-            case "green":
-                trailDifficulty = "Easy"
-            case "greenBlue":
-                trailDifficulty = "Easy/Intermediate"
-            case "blue":
-                trailDifficulty = "Intermediate"
-            case "blueBlack":
-                trailDifficulty = "Intermediate/Difficult"
-            case "black":
-                trailDifficulty = "Difficult"
-            case "blackBlack":
-                trailDifficulty = "Extremely Difficult"
-            default:
-                trailDifficulty = "Unknown"
+                case "green":
+                    trailDifficulty = "Easy"
+                case "greenBlue":
+                    trailDifficulty = "Easy/Intermediate"
+                case "blue":
+                    trailDifficulty = "Intermediate"
+                case "blueBlack":
+                    trailDifficulty = "Intermediate/Difficult"
+                case "black":
+                    trailDifficulty = "Difficult"
+                case "blackBlack":
+                    trailDifficulty = "Extremely Difficult"
+                default:
+                    trailDifficulty = "Unknown"
             }
             
             tv.text = """
@@ -124,18 +124,27 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     }()
     
     lazy var weatherCollectionView: UICollectionView = {
-        let cvLayout = UICollectionViewFlowLayout()
-        cvLayout.scrollDirection = .horizontal
-        cvLayout.minimumInteritemSpacing = 5
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 5
         
-        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: view.frame.width / 7, height: view.frame.height / 10), collectionViewLayout: cvLayout)
-        
-        cv.backgroundColor = .blue
-        cv.register(WeatherCell.self, forCellWithReuseIdentifier: "weatherCell")
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 2), collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
+        cv.register(WeatherCell.self, forCellWithReuseIdentifier: "weatherCell")
+        
+        cv.backgroundColor = .gray
         
         return cv
+    }()
+    
+    lazy var forecastSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl()
+        sc.insertSegment(withTitle: "Daily", at: 0, animated: true)
+        sc.insertSegment(withTitle: "Hourly", at: 1, animated: true)
+        sc.selectedSegmentIndex = 0
+        sc.addTarget(self, action: #selector(tappedForecastSegmentControl), for: .valueChanged)
+        return sc
     }()
     
     
@@ -160,9 +169,19 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     var weatherForecast: [DayForecastDetails]? {
         didSet {
-            DispatchQueue.main.async {
-                self.weatherCollectionView.reloadData()
-            }
+            self.weatherCollectionView.reloadData()
+        }
+    }
+    
+    private var forecastDetails: WeatherForecast? {
+        didSet {
+            selectedForecast = .daily
+        }
+    }
+    
+    private var selectedForecast: ForecastType? {
+        didSet {
+            weatherCollectionView.reloadData()
         }
     }
     
@@ -180,14 +199,13 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     //MARK: - Objective-C Methods
     @objc func loadWeather() {
         guard let trail = self.trail else {return}
-        DispatchQueue.main.async {
-            WeatherForecast.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
-                switch result {
+        DarkSkyAPIClient.manager.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
+            switch result {
                 case .success (let forecast):
-                    self.weatherForecast = forecast.daily?.data
+                    self.forecastDetails = forecast
+                
                 case .failure(let error):
                     print(error)
-                }
             }
         }
     }
@@ -199,52 +217,63 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     
     //MARK: - Private Functions
     
-    private func setUpViews() {
-        scrollView = UIScrollView(frame: view.bounds)
-        scrollView.delegate = self
-        scrollView.backgroundColor = .black
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
-        
-//        scrollView.addSubview(mapView)
-//        scrollView.addSubview(trailDetailsTextView)
-//        scrollView.addSubview(toolBar)
-        
-        scrollView.addSubview(nameLabel)
-        scrollView.addSubview(locationSymbolImageView)
-        scrollView.addSubview(locationLabel)
-        
-        scrollView.addSubview(summaryTextView)
-        scrollView.addSubview(weatherCollectionView)
-        
-        view.addSubview(scrollView)
-        
-        constrainViews()
+    @objc func tappedForecastSegmentControl() {
+        switch self.forecastSegmentedControl.selectedSegmentIndex {
+            case 0:
+                selectedForecast = .daily
+            case 1:
+                selectedForecast = .hourly
+            default:
+                selectedForecast = .daily
+        }
     }
     
+    //MARK: Private Functions
+    
+    private func setUpViews() {
+        view.addSubview(weatherCollectionView)
+        weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            weatherCollectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            weatherCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            weatherCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height / 3)
+        ])
+        
+        view.addSubview(forecastSegmentedControl)
+        forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            forecastSegmentedControl.bottomAnchor.constraint(equalTo: weatherCollectionView.topAnchor, constant: -20),
+            forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width),
+            forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+    }
+    
+    //    private func setUpViews() {
+    //        scrollView = UIScrollView(frame: view.bounds)
+    //        scrollView.delegate = self
+    //        scrollView.backgroundColor = .black
+    //        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 1.5)
+    //
+    //        //        scrollView.addSubview(mapView)
+    //        //        scrollView.addSubview(trailDetailsTextView)
+    //        //        scrollView.addSubview(toolBar)
+    //
+    //        scrollView.addSubview(nameLabel)
+    //        scrollView.addSubview(locationSymbolImageView)
+    //        scrollView.addSubview(locationLabel)
+    //
+    //        scrollView.addSubview(summaryTextView)
+    //        scrollView.addSubview(weatherCollectionView)
+    //
+    //        view.addSubview(scrollView)
+    //
+    //        constrainViews()
+    //    }
+    
     private func constrainViews() {
-        
-//        mapView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            mapView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            mapView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-//            mapView.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
-//            mapView.heightAnchor.constraint(equalToConstant: scrollView.frame.height / 2.5)
-//        ])
-//
-//        trailDetailsTextView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            trailDetailsTextView.topAnchor.constraint(equalTo: mapView.topAnchor),
-//            trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
-//        ])
-        
-//        toolBar.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            toolBar.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
-//            toolBar.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-//            toolBar.widthAnchor.constraint(equalToConstant: scrollView.frame.width),
-//            toolBar.heightAnchor.constraint(equalToConstant: 40)
-//        ])
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -304,14 +333,14 @@ class MapboxTestVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
         let reachability = note.object as! Reachability
         
         switch reachability.connection {
-        case .wifi:
-            showAlertController(message: "Reachable via WiFi")
-        case .cellular:
-            showAlertController(message: "Reachable via Cellular")
-        case .unavailable:
-            showAlertController(message: "Network not reachable")
-        default:
-            showAlertController(message: "Network status unknown")
+            case .wifi:
+                showAlertController(message: "Reachable via WiFi")
+            case .cellular:
+                showAlertController(message: "Reachable via Cellular")
+            case .unavailable:
+                showAlertController(message: "Network not reachable")
+            default:
+                showAlertController(message: "Network status unknown")
         }
     }
     
@@ -367,18 +396,18 @@ extension MapboxTestVC: MGLMapViewDelegate {
         if annotation is MGLPolyline {
             if let trail = trail {
                 switch trail.difficulty {
-                case "green":
-                    return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
-                case "greenBlue":
-                    return #colorLiteral(red: 0.1686150432, green: 0.8940697312, blue: 0.9647199512, alpha: 1)
-                case "blue":
-                    return #colorLiteral(red: 0.1324204504, green: 0.1454157829, blue: 1, alpha: 1)
-                case "blueBlack":
-                    return #colorLiteral(red: 0.2521547079, green: 0.2470324337, blue: 0.5169785023, alpha: 1)
-                case "black":
-                    return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                default:
-                    return .white
+                    case "green":
+                        return #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
+                    case "greenBlue":
+                        return #colorLiteral(red: 0.1686150432, green: 0.8940697312, blue: 0.9647199512, alpha: 1)
+                    case "blue":
+                        return #colorLiteral(red: 0.1324204504, green: 0.1454157829, blue: 1, alpha: 1)
+                    case "blueBlack":
+                        return #colorLiteral(red: 0.2521547079, green: 0.2470324337, blue: 0.5169785023, alpha: 1)
+                    case "black":
+                        return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                    default:
+                        return .white
                 }
             }
         }
@@ -406,20 +435,116 @@ extension MapboxTestVC: MGLMapViewDelegate {
 
 extension MapboxTestVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.weatherForecast?.count ?? 0
+        if collectionView == weatherCollectionView {
+            switch selectedForecast {
+                case .daily:
+                    return forecastDetails?.daily?.data?.count ?? 0
+                case .hourly:
+                    return forecastDetails?.hourly?.data?.count ?? 0
+                case .none:
+                    return 0
+            }
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCell else { return WeatherCell() }
-        if let dailyWeatherForecaseDetails = self.weatherForecast?[indexPath.row] {
-            cell.dayForecast = dailyWeatherForecaseDetails
+        if collectionView == weatherCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCell else { return WeatherCell() }
+            switch selectedForecast {
+                case .daily:
+                    cell.forecastType = .daily
+                    let dayForecast = forecastDetails?.daily?.data?[indexPath.row]
+                    cell.dateLabel.text = convertTimeToDate(forecastType: .daily, time: dayForecast?.time ?? 0)
+                    cell.weatherIconImageView.image = getWeatherIcon(named: dayForecast?.icon ?? "")
+                    cell.weatherSummaryLabel.text = dayForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                    cell.lowTemperature.text = """
+                    Low
+                    \(dayForecast?.temperatureLow?.description ?? "N/A")\u{00B0}
+                    """
+                    
+                    cell.highTemperature.text = """
+                    High
+                    \(dayForecast?.temperatureLow?.description  ?? "N/A")\u{00B0}
+                    """
+                    return cell
+                case .hourly:
+                    cell.forecastType = .hourly
+                    let hourlyForecast = forecastDetails?.hourly?.data?[indexPath.row]
+                    cell.dateLabel.text = convertTimeToDate(forecastType: .hourly, time: hourlyForecast?.time ?? 0)
+                    cell.weatherIconImageView.image = getWeatherIcon(named: hourlyForecast?.icon ?? "")
+                    cell.weatherSummaryLabel.text = hourlyForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                    cell.lowTemperature.text = """
+                    \(hourlyForecast?.temperature?.description ?? "N/A")\u{00B0}
+                    """
+                    if let precipitationChance = hourlyForecast?.precipProbability {
+                        cell.highTemperature.text = """
+                        Precip
+                        \(String(format: "%.0f", precipitationChance * 100))%
+                        """
+                }
+                default:
+                    return cell
+            }
+            
+            return cell
         }
-        return cell
+        
+        return UICollectionViewCell()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.height)
+        if collectionView == weatherCollectionView {
+            return CGSize(width: view.frame.width / 3, height: collectionView.frame.height * 0.9)
+        } else {
+            return CGSize(width: 200, height: 200)
+        }
     }
+    
+    private func convertTimeToDate(forecastType: ForecastType, time: Int) -> String {
+        let dateInput = Date(timeIntervalSinceNow: TimeInterval(exactly: time) ?? 0)
+        let formatter = DateFormatter()
+        switch forecastType {
+            case .daily:
+                formatter.dateFormat = "E M/d"
+            case .hourly:
+                formatter.dateFormat = "E h a"
+        }
+        formatter.locale = .current
+        return formatter.string(from: dateInput)
+    }
+    
+    private func getWeatherIcon(named: String) -> UIImage {
+        switch named {
+            case "clear-day":
+                return UIImage(systemName: "sun.max.fill")!
+            case "clear-night":
+                return UIImage(systemName: "moon.fill")!
+            case "wind":
+                return UIImage(systemName: "wind")!
+            case "rain":
+                return UIImage(systemName: "cloud.rain.fill")!
+            case "sleet":
+                return UIImage(systemName: "cloud.sleet.fill")!
+            case "snow":
+                return UIImage(systemName: "cloud.snow.fill")!
+            case "fog":
+                return UIImage(systemName: "cloud.fog.fill")!
+            case "cloudy":
+                return UIImage(systemName: "cloud.fill")!
+            case "hail":
+                return UIImage(systemName: "cloud.hail.fill")!
+            case "thunderstorm":
+                return UIImage(systemName: "cloud.bolt.rain.fill")!
+            case "tornado":
+                return UIImage(systemName: "tornado")!
+            default:
+                return UIImage(systemName: "cloud.sun.fill")!
+        }
+    }
+    
 }
 
 
