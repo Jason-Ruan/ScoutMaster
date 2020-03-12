@@ -131,7 +131,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             label.font = label.font.withSize(50)
             label.textColor = .white
             label.adjustsFontSizeToFitWidth = true
-            label.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
+            label.backgroundColor = .clear
         }
         return label
     }()
