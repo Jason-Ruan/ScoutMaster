@@ -278,20 +278,22 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         scrollView.addSubview(mapView)
         scrollView.addSubview(trailDetailsTextView)
-        //        scrollView.addSubview(toolBar)
-        scrollView.addSubview(favoriteButton)
-        scrollView.addSubview(weatherButton)
+        scrollView.addSubview(buttonStackView)
         
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(locationSymbolImageView)
         scrollView.addSubview(locationLabel)
         
-        scrollView.addSubview(summaryTextView)
         scrollView.addSubview(startButton)
+        scrollView.addSubview(summaryTextView)
+        
+        scrollView.addSubview(forecastSegmentedControl)
+        scrollView.addSubview(weatherCollectionView)
         
         view.addSubview(scrollView)
         
         constrainViews()
+        
     }
     
     private func constrainViews() {
@@ -310,33 +312,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
         ])
         
-        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            favoriteButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
-            favoriteButton.trailingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -5),
-            favoriteButton.widthAnchor.constraint(equalToConstant: 30),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        weatherButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            weatherButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 30),
-            weatherButton.leadingAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 5),
-            weatherButton.widthAnchor.constraint(equalToConstant: 30),
-            weatherButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        startButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            startButton.widthAnchor.constraint(equalToConstant: 90),
-            startButton.heightAnchor.constraint(equalToConstant: 50),
-            startButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
-            startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ])
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: weatherButton.bottomAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
             nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             nameLabel.widthAnchor.constraint(equalToConstant: scrollView.frame.width - 15),
             nameLabel.heightAnchor.constraint(equalToConstant: 75)
@@ -358,20 +336,63 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             locationLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
         
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonStackView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
+            buttonStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+            buttonStackView.widthAnchor.constraint(equalToConstant: 250),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            startButton.widthAnchor.constraint(equalToConstant: 90),
+            startButton.heightAnchor.constraint(equalToConstant: 50),
+            startButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 20),
+            startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
+        
         summaryTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
+            summaryTextView.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 40),
             summaryTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             summaryTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
             summaryTextView.heightAnchor.constraint(equalToConstant: 75)
         ])
         
+        forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            forecastSegmentedControl.bottomAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 100),
+            forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
+            forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        weatherCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherCollectionView.topAnchor.constraint(equalTo: forecastSegmentedControl.bottomAnchor),
+            weatherCollectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            weatherCollectionView.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
+            weatherCollectionView.heightAnchor.constraint(equalToConstant: 250)
+        ])
+        
+    }
+    
+    private func loadWeather() {
+        DarkSkyAPIClient.manager.fetchWeatherForecast(lat: self.trail.latitude, long: self.trail.longitude) { (result) in
+            switch result {
+                case .success(let weatherForecast):
+                    self.forecastDetails = weatherForecast
+                case .failure(let error):
+                    print(error)
+            }
+        }
     }
     
 }
 
 
-//MARK: Mapbox Methods
+//MARK: - Mapbox Methods
 extension DetailVC: MGLMapViewDelegate {
     
     func getCoordinates(data: Data){
