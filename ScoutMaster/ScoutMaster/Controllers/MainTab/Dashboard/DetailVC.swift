@@ -66,6 +66,13 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return tv
     }()
     
+    lazy var mapResizingButton: UIButton = {
+        let button = UIButton(type: UIButton.ButtonType.system)
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.addTarget(self, action: #selector(adjustMapView), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var favoriteButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
@@ -269,6 +276,27 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    @objc func adjustMapView() {
+        if mapResizingButton.imageView?.image == UIImage(systemName: "chevron.down") {
+            
+            NSLayoutConstraint.deactivate(self.mapView.constraintsAffectingLayout(for: .vertical))
+            self.mapView.heightAnchor.constraint(equalToConstant: self.view.frame.height - 200).isActive = true
+            mapResizingButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        } else if mapResizingButton.imageView?.image == UIImage(systemName: "chevron.up") {
+            NSLayoutConstraint.deactivate(self.mapView.constraintsAffectingLayout(for: .vertical))
+            self.mapView.heightAnchor.constraint(equalToConstant: self.scrollView.frame.height / 2.5).isActive = true
+            mapResizingButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+    }
+    
     
     //MARK: - Private Functions
     
@@ -280,6 +308,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         scrollView.addSubview(mapView)
         scrollView.addSubview(trailDetailsTextView)
+        scrollView.addSubview(mapResizingButton)
         scrollView.addSubview(buttonStackView)
         
         scrollView.addSubview(nameLabel)
@@ -312,6 +341,14 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             trailDetailsTextView.topAnchor.constraint(equalTo: mapView.topAnchor),
             trailDetailsTextView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor)
+        ])
+        
+        mapResizingButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mapResizingButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 5),
+            mapResizingButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            mapResizingButton.widthAnchor.constraint(equalToConstant: 30),
+            mapResizingButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
