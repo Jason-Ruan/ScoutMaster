@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum ForecastType {
+    case daily
+    case hourly
+}
+
 //MARK: - DarkSky API Client
 
 class DarkSkyAPIClient {
