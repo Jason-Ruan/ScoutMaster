@@ -98,12 +98,12 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     }()
 
 
-//    @objc func click(sender: UIButton) {
-//        print("click")
-//        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-//
-//        }, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
-//    }
+    @objc func click(sender: UIButton) {
+        print("click")
+        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+
+        }, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+    }
     
     lazy var searchIcon: UIImageView = {
         let icon = UIImageView()
@@ -148,7 +148,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(profileImage)
         view.addSubview(filterButton)
 //        view.addSubview(dropDown)
-//        view.addSubview(horizontalStackView)
+        view.addSubview(horizontalStackView)
         
         
         // add Constraints
@@ -160,7 +160,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setProfileImageConstraints()
         setFilterButtonConstraints()
 //        setTableViewConstraints()
-//        setHorizontalStackViewConstraints()
+        setHorizontalStackViewConstraints()
         
     }
     
