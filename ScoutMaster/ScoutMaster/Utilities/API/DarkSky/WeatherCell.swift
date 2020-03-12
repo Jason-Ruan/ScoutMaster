@@ -8,19 +8,13 @@
 
 import UIKit
 
-public enum ForecastType {
-    case daily
-    case hourly
-}
-
 class WeatherCell: UICollectionViewCell {
     
     //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .init(white: 0.3, alpha: 0.3)
+        contentView.backgroundColor = .white
         setUpCell()
     }
     
