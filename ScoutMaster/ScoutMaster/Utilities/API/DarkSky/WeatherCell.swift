@@ -8,6 +8,11 @@
 
 import UIKit
 
+public enum ForecastType {
+    case daily
+    case hourly
+}
+
 class WeatherCell: UICollectionViewCell {
     
     //MARK: - Initializers
@@ -15,7 +20,8 @@ class WeatherCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 20
-        contentView.backgroundColor = .init(white: 0.3, alpha: 0.6)
+        contentView.backgroundColor = .init(white: 0.3, alpha: 0.3)
+        setUpCell()
     }
     
     required init?(coder: NSCoder) {
@@ -27,85 +33,70 @@ class WeatherCell: UICollectionViewCell {
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        if let dayForecast = self.dayForecast, let time = dayForecast.time {
-            let dateInput = Date(timeIntervalSinceNow: TimeInterval(exactly: time) ?? 0)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "E-M/d"
-            formatter.locale = .current
-            label.text = formatter.string(from: dateInput)
-        }
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     lazy var weatherIconImageView: UIImageView = {
         let iv = UIImageView()
-        if let dayForecast = self.dayForecast, let weatherIconName = dayForecast.icon {
-//            iv.image = UIImage(named: weatherIconName)
-            iv.image = UIImage(systemName: "cloud")
-        }
         iv.backgroundColor = .clear
         iv.tintColor = .lightGray
         return iv
     }()
     
-//    lazy var temperatureStackView: UIView = {
-//        let view = UIView()
-//        return view
-//    }()
-    
-    lazy var temperatureStackView: UIStackView = {
-       let sv = UIStackView()
-        sv.alignment = .center
-        sv.axis = .horizontal
-        sv.addArrangedSubview(self.lowTemperature)
-        sv.addArrangedSubview(self.highTemperature)
-        return sv
+    lazy var weatherSummaryLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        return label
     }()
     
     lazy var lowTemperature: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.numberOfLines = 0
-        if let dayForecast = self.dayForecast, let lowTemp = dayForecast.temperatureLow {
-            label.text = """
-            Low
-            \(lowTemp.description)\u{00B0}
-            """
-        }
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     lazy var highTemperature: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.numberOfLines = 0
-        if let dayForecast = self.dayForecast, let highTemp = dayForecast.temperatureHigh {
-            label.text = """
-            High
-            \(highTemp.description)\u{00B0}
-            """
-        }
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
+    }()
+    
+    lazy var temperatureStackView: UIStackView = {
+        let sv = UIStackView()
+        let lineSeparator = UIView()
+        
+        sv.alignment = .center
+        sv.axis = .horizontal
+        sv.distribution = .fillProportionally
+        
+        lineSeparator.backgroundColor = .black
+        lineSeparator.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        lineSeparator.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        sv.addArrangedSubview(self.lowTemperature)
+        sv.addArrangedSubview(lineSeparator)
+        sv.addArrangedSubview(self.highTemperature)
+        return sv
     }()
     
     
     //MARK: - Properties
-    var dayForecast: DayForecastDetails? {
-        didSet {
-            setUpCell()
-        }
-    }
-    
+    var forecastType: ForecastType?
     
     //MARK: - Functions
     private func setUpCell() {
         contentView.addSubview(dateLabel)
         contentView.addSubview(weatherIconImageView)
+        contentView.addSubview(weatherSummaryLabel)
         contentView.addSubview(temperatureStackView)
         
         constrainSubviews()
-//        configureTemperatureViews()
+        
     }
     
     private func constrainSubviews() {
@@ -125,39 +116,22 @@ class WeatherCell: UICollectionViewCell {
             weatherIconImageView.heightAnchor.constraint(equalToConstant: contentView.frame.height / 3)
         ])
         
+        weatherSummaryLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherSummaryLabel.topAnchor.constraint(equalTo: weatherIconImageView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            weatherSummaryLabel.centerXAnchor.constraint(equalTo: dateLabel.safeAreaLayoutGuide.centerXAnchor),
+            weatherSummaryLabel.widthAnchor.constraint(equalToConstant: contentView.frame.width),
+            weatherSummaryLabel.heightAnchor.constraint(equalToConstant: 15)
+        ])
+        
         temperatureStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            temperatureStackView.topAnchor.constraint(equalTo: weatherIconImageView.safeAreaLayoutGuide.bottomAnchor),
+            temperatureStackView.topAnchor.constraint(equalTo: weatherSummaryLabel.safeAreaLayoutGuide.bottomAnchor),
             temperatureStackView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
             temperatureStackView.widthAnchor.constraint(equalToConstant: contentView.frame.width),
             temperatureStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
         
     }
-    
-    private func configureTemperatureViews() {
-//        temperatureView.addSubview(lowTemperature)
-//        temperatureView.addSubview(highTemperature)
-//
-//        lowTemperature.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            lowTemperature.topAnchor.constraint(equalTo: temperatureView.safeAreaLayoutGuide.topAnchor),
-//            lowTemperature.centerXAnchor.constraint(equalTo: temperatureView.safeAreaLayoutGuide.centerXAnchor),
-//            lowTemperature.widthAnchor.constraint(equalToConstant: temperatureView.frame.width),
-//            lowTemperature.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-//
-//        highTemperature.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            highTemperature.topAnchor.constraint(equalTo: temperatureView.safeAreaLayoutGuide.topAnchor, constant: 100),
-//            highTemperature.centerXAnchor.constraint(equalTo: temperatureView.safeAreaLayoutGuide.centerXAnchor),
-//            highTemperature.widthAnchor.constraint(equalToConstant: temperatureView.frame.width),
-//            highTemperature.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-        
-        
-        
-    }
-    
     
 }
