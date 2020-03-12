@@ -90,16 +90,18 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         sv.spacing = 10
         
         sv.addArrangedSubview(self.favoriteButton)
-        let favLabel = UILabel()
-        favLabel.text = "Favorite"
-        favLabel.textColor = .systemBlue
-        sv.addArrangedSubview(favLabel)
+        let favButton = UIButton(type: UIButton.ButtonType.system)
+        favButton.setTitle("Favorite", for: .normal)
+        favButton.setTitleColor(.systemBlue, for: .normal)
+        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+        sv.addArrangedSubview(favButton)
         
         sv.addArrangedSubview(self.webLinkButton)
-        let webLabel = UILabel()
-        webLabel.text = "Website"
-        webLabel.textColor = .systemBlue
-        sv.addArrangedSubview(webLabel)
+        let webButton = UIButton(type: UIButton.ButtonType.system)
+        webButton.setTitle("Website", for: .normal)
+        webButton.setTitleColor(.systemBlue, for: .normal)
+        webButton.addTarget(self, action: #selector(openTrailLink), for: .touchUpInside)
+        sv.addArrangedSubview(webButton)
         
         return sv
     }()
