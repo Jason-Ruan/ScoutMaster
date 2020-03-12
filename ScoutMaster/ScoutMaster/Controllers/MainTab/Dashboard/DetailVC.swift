@@ -216,6 +216,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         view.backgroundColor = .black
         setUpViews()
         drawTrailPolyline()
+        loadWeather()
     }
     
     //    MARK: - Objective-C Methods
@@ -230,25 +231,11 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         FirestoreService.manager.createFaveHikes(post: newFaveTrail) { (result) in
             switch result {
-            case .failure(let error):
-                print(error)
-            case .success(()):
-                print("yes")
-                self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
-        }
-    }
-    
-    @objc func loadWeather() {
-        guard let trail = self.trail else {return}
-        DispatchQueue.main.async {
-            DarkSkyAPIClient.manager.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
-                switch result {
-                case .success(let sevenDayForecast):
-                    print("got weather")
                 case .failure(let error):
                     print(error)
-                }
+                case .success(()):
+                    print("yes")
+                    self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             }
         }
     }
@@ -267,6 +254,17 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             tabBarController.selectedIndex = 1
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func tappedForecastSegmentControl() {
+        switch self.forecastSegmentedControl.selectedSegmentIndex {
+            case 0:
+                selectedForecast = .daily
+            case 1:
+                selectedForecast = .hourly
+            default:
+                selectedForecast = .daily
+        }
     }
     
     
