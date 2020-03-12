@@ -24,6 +24,7 @@ class NetworkManager {
         }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
             guard error == nil else {
                 completionHandler(.failure(.networkError))
                 return
@@ -48,6 +49,7 @@ class NetworkManager {
                 completionHandler(.success(data))
             default:
                 completionHandler(.failure(.other(errorDescription: "Wrong Status Code")))
+            }
             }
         }.resume()
         
