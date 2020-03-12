@@ -8,14 +8,18 @@
 
 import Foundation
 
-struct WeatherForecast: Codable {
-    let timezone: String?
-    let daily: DailyForecast?
-    let hourly: HourlyForecast?
+//MARK: - DarkSky API Client
+
+class DarkSkyAPIClient {
+    private init() {}
+    static let manager = DarkSkyAPIClient()
     
-    static func fetchWeatherForecast(lat: Double, long: Double, completionHandler: @escaping (Result<WeatherForecast, AppError>) -> () ) {
+    // Gets back WeatherForecast object with both daily and hourly forecasts
+    func fetchWeatherForecast(lat: Double, long: Double, completionHandler: @escaping (Result<WeatherForecast, AppError>) -> () ) {
+        
         let urlStr = "https://api.darksky.net/forecast/\(Secrets.darkSky_key)/\(lat),\(long)"
-        NetworkManager.shared.fetchData(urlString: urlStr) { (result) in
+        
+        NetworkManager.shared.fetchData(urlString: urlStr, completionHandler: { (result) in
             switch result {
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -28,12 +32,20 @@ struct WeatherForecast: Codable {
                     }
                     completionHandler(.success(darkSkyResult))
                 } catch let error {
-                    print(error)
-                    completionHandler(.failure(.badJSONError))
+                    completionHandler(.failure(.other(errorDescription: error.localizedDescription)))
                 }
             }
-        }
+        })
     }
+    
+}
+
+//MARK: - Weather Forecast Object w/ Daily and Hourly
+
+struct WeatherForecast: Codable {
+    let timezone: String?
+    let daily: DailyForecast?
+    let hourly: HourlyForecast?
     
     struct DailyForecast: Codable {
         let summary: String?
@@ -59,6 +71,8 @@ struct WeatherForecast: Codable {
     
 }
 
+//MARK: - Daily Forecast Details
+
 struct DayForecastDetails: Codable {
     let time: Int?
     let summary: String?
@@ -76,6 +90,9 @@ struct DayForecastDetails: Codable {
     let cloudCover: Double?
     let visibility: Double?
 }
+
+
+//MARK: - Hourly Forecast Details
 
 struct HourForecastDetails: Codable {
     let time: Int?

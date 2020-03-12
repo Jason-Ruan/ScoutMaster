@@ -182,7 +182,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
     @objc func loadWeather() {
         guard let trail = self.trail else {return}
         DispatchQueue.main.async {
-            WeatherForecast.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
+            DarkSkyAPIClient.manager.fetchWeatherForecast(lat: trail.latitude, long: trail.longitude) { (result) in
                 switch result {
                 case .success(let sevenDayForecast):
                     print("got weather")
