@@ -198,6 +198,18 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     var scrollView: UIScrollView!
     
+    private var forecastDetails: WeatherForecast? {
+        didSet {
+            selectedForecast = .daily
+        }
+    }
+    
+    private var selectedForecast: ForecastType? {
+        didSet {
+            weatherCollectionView.reloadData()
+        }
+    }
+    
     //MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
