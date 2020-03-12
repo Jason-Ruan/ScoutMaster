@@ -8,8 +8,9 @@
 
 import UIKit
 import Mapbox
+import SafariServices
 
-class DetailVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
+class DetailVC: UIViewController, UIScrollViewDelegate {
     
     //MARK: - UI Objects
     lazy var mapView: MGLMapView = {
@@ -191,6 +192,12 @@ class DetailVC: UIViewController, UIScrollViewDelegate, UIToolbarDelegate {
                 }
             }
         }
+    }
+    
+    @objc func openTrailLink() {
+        guard let trail = self.trail, let trailURL = URL(string: trail.url) else {return}
+        let safariWebView = SFSafariViewController(url: trailURL)
+        present(safariWebView, animated: true, completion: nil)
     }
     
     @objc private func segueToMap() {

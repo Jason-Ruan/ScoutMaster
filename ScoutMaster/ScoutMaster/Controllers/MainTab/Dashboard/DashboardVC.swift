@@ -294,7 +294,7 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailVC = MapboxTestVC()
+        let detailVC = DetailVC()
         detailVC.trail = HPTrails[indexPath.row]
         present(detailVC, animated: true, completion: nil)
         
