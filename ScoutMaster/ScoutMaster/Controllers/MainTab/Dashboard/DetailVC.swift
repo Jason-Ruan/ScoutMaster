@@ -584,7 +584,7 @@ extension DetailVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayo
     }
     
     private func convertTimeToDate(forecastType: ForecastType, time: Int) -> String {
-        let dateInput = Date(timeIntervalSinceNow: TimeInterval(exactly: time) ?? 0)
+        let dateInput = Date(timeIntervalSince1970: TimeInterval(exactly: time) ?? 0)
         let formatter = DateFormatter()
         switch forecastType {
             case .daily:
