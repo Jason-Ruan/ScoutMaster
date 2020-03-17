@@ -274,6 +274,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             default:
                 selectedForecast = .daily
         }
+        
+        weatherCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
+        
     }
     
     @objc func adjustMapView() {
