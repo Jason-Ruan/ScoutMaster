@@ -19,7 +19,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         yourName.attributedText = attributedTitle
         yourName.numberOfLines = 0
         yourName.backgroundColor = .clear
-//        yourName.font = yourName.font.withSize(20)
         return yourName
     }()
     
@@ -38,7 +37,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         searchIt.layer.shadowRadius = 0.0
         searchIt.layer.masksToBounds = false
         searchIt.autocorrectionType = .no
-        //        searchIt.addSoftUIEffectForView()
         searchIt.delegate = self
         return searchIt
     }()
@@ -53,31 +51,36 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return collectionView
     }()
     
-//    lazy var dropDown: UITableView = {
-//        let dropDown: UITableView = UITableView()
-//        dropDown.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-//        return dropDown
-//    }()
-    
     lazy var nearbyButton: UIButton = {
         let button: UIButton = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Nearby", for: .normal)
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
-//        button.backgroundColor = .black
+        button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         return button
     }()
     
+    @objc func clickNearbyButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        horizontalStackView.isHidden = true
+    }
+    
     lazy var popularButton: UIButton = {
         let button: UIButton = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Popular", for: .normal)
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
-//        button.backgroundColor = .black
+        button.addTarget(self, action: #selector(clickPopularButton), for: .touchUpInside)
         return button
     }()
+    
+    @objc func clickPopularButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        filterLabel.titleLabel?.text = "Popular"
+        horizontalStackView.isHidden = true
+    }
     
     lazy var horizontalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [nearbyButton, popularButton])
@@ -85,6 +88,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 30
+        stackView.isHidden = true
         return stackView
     }()
     
@@ -93,16 +97,18 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         label.setTitle("Nearby", for: .normal)
         label.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         label.setTitleColor(.black, for: .normal)
-//        label.addTarget(self, action: #selector(click), for: .touchUpInside)
+        label.addTarget(self, action: #selector(click), for: .touchUpInside)
+        label.titleLabel?.numberOfLines = 1
+        label.titleLabel?.adjustsFontSizeToFitWidth = true
+        label.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return label
     }()
 
 
     @objc func click(sender: UIButton) {
         print("click")
-        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-
-        }, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+        filterLabel.isHidden = true
+        horizontalStackView.isHidden = false
     }
     
     lazy var searchIcon: UIImageView = {
@@ -147,7 +153,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(searchIcon)
         view.addSubview(profileImage)
         view.addSubview(filterButton)
-//        view.addSubview(dropDown)
         view.addSubview(horizontalStackView)
         
         
@@ -159,7 +164,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setSearchIconConstraints()
         setProfileImageConstraints()
         setFilterButtonConstraints()
-//        setTableViewConstraints()
         setHorizontalStackViewConstraints()
         
     }
