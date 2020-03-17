@@ -153,15 +153,24 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return label
     }()
     
-    lazy var summaryTextView: UITextView = {
+    lazy var descriptionHeaderLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Description"
+        label.textColor = .lightText
+        label.font = label.font.withSize(20)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    lazy var descriptionTextView: UITextView = {
         let tv = UITextView()
         tv.isEditable = false
         if let trail = self.trail {
             tv.text = trail.summary
             tv.textColor = .white
-            tv.font = tv.font?.withSize(20)
+            tv.font = tv.font?.withSize(16)
             tv.adjustsFontForContentSizeCategory = true
-            tv.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
+            tv.backgroundColor = .clear
         }
         return tv
     }()
@@ -319,7 +328,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(locationLabel)
         
         scrollView.addSubview(startButton)
-        scrollView.addSubview(summaryTextView)
+        scrollView.addSubview(descriptionHeaderLabel)
+        scrollView.addSubview(descriptionTextView)
         
         scrollView.addSubview(forecastSegmentedControl)
         scrollView.addSubview(weatherCollectionView)
@@ -394,17 +404,25 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
         
-        summaryTextView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            summaryTextView.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 40),
-            summaryTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            summaryTextView.widthAnchor.constraint(equalToConstant: view.frame.width),
-            summaryTextView.heightAnchor.constraint(equalToConstant: 75)
+            descriptionHeaderLabel.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 50),
+            descriptionHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            descriptionHeaderLabel.widthAnchor.constraint(equalToConstant: view.frame.width / 3),
+            descriptionHeaderLabel.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor, constant: 5),
+            descriptionTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            descriptionTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            descriptionTextView.heightAnchor.constraint(equalToConstant: 75)
         ])
         
         forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            forecastSegmentedControl.bottomAnchor.constraint(equalTo: summaryTextView.bottomAnchor, constant: 100),
+            forecastSegmentedControl.bottomAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 100),
             forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
             forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
