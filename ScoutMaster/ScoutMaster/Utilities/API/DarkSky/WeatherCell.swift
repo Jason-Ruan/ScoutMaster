@@ -41,6 +41,7 @@ class WeatherCell: UICollectionViewCell {
     lazy var weatherSummaryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
