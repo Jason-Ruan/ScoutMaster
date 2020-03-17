@@ -116,7 +116,7 @@ class WeatherCell: UICollectionViewCell {
             weatherSummaryLabel.topAnchor.constraint(equalTo: weatherIconImageView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
             weatherSummaryLabel.centerXAnchor.constraint(equalTo: dateLabel.safeAreaLayoutGuide.centerXAnchor),
             weatherSummaryLabel.widthAnchor.constraint(equalToConstant: contentView.frame.width),
-            weatherSummaryLabel.heightAnchor.constraint(equalToConstant: 15)
+            weatherSummaryLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         temperatureStackView.translatesAutoresizingMaskIntoConstraints = false
