@@ -545,7 +545,7 @@ extension DetailVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayo
                 let dayForecast = forecastDetails?.daily?.data?[indexPath.row]
                 cell.dateLabel.text = convertTimeToDate(forecastType: .daily, time: dayForecast?.time ?? 0)
                 cell.weatherIconImageView.image = getWeatherIcon(named: dayForecast?.icon ?? "")
-                cell.weatherSummaryLabel.text = dayForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                cell.weatherSummaryLabel.text = dayForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
                 cell.lowTemperature.text = """
                 Low
                 \(dayForecast?.temperatureLow?.description ?? "N/A")\u{00B0}
@@ -561,7 +561,7 @@ extension DetailVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayo
                 let hourlyForecast = forecastDetails?.hourly?.data?[indexPath.row]
                 cell.dateLabel.text = convertTimeToDate(forecastType: .hourly, time: hourlyForecast?.time ?? 0)
                 cell.weatherIconImageView.image = getWeatherIcon(named: hourlyForecast?.icon ?? "")
-                cell.weatherSummaryLabel.text = hourlyForecast?.icon?.trimmingCharacters(in: CharacterSet.punctuationCharacters).capitalized
+                cell.weatherSummaryLabel.text = hourlyForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
                 cell.lowTemperature.text = """
                 \(hourlyForecast?.temperature?.description ?? "N/A")\u{00B0}
                 """
