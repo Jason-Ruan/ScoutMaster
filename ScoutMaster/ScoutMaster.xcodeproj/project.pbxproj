@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080C48CC2412F616006A19EC /* WeatherCell.swift */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
 		080E1C9B23E4734500EF94A6 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		08BF0ED0242255D600F12B9C /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */; };
 		0D965CB6B3A011C0B1E1BEC6 /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */; };
 		3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */; };
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
@@ -81,7 +83,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080C48CC2412F616006A19EC /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
+		08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		1B33429CD402F55EAA5FEC22 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
@@ -447,6 +451,8 @@
 			isa = PBXGroup;
 			children = (
 				52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */,
+				080C48CC2412F616006A19EC /* WeatherCell.swift */,
+				08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */,
 			);
 			path = DarkSky;
 			sourceTree = "<group>";
@@ -714,6 +720,7 @@
 				3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
+				080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */,
 				3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */,
 				4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */,
 				4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */,
@@ -727,6 +734,7 @@
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
 				3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */,
 				3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */,
+				08BF0ED0242255D600F12B9C /* WeatherTableViewCell.swift in Sources */,
 				4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
 				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
