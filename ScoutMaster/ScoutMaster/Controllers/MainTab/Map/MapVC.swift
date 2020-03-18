@@ -219,6 +219,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         case false:
             let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
             //record trail method goes here
+                
                 self.recordingStatus = true
             })
             let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
@@ -226,12 +227,21 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             
         case true:
             print("stop recording prompt goes here")
-            let action = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
                 //save or discard trail here, add images, title , description then persist
                 //maybe a custom uiview to add these properties visually
                 self.recordingStatus = false
             }
-            let alertController = showAlertController(title: "End Recording?", message: nil, actions: [action])
+            
+            let keepRecording = UIAlertAction(title: "No, Keep Recording", style: .destructive) { (action) in
+                //
+            }
+            let discard = UIAlertAction(title: "No, Discard Recording", style: .destructive) { (action) in
+                //
+                self.recordingStatus = false
+                self.userTraversedCoordinates = [CLLocationCoordinate2D]()
+            }
+            let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
             present(alertController,animated: true)
         }
            
@@ -439,15 +449,17 @@ extension MapVC: MGLMapViewDelegate {
     }
     
     func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
+        if recordingStatus == true {
         if let userCoord = userLocation?.coordinate {
                    self.userTraversedCoordinates.append(userCoord)
+                    drawUserTrailPolyline()
                }
                
-               if self.userTraversedCoordinates.count >= 2 {
+               if self.userTraversedCoordinates.count >= 3 {
                    drawUserTrailPolyline()
                }
     }
-    
+    }
     
     
     
