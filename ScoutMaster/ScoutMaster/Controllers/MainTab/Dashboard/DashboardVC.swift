@@ -7,18 +7,10 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             collectionView.reloadData()
         }
     }
-    var longitude: Double = 40.668 {
-        didSet {
-            
-        }
-    }
-    var latitude: Double = -73.9738 {
-        didSet {
-            
-        }
-    }
-    
+    var longitude: Double = 40.668
+    var latitude: Double = -73.9738
     var newText = ""
+    var dropDownOptions = ["Popular", "Nearby"]
     
     lazy var nameLabel: UILabel = {
         var yourName = UILabel()
@@ -27,7 +19,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         yourName.attributedText = attributedTitle
         yourName.numberOfLines = 0
         yourName.backgroundColor = .clear
-//        yourName.font = yourName.font.withSize(20)
         return yourName
     }()
     
@@ -37,7 +28,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         searchIt.attributedPlaceholder = NSMutableAttributedString(string: "   Search...", attributes: [NSAttributedString.Key.font: UIFont(name: "Helvetica", size: 18)!, NSAttributedString.Key.foregroundColor: UIColor.black])
         
         searchIt.layer.cornerRadius = 25
-        //had to detail color to test to device
         searchIt.textColor = .black
         searchIt.backgroundColor = .white
         searchIt.textAlignment = .center
@@ -47,7 +37,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         searchIt.layer.shadowRadius = 0.0
         searchIt.layer.masksToBounds = false
         searchIt.autocorrectionType = .no
-        //        searchIt.addSoftUIEffectForView()
         searchIt.delegate = self
         return searchIt
     }()
@@ -62,14 +51,65 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return collectionView
     }()
     
+    lazy var nearbyButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Nearby", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func clickNearbyButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        horizontalStackView.isHidden = true
+    }
+    
+    lazy var popularButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Popular", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(clickPopularButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func clickPopularButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        filterLabel.titleLabel?.text = "Popular"
+        horizontalStackView.isHidden = true
+    }
+    
+    lazy var horizontalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [nearbyButton, popularButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 30
+        stackView.isHidden = true
+        return stackView
+    }()
+    
     lazy var filterLabel: UIButton = {
         let label = UIButton()
         label.setTitle("Nearby", for: .normal)
-//        label.font = UIFont.init(name: "Baskerville", size: 25)
         label.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         label.setTitleColor(.black, for: .normal)
+        label.addTarget(self, action: #selector(click), for: .touchUpInside)
+        label.titleLabel?.numberOfLines = 1
+        label.titleLabel?.adjustsFontSizeToFitWidth = true
+        label.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return label
     }()
+
+
+    @objc func click(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = true
+        horizontalStackView.isHidden = false
+    }
     
     lazy var searchIcon: UIImageView = {
         let icon = UIImageView()
@@ -113,6 +153,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(searchIcon)
         view.addSubview(profileImage)
         view.addSubview(filterButton)
+        view.addSubview(horizontalStackView)
+        
         
         // add Constraints
         setCollectionViewConstraints()
@@ -122,15 +164,9 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setSearchIconConstraints()
         setProfileImageConstraints()
         setFilterButtonConstraints()
+        setHorizontalStackViewConstraints()
         
     }
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if string == "" {
-//            print("test")
-//        }
-//        return false
-//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
@@ -142,7 +178,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         }
         loadGeoCoordinates()
         textField.resignFirstResponder()
-        print(newText)
         newText = ""
         return true
     }
@@ -163,7 +198,6 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
                 }
             }
         }
-        print(searchItBar.text!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,6 +235,22 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
+    
+    private func setTableViewConstraints() {
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            self.collectionView.topAnchor.constraint(equalTo: searchItBar.bottomAnchor,constant: 30),
+            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 20),
+            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20),
+            self.collectionView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+
+
+
     
     private func setSearchItBarConstraints() {
         self.searchItBar.translatesAutoresizingMaskIntoConstraints = false
@@ -253,6 +303,14 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             filterLabel.heightAnchor.constraint(equalToConstant: 30)])
     }
     
+    private func setHorizontalStackViewConstraints(){
+        self.horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalStackView.topAnchor.constraint(equalTo: searchItBar.bottomAnchor,constant: 30),
+            horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            horizontalStackView.heightAnchor.constraint(equalToConstant: 30)])
+    }
+    
     private func setFilterButtonConstraints(){
         self.filterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -294,48 +352,25 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailVC = MapboxTestVC()
+        let detailVC = DetailVC()
         detailVC.trail = HPTrails[indexPath.row]
         present(detailVC, animated: true, completion: nil)
         
     }
 }
+    
 
-class dropDownView: UIView, UITableViewDelegate, UITableViewDataSource {
+//extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        dropDownOptions.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = UITableViewCell()
+//        cell.textLabel?.text = dropDownOptions[indexPath.row]
+//        return cell
+//    }
+//
+//
+//}
     
-    var dropDownOptions = [String]()
-    var tableView = UITableView()
-    
-    
-    
-    override init(frame: CGRect) {
-    super.init(frame: frame)
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.addSubview(tableView)
-        
-        tableView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-         tableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-         tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dropDownOptions.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        cell.textLabel?.text = dropDownOptions[indexPath.row]
-        return cell
-    }
-    
-    
-}

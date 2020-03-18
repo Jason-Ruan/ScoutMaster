@@ -70,6 +70,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             print(newCoords!)
             for i in newCoords {
                 coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
+                drawTrailPolyline()
             }
         }
     }
@@ -111,6 +112,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         constrainRecordTrailButton()
         constrainAddPopUp()
         getPointsOfInterest()
+        
     }
     
     //MARK: Constraint Methods
