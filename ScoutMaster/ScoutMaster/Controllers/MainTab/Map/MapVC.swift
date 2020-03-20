@@ -56,8 +56,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     lazy var forecastSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl()
-        sc.insertSegment(withTitle: "Daily", at: 0, animated: true)
-        sc.insertSegment(withTitle: "Hourly", at: 1, animated: true)
+        sc.insertSegment(withTitle: "Hourly", at: 0, animated: true)
+        sc.insertSegment(withTitle: "Daily", at: 1, animated: true)
         sc.selectedSegmentIndex = 0
         sc.backgroundColor = .lightGray
         sc.addTarget(self, action: #selector(tappedForecastSegmentControl), for: .valueChanged)
@@ -118,16 +118,16 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var forecastDetails: WeatherForecast? {
         didSet {
-            selectedForecast = .daily
+            selectedForecast = .hourly
         }
     }
     
     var selectedForecast: ForecastType? {
         didSet {
             switch selectedForecast {
-                case .daily:
-                    forecastSegmentedControl.selectedSegmentIndex = 0
                 case .hourly:
+                    forecastSegmentedControl.selectedSegmentIndex = 0
+                case .daily:
                     forecastSegmentedControl.selectedSegmentIndex = 1
                 default:
                     forecastSegmentedControl.selectedSegmentIndex = 0
@@ -438,11 +438,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     @objc func tappedForecastSegmentControl() {
         switch self.forecastSegmentedControl.selectedSegmentIndex {
             case 0:
-                selectedForecast = .daily
-            case 1:
                 selectedForecast = .hourly
-            default:
+            case 1:
                 selectedForecast = .daily
+            default:
+                selectedForecast = .hourly
         }
         
     }
