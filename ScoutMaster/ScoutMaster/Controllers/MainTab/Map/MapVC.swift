@@ -275,33 +275,33 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     //MARK: - Trail Recording Methods
     @objc func recordTrailPrompt(button: UIButton){
         switch recordingStatus {
-        case false:
-            let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
-            //record trail method goes here
+            case false:
+                let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
+                    //record trail method goes here
+                    
+                    self.recordingStatus = true
+                })
+                let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
+                present(alertController, animated: true, completion: nil)
+            
+            case true:
+                print("stop recording prompt goes here")
+                let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+                    //save or discard trail here, add images, title , description then persist
+                    //maybe a custom uiview to add these properties visually
+                    self.recordingStatus = false
+                }
                 
-                self.recordingStatus = true
-            })
-            let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
-            present(alertController, animated: true, completion: nil)
-            
-        case true:
-            print("stop recording prompt goes here")
-            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
-                //save or discard trail here, add images, title , description then persist
-                //maybe a custom uiview to add these properties visually
-                self.recordingStatus = false
-            }
-            
-            let keepRecording = UIAlertAction(title: "No, Keep Recording", style: .destructive) { (action) in
-                //
-            }
-            let discard = UIAlertAction(title: "No, Discard Recording", style: .destructive) { (action) in
-                //
-                self.recordingStatus = false
-                self.userTraversedCoordinates = [CLLocationCoordinate2D]()
-            }
-            let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
-            present(alertController,animated: true)
+                let keepRecording = UIAlertAction(title: "No, Keep Recording", style: .destructive) { (action) in
+                    //
+                }
+                let discard = UIAlertAction(title: "No, Discard Recording", style: .destructive) { (action) in
+                    //
+                    self.recordingStatus = false
+                    self.userTraversedCoordinates = [CLLocationCoordinate2D]()
+                }
+                let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
+                present(alertController,animated: true)
         }
         
     }
@@ -325,12 +325,12 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     private func togglePOI(){
         switch POIShown {
-        case true:
-            hidePointsOfInterest()
-            POIShown = false
-        case false:
-            getPointsOfInterest()
-            POIShown = true
+            case true:
+                hidePointsOfInterest()
+                POIShown = false
+            case false:
+                getPointsOfInterest()
+                POIShown = true
         }
     }
     
@@ -341,52 +341,52 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         } catch {
             print("error, could not save POI")
         }
-      
+        
     }
     
     func dismissAddPointView() {
-           switchAnimationAddPopUp()
-       }
-       
-       @objc func showAddPointView(sender: UIButton){
-           switchAnimationAddPopUp()
-           
-       }
-       
-       private func switchAnimationAddPopUp(){
-           switch addPopUp.shown {
-           case false:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = false
-                   self.showPopUpTopAnchorConstraint.isActive = true
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = true
-               }
-           case true:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = true
-                   self.showPopUpTopAnchorConstraint.isActive = false
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = false
-               }
-           }
-       }
-
-    //MARK: Visual Map Methods
+        switchAnimationAddPopUp()
+    }
+    
+    @objc func showAddPointView(sender: UIButton){
+        switchAnimationAddPopUp()
+        
+    }
+    
+    private func switchAnimationAddPopUp(){
+        switch addPopUp.shown {
+            case false:
+                UIView.animate(withDuration: 0.3) {
+                    self.hidePopUpTopAnchorConstraint.isActive = false
+                    self.showPopUpTopAnchorConstraint.isActive = true
+                    self.view.layoutIfNeeded()
+                    self.addPopUp.shown = true
+            }
+            case true:
+                UIView.animate(withDuration: 0.3) {
+                    self.hidePopUpTopAnchorConstraint.isActive = true
+                    self.showPopUpTopAnchorConstraint.isActive = false
+                    self.view.layoutIfNeeded()
+                    self.addPopUp.shown = false
+            }
+        }
+    }
+    
+    //MARK: - Visual Map Methods
     
     @objc func locationButtonTapped(sender: UIButton) {
         var mode: MGLUserTrackingMode
         switch (mapView.userTrackingMode) {
-        case .none:
-            mode = .follow
-        case .follow:
-            mode = .followWithHeading
-        case .followWithHeading:
-            mode = .followWithCourse
-        case .followWithCourse:
-            mode = .none
-        @unknown default:
-            fatalError("Unknown user tracking mode")
+            case .none:
+                mode = .follow
+            case .follow:
+                mode = .followWithHeading
+            case .followWithHeading:
+                mode = .followWithCourse
+            case .followWithCourse:
+                mode = .none
+            @unknown default:
+                fatalError("Unknown user tracking mode")
         }
         mapView.userTrackingMode = mode
         mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
@@ -426,10 +426,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
     func drawUserTrailPolyline() {
-    let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
+        let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
         polyline.title = "user"
-    DispatchQueue.main.async {
-        self.mapView.addAnnotation(polyline)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(polyline)
+        }
     }
     }
     
@@ -473,10 +474,10 @@ extension MapVC: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         switch annotation.title {
-        case "user":
-            return .systemGreen
-        default:
-           return .systemBlue
+            case "user":
+                return .systemGreen
+            default:
+                return .systemBlue
         }
         
     }
@@ -508,15 +509,15 @@ extension MapVC: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
         if recordingStatus == true {
-        if let userCoord = userLocation?.coordinate {
-                   self.userTraversedCoordinates.append(userCoord)
-                    drawUserTrailPolyline()
-               }
-               
-               if self.userTraversedCoordinates.count >= 3 {
-                   drawUserTrailPolyline()
-               }
-    }
+            if let userCoord = userLocation?.coordinate {
+                self.userTraversedCoordinates.append(userCoord)
+                drawUserTrailPolyline()
+            }
+            
+            if self.userTraversedCoordinates.count >= 3 {
+                drawUserTrailPolyline()
+            }
+        }
     }
     
     
