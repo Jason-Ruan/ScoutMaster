@@ -219,6 +219,25 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
     }
     
+    func showWeatherTableView() {
+        view.addSubview(forecastSegmentedControl)
+        forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            forecastSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
+            forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        view.addSubview(weatherTableView)
+        weatherTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            weatherTableView.topAnchor.constraint(equalTo: forecastSegmentedControl.bottomAnchor, constant: 3),
+            weatherTableView.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
+            weatherTableView.widthAnchor.constraint(equalToConstant: view.frame.width)])
+    }
+    
     lazy var hidePopUpTopAnchorConstraint: NSLayoutConstraint = {
         return addPopUp.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     }()
