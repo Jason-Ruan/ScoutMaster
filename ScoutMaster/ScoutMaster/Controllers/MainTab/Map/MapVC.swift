@@ -5,7 +5,7 @@ import MapboxAnnotationExtension
 class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AddPointViewDelegate {
     
     
-    //MARK: UI Variables
+    //MARK: - UI Variables
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,7 +38,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         return button
     }()
     
-    
     lazy var recordTrailButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 25
@@ -56,7 +55,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
        }()
     
     
-    //MARK: Properties
+    //MARK: - Properties
+    
     var trail: Trail? {
         didSet{
             drawTrailPolyline()
@@ -98,7 +98,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var recordingStatus = false
     
     
-    //MARK: Lifecycle
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
@@ -115,7 +115,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         
     }
     
-    //MARK: Constraint Methods
+    //MARK: - Constraint Methods
     func constrainLocationButton(){
         view.addSubview(locationButton)
         locationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +125,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             locationButton.heightAnchor.constraint(equalToConstant: 50),
             locationButton.widthAnchor.constraint(equalToConstant: 50)])
     }
+    
     func constrainAddAnnotationButton(){
         view.addSubview(addAnnotationButton)
         addAnnotationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -187,7 +188,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }()
     
     
-    //MARK: Private Methods
+    //MARK: - Private Methods
     
     private func getCoordinatesFromJSON(data: Data){
            do {
@@ -213,7 +214,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
     
-    //MARK: Trail Recording Methods
+    //MARK: - Trail Recording Methods
     @objc func recordTrailPrompt(button: UIButton){
         switch recordingStatus {
         case false:
@@ -244,11 +245,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
             present(alertController,animated: true)
         }
-           
+        
     }
     
     
-    //MARK: Points Of Interest Methods
+    //MARK: - Points Of Interest Methods
     private func getPointsOfInterest() {
         var poi = [PointOfInterest]()
         do {
@@ -375,7 +376,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
 }
-    //MARK: CV Delegate Methods
+//MARK: - CV Delegate Methods
 
 extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -403,11 +404,10 @@ extension MapVC: UICollectionViewDataSource {
         }
     }
 }
-    
-    
-    
-    
-    //MARK: MV Delegate Methods
+
+
+
+//MARK: - MV Delegate Methods
 extension MapVC: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         return 4.0
@@ -420,7 +420,7 @@ extension MapVC: MGLMapViewDelegate {
         default:
            return .systemBlue
         }
-       
+        
     }
     
     
