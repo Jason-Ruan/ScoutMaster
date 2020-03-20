@@ -49,10 +49,30 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }()
     
     lazy var addPopUp: AddPointView = {
-           let popUp = AddPointView()
-           popUp.delegate = self
-           return popUp
-       }()
+        let popUp = AddPointView()
+        popUp.delegate = self
+        return popUp
+    }()
+    
+    lazy var forecastSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl()
+        sc.insertSegment(withTitle: "Daily", at: 0, animated: true)
+        sc.insertSegment(withTitle: "Hourly", at: 1, animated: true)
+        sc.selectedSegmentIndex = 0
+        sc.backgroundColor = .lightGray
+        sc.addTarget(self, action: #selector(tappedForecastSegmentControl), for: .valueChanged)
+        return sc
+    }()
+    
+    lazy var weatherTableView: UITableView = {
+        let tv = UITableView()
+        tv.delegate = self
+        tv.dataSource = self
+        tv.layer.borderWidth = 3
+        tv.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0.5, alpha: 0.5)
+        tv.register(WeatherTableViewCell.self, forCellReuseIdentifier: "weatherTableViewCell")
+        return tv
+    }()
     
     
     //MARK: - Properties
