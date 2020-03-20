@@ -87,7 +87,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var newCoords: [(Double,Double)]! {
         didSet {
-            print(newCoords!)
             for i in newCoords {
                 coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
                 drawTrailPolyline()
@@ -250,19 +249,19 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     //MARK: - Private Methods
     
     private func getCoordinatesFromJSON(data: Data){
-           do {
-               var coords = [(Double,Double)]()
-               let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
-               for i in rawCoords {
-                   coords.append((i[1],i[0]))
-               }
-               newCoords = coords
-               print("got coordinates")
-           }
-           catch {
-               print("error, could not decode geoJSON")
-           }
-       }
+        do {
+            var coords = [(Double,Double)]()
+            let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
+            for i in rawCoords {
+                coords.append((i[1],i[0]))
+            }
+            newCoords = coords
+        }
+        catch {
+            print("error, could not decode geoJSON")
+        }
+    }
+    
     func showAlertController(title: String?, message: String?, actions: [UIAlertAction]) -> UIAlertController {
         let alertController = UIAlertController(title: title , message: message, preferredStyle: .alert)
         actions.forEach { (action) in
