@@ -79,7 +79,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var trail: Trail? {
         didSet{
-            drawTrailPolyline()
+//             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
+//            drawTrailPolyline()
         }
     }
     
