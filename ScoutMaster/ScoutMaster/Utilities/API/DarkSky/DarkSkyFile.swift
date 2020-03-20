@@ -7,11 +7,55 @@
 //
 
 import Foundation
+import UIKit
 
 public enum ForecastType {
     case daily
     case hourly
 }
+
+public func convertTimeToDate(forecastType: ForecastType, time: Int) -> String {
+    let dateInput = Date(timeIntervalSince1970: TimeInterval(exactly: time) ?? 0)
+    let formatter = DateFormatter()
+    switch forecastType {
+        case .daily:
+            formatter.dateFormat = "E M/d"
+        case .hourly:
+            formatter.dateFormat = "E - h a"
+    }
+    formatter.locale = .current
+    return formatter.string(from: dateInput)
+}
+
+public func getWeatherIcon(named: String) -> UIImage {
+    switch named {
+        case "clear-day":
+            return UIImage(systemName: "sun.max.fill")!
+        case "clear-night":
+            return UIImage(systemName: "moon.fill")!
+        case "wind":
+            return UIImage(systemName: "wind")!
+        case "rain":
+            return UIImage(systemName: "cloud.rain.fill")!
+        case "sleet":
+            return UIImage(systemName: "cloud.sleet.fill")!
+        case "snow":
+            return UIImage(systemName: "cloud.snow.fill")!
+        case "fog":
+            return UIImage(systemName: "cloud.fog.fill")!
+        case "cloudy":
+            return UIImage(systemName: "cloud.fill")!
+        case "hail":
+            return UIImage(systemName: "cloud.hail.fill")!
+        case "thunderstorm":
+            return UIImage(systemName: "cloud.bolt.rain.fill")!
+        case "tornado":
+            return UIImage(systemName: "tornado")!
+        default:
+            return UIImage(systemName: "cloud.sun.fill")!
+    }
+}
+
 
 //MARK: - DarkSky API Client
 
