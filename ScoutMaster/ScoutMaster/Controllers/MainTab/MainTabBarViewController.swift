@@ -10,16 +10,13 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
 
-    lazy var discoverVC = UINavigationController(rootViewController: DashboardVC())
-    lazy var journeyVC = UINavigationController(rootViewController: MapVC())
-    lazy var userVC = UINavigationController(rootViewController: ProfileVC())
+    lazy var discoverVC = DashboardVC()
+    lazy var journeyVC = MapVC()
+    lazy var userVC = ProfileVC()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        discoverVC.isNavigationBarHidden = true
-        journeyVC.isNavigationBarHidden = true
-        userVC.isNavigationBarHidden = true
         
         discoverVC.tabBarItem = UITabBarItem(title: "Discover", image: UIImage(named: "search"), tag: 0)
         journeyVC.tabBarItem = UITabBarItem(title: "Journey", image: UIImage(named: "map"), tag: 1)
