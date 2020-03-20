@@ -432,6 +432,19 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             self.mapView.addAnnotation(polyline)
         }
     }
+    
+    //MARK: - Weather Methods
+    
+    @objc func tappedForecastSegmentControl() {
+        switch self.forecastSegmentedControl.selectedSegmentIndex {
+            case 0:
+                selectedForecast = .daily
+            case 1:
+                selectedForecast = .hourly
+            default:
+                selectedForecast = .daily
+        }
+        
     }
     
 }
@@ -455,11 +468,18 @@ extension MapVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0:
-        print("poi toggled")
-        self.togglePOI()
-        default:
-            return
+            case 0:
+                print("poi toggled")
+                self.togglePOI()
+            case 1:
+                if weatherTableView.isDescendant(of: self.view) && forecastSegmentedControl.isDescendant(of: self.view) {
+                    weatherTableView.removeFromSuperview()
+                    forecastSegmentedControl.removeFromSuperview()
+                } else {
+                    self.showWeatherTableView()
+                }
+            default:
+                return
         }
     }
 }
@@ -526,3 +546,80 @@ extension MapVC: MGLMapViewDelegate {
 }
 
 
+//MARK: - TableView Methods for Weather
+
+extension MapVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerlabel = UILabel()
+        headerlabel.backgroundColor = .lightGray
+        headerlabel.adjustsFontSizeToFitWidth = true
+        headerlabel.textAlignment = .center
+        if let trail = self.trail {
+            headerlabel.text = " Weather for \(trail.name) "
+        } else {
+            headerlabel.text = "No trail detected"
+        }
+        return headerlabel
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch selectedForecast {
+            case .daily:
+                return forecastDetails?.daily?.data?.count ?? 0
+            case .hourly:
+                return forecastDetails?.hourly?.data?.count ?? 0
+            case .none:
+                return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherTableViewCell", for: indexPath) as? WeatherTableViewCell else  {
+            print("Could not make tvc")
+            return UITableViewCell()
+            
+        }
+        switch selectedForecast {
+            case .daily:
+                let dayForecast = forecastDetails?.daily?.data?[indexPath.row]
+                if indexPath.row == 0 {
+                    cell.dateLabel.text = "Today"
+                } else {
+                    cell.dateLabel.text = convertTimeToDate(forecastType: .daily, time: dayForecast?.time ?? 0)
+                }
+                cell.weatherIconImageView.image = getWeatherIcon(named: dayForecast?.icon ?? "cloud")
+                cell.weatherDescription.text = dayForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
+                cell.lowTempLabel.textColor = .systemBlue
+                if let lowTemp = dayForecast?.temperatureLow, let highTemp = dayForecast?.temperatureHigh {
+                    cell.lowTempLabel.text = String(format: "%.0f\u{00B0}", lowTemp)
+                    cell.highTempLabel.text = String(format: "%.0f\u{00B0}", highTemp)
+            }
+            
+            case .hourly:
+                let hourForecast = forecastDetails?.hourly?.data?[indexPath.row]
+                cell.dateLabel.text = convertTimeToDate(forecastType: .hourly, time: hourForecast?.time ?? 0)
+                cell.weatherIconImageView.image = getWeatherIcon(named: hourForecast?.icon ?? "cloud")
+                cell.weatherDescription.text = hourForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
+                cell.lowTempLabel.textColor = .black
+                if let temp = hourForecast?.temperature {
+                    cell.highTempLabel.text = ""
+                    cell.lowTempLabel.text = String(format: "%.0f\u{00B0}", temp)
+            }
+            
+            default:
+                return cell
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
+    
+}
