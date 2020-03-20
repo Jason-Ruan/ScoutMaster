@@ -117,6 +117,26 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var recordingStatus = false
     
+    var forecastDetails: WeatherForecast? {
+        didSet {
+            selectedForecast = .daily
+        }
+    }
+    
+    var selectedForecast: ForecastType? {
+        didSet {
+            switch selectedForecast {
+                case .daily:
+                    forecastSegmentedControl.selectedSegmentIndex = 0
+                case .hourly:
+                    forecastSegmentedControl.selectedSegmentIndex = 1
+                default:
+                    forecastSegmentedControl.selectedSegmentIndex = 0
+            }
+            weatherTableView.reloadData()
+        }
+    }
+    
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
