@@ -51,6 +51,33 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return collectionView
     }()
     
+    lazy var easyButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Easy", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var mediumButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Medium", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var hardButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Hard", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var nearbyButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Nearby", for: .normal)
@@ -58,6 +85,16 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var horizontalStackViewForFilterIcon: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [easyButton, mediumButton, hardButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 30
+        stackView.isHidden = false
+        return stackView
     }()
     
     @objc func clickNearbyButton(sender: UIButton) {
@@ -154,6 +191,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(profileImage)
         view.addSubview(filterButton)
         view.addSubview(horizontalStackView)
+        view.addSubview(horizontalStackViewForFilterIcon)
         
         
         // add Constraints
@@ -165,6 +203,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setProfileImageConstraints()
         setFilterButtonConstraints()
         setHorizontalStackViewConstraints()
+        setHorizontalForFilterButtonStackViewConstraints()
         
     }
     
@@ -309,6 +348,15 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             horizontalStackView.topAnchor.constraint(equalTo: searchItBar.bottomAnchor,constant: 30),
             horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             horizontalStackView.heightAnchor.constraint(equalToConstant: 30)])
+    }
+    
+    private func setHorizontalForFilterButtonStackViewConstraints(){
+        self.horizontalStackViewForFilterIcon.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalStackViewForFilterIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -110),
+            horizontalStackViewForFilterIcon.widthAnchor.constraint(equalToConstant: 140),
+            horizontalStackViewForFilterIcon.heightAnchor.constraint(equalToConstant: 140),
+            horizontalStackViewForFilterIcon.centerYAnchor.constraint(equalTo: filterLabel.centerYAnchor)])
     }
     
     private func setFilterButtonConstraints(){
