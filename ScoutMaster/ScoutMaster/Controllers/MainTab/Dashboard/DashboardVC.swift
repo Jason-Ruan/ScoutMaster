@@ -57,6 +57,9 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
     
@@ -66,6 +69,9 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
     
@@ -75,6 +81,9 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
     
