@@ -54,11 +54,11 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     lazy var easyButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Easy", for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         button.titleLabel?.numberOfLines = 1
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
@@ -66,11 +66,11 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     lazy var mediumButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Medium", for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         button.titleLabel?.numberOfLines = 1
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
@@ -78,11 +78,11 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     lazy var hardButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Hard", for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         button.titleLabel?.numberOfLines = 1
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         return button
     }()
@@ -358,12 +358,12 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             horizontalStackView.heightAnchor.constraint(equalToConstant: 30)])
     }
-    
+    // try width anchor contraint next
     private func setHorizontalForFilterButtonStackViewConstraints(){
         self.horizontalStackViewForFilterIcon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            horizontalStackViewForFilterIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -110),
-            horizontalStackViewForFilterIcon.widthAnchor.constraint(equalToConstant: 140),
+            horizontalStackViewForFilterIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            horizontalStackViewForFilterIcon.widthAnchor.constraint(equalToConstant: 275),
             horizontalStackViewForFilterIcon.heightAnchor.constraint(equalToConstant: 140),
             horizontalStackViewForFilterIcon.centerYAnchor.constraint(equalTo: filterLabel.centerYAnchor)])
     }
