@@ -5,7 +5,7 @@ import MapboxAnnotationExtension
 class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AddPointViewDelegate {
     
     
-    //MARK: UI Variables
+    //MARK: - UI Variables
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,7 +38,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         return button
     }()
     
-    
     lazy var recordTrailButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 25
@@ -50,16 +49,38 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }()
     
     lazy var addPopUp: AddPointView = {
-           let popUp = AddPointView()
-           popUp.delegate = self
-           return popUp
-       }()
+        let popUp = AddPointView()
+        popUp.delegate = self
+        return popUp
+    }()
+    
+    lazy var forecastSegmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl()
+        sc.insertSegment(withTitle: "Hourly", at: 0, animated: true)
+        sc.insertSegment(withTitle: "Daily", at: 1, animated: true)
+        sc.selectedSegmentIndex = 0
+        sc.backgroundColor = .lightGray
+        sc.addTarget(self, action: #selector(tappedForecastSegmentControl), for: .valueChanged)
+        return sc
+    }()
+    
+    lazy var weatherTableView: UITableView = {
+        let tv = UITableView()
+        tv.delegate = self
+        tv.dataSource = self
+        tv.layer.borderWidth = 3
+        tv.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0.5, alpha: 0.5)
+        tv.register(WeatherTableViewCell.self, forCellReuseIdentifier: "weatherTableViewCell")
+        return tv
+    }()
     
     
-    //MARK: Properties
+    //MARK: - Properties
+    
     var trail: Trail? {
         didSet{
-            drawTrailPolyline()
+//             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
+//            drawTrailPolyline()
         }
     }
     
@@ -67,7 +88,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var newCoords: [(Double,Double)]! {
         didSet {
-            print(newCoords!)
             for i in newCoords {
                 coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
                 drawTrailPolyline()
@@ -97,8 +117,28 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var recordingStatus = false
     
+    var forecastDetails: WeatherForecast? {
+        didSet {
+            selectedForecast = .hourly
+        }
+    }
     
-    //MARK: Lifecycle
+    var selectedForecast: ForecastType? {
+        didSet {
+            switch selectedForecast {
+                case .hourly:
+                    forecastSegmentedControl.selectedSegmentIndex = 0
+                case .daily:
+                    forecastSegmentedControl.selectedSegmentIndex = 1
+                default:
+                    forecastSegmentedControl.selectedSegmentIndex = 0
+            }
+            weatherTableView.reloadData()
+        }
+    }
+    
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
@@ -115,7 +155,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         
     }
     
-    //MARK: Constraint Methods
+    //MARK: - Constraint Methods
     func constrainLocationButton(){
         view.addSubview(locationButton)
         locationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +165,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             locationButton.heightAnchor.constraint(equalToConstant: 50),
             locationButton.widthAnchor.constraint(equalToConstant: 50)])
     }
+    
     func constrainAddAnnotationButton(){
         view.addSubview(addAnnotationButton)
         addAnnotationButton.translatesAutoresizingMaskIntoConstraints = false
@@ -178,6 +219,25 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
     }
     
+    func showWeatherTableView() {
+        view.addSubview(forecastSegmentedControl)
+        forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            forecastSegmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
+            forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        view.addSubview(weatherTableView)
+        weatherTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            weatherTableView.topAnchor.constraint(equalTo: forecastSegmentedControl.bottomAnchor, constant: 3),
+            weatherTableView.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
+            weatherTableView.widthAnchor.constraint(equalToConstant: view.frame.width)])
+    }
+    
     lazy var hidePopUpTopAnchorConstraint: NSLayoutConstraint = {
         return addPopUp.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     }()
@@ -187,22 +247,22 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }()
     
     
-    //MARK: Private Methods
+    //MARK: - Private Methods
     
     private func getCoordinatesFromJSON(data: Data){
-           do {
-               var coords = [(Double,Double)]()
-               let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
-               for i in rawCoords {
-                   coords.append((i[1],i[0]))
-               }
-               newCoords = coords
-               print("got coordinates")
-           }
-           catch {
-               print("error, could not decode geoJSON")
-           }
-       }
+        do {
+            var coords = [(Double,Double)]()
+            let rawCoords = (try LocationData.getCoordinatesFromData(data: data))!
+            for i in rawCoords {
+                coords.append((i[1],i[0]))
+            }
+            newCoords = coords
+        }
+        catch {
+            print("error, could not decode geoJSON")
+        }
+    }
+    
     func showAlertController(title: String?, message: String?, actions: [UIAlertAction]) -> UIAlertController {
         let alertController = UIAlertController(title: title , message: message, preferredStyle: .alert)
         actions.forEach { (action) in
@@ -213,42 +273,42 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
     
-    //MARK: Trail Recording Methods
+    //MARK: - Trail Recording Methods
     @objc func recordTrailPrompt(button: UIButton){
         switch recordingStatus {
-        case false:
-            let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
-            //record trail method goes here
+            case false:
+                let action =  UIAlertAction(title: "Start Recording", style: .destructive, handler: { (action) in
+                    //record trail method goes here
+                    
+                    self.recordingStatus = true
+                })
+                let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
+                present(alertController, animated: true, completion: nil)
+            
+            case true:
+                print("stop recording prompt goes here")
+                let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+                    //save or discard trail here, add images, title , description then persist
+                    //maybe a custom uiview to add these properties visually
+                    self.recordingStatus = false
+                }
                 
-                self.recordingStatus = true
-            })
-            let alertController = showAlertController(title: "Record New Trail?", message: nil, actions: [action])
-            present(alertController, animated: true, completion: nil)
-            
-        case true:
-            print("stop recording prompt goes here")
-            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
-                //save or discard trail here, add images, title , description then persist
-                //maybe a custom uiview to add these properties visually
-                self.recordingStatus = false
-            }
-            
-            let keepRecording = UIAlertAction(title: "No, Keep Recording", style: .destructive) { (action) in
-                //
-            }
-            let discard = UIAlertAction(title: "No, Discard Recording", style: .destructive) { (action) in
-                //
-                self.recordingStatus = false
-                self.userTraversedCoordinates = [CLLocationCoordinate2D]()
-            }
-            let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
-            present(alertController,animated: true)
+                let keepRecording = UIAlertAction(title: "No, Keep Recording", style: .destructive) { (action) in
+                    //
+                }
+                let discard = UIAlertAction(title: "No, Discard Recording", style: .destructive) { (action) in
+                    //
+                    self.recordingStatus = false
+                    self.userTraversedCoordinates = [CLLocationCoordinate2D]()
+                }
+                let alertController = showAlertController(title: "Save New Trail?", message: nil, actions: [yesAction,keepRecording,discard])
+                present(alertController,animated: true)
         }
-           
+        
     }
     
     
-    //MARK: Points Of Interest Methods
+    //MARK: - Points Of Interest Methods
     private func getPointsOfInterest() {
         var poi = [PointOfInterest]()
         do {
@@ -266,12 +326,12 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     private func togglePOI(){
         switch POIShown {
-        case true:
-            hidePointsOfInterest()
-            POIShown = false
-        case false:
-            getPointsOfInterest()
-            POIShown = true
+            case true:
+                hidePointsOfInterest()
+                POIShown = false
+            case false:
+                getPointsOfInterest()
+                POIShown = true
         }
     }
     
@@ -282,52 +342,52 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         } catch {
             print("error, could not save POI")
         }
-      
+        
     }
     
     func dismissAddPointView() {
-           switchAnimationAddPopUp()
-       }
-       
-       @objc func showAddPointView(sender: UIButton){
-           switchAnimationAddPopUp()
-           
-       }
-       
-       private func switchAnimationAddPopUp(){
-           switch addPopUp.shown {
-           case false:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = false
-                   self.showPopUpTopAnchorConstraint.isActive = true
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = true
-               }
-           case true:
-               UIView.animate(withDuration: 0.3) {
-                   self.hidePopUpTopAnchorConstraint.isActive = true
-                   self.showPopUpTopAnchorConstraint.isActive = false
-                   self.view.layoutIfNeeded()
-                   self.addPopUp.shown = false
-               }
-           }
-       }
-
-    //MARK: Visual Map Methods
+        switchAnimationAddPopUp()
+    }
+    
+    @objc func showAddPointView(sender: UIButton){
+        switchAnimationAddPopUp()
+        
+    }
+    
+    private func switchAnimationAddPopUp(){
+        switch addPopUp.shown {
+            case false:
+                UIView.animate(withDuration: 0.3) {
+                    self.hidePopUpTopAnchorConstraint.isActive = false
+                    self.showPopUpTopAnchorConstraint.isActive = true
+                    self.view.layoutIfNeeded()
+                    self.addPopUp.shown = true
+            }
+            case true:
+                UIView.animate(withDuration: 0.3) {
+                    self.hidePopUpTopAnchorConstraint.isActive = true
+                    self.showPopUpTopAnchorConstraint.isActive = false
+                    self.view.layoutIfNeeded()
+                    self.addPopUp.shown = false
+            }
+        }
+    }
+    
+    //MARK: - Visual Map Methods
     
     @objc func locationButtonTapped(sender: UIButton) {
         var mode: MGLUserTrackingMode
         switch (mapView.userTrackingMode) {
-        case .none:
-            mode = .follow
-        case .follow:
-            mode = .followWithHeading
-        case .followWithHeading:
-            mode = .followWithCourse
-        case .followWithCourse:
-            mode = .none
-        @unknown default:
-            fatalError("Unknown user tracking mode")
+            case .none:
+                mode = .follow
+            case .follow:
+                mode = .followWithHeading
+            case .followWithHeading:
+                mode = .followWithCourse
+            case .followWithCourse:
+                mode = .none
+            @unknown default:
+                fatalError("Unknown user tracking mode")
         }
         mapView.userTrackingMode = mode
         mapView.setCenter(mapView.userLocation!.coordinate, zoomLevel: 16, animated: true)
@@ -367,15 +427,29 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     }
     
     func drawUserTrailPolyline() {
-    let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
+        let polyline = MGLPolyline(coordinates: self.userTraversedCoordinates, count: UInt(self.userTraversedCoordinates.count))
         polyline.title = "user"
-    DispatchQueue.main.async {
-        self.mapView.addAnnotation(polyline)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotation(polyline)
+        }
     }
+    
+    //MARK: - Weather Methods
+    
+    @objc func tappedForecastSegmentControl() {
+        switch self.forecastSegmentedControl.selectedSegmentIndex {
+            case 0:
+                selectedForecast = .hourly
+            case 1:
+                selectedForecast = .daily
+            default:
+                selectedForecast = .hourly
+        }
+        
     }
     
 }
-    //MARK: CV Delegate Methods
+//MARK: - CV Delegate Methods
 
 extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -395,19 +469,25 @@ extension MapVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0:
-        print("poi toggled")
-        self.togglePOI()
-        default:
-            return
+            case 0:
+                print("poi toggled")
+                self.togglePOI()
+            case 1:
+                if weatherTableView.isDescendant(of: self.view) && forecastSegmentedControl.isDescendant(of: self.view) {
+                    weatherTableView.removeFromSuperview()
+                    forecastSegmentedControl.removeFromSuperview()
+                } else {
+                    self.showWeatherTableView()
+                }
+            default:
+                return
         }
     }
 }
-    
-    
-    
-    
-    //MARK: MV Delegate Methods
+
+
+
+//MARK: - MV Delegate Methods
 extension MapVC: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
         return 4.0
@@ -415,12 +495,12 @@ extension MapVC: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         switch annotation.title {
-        case "user":
-            return .systemGreen
-        default:
-           return .systemBlue
+            case "user":
+                return .systemGreen
+            default:
+                return .systemBlue
         }
-       
+        
     }
     
     
@@ -450,15 +530,15 @@ extension MapVC: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
         if recordingStatus == true {
-        if let userCoord = userLocation?.coordinate {
-                   self.userTraversedCoordinates.append(userCoord)
-                    drawUserTrailPolyline()
-               }
-               
-               if self.userTraversedCoordinates.count >= 3 {
-                   drawUserTrailPolyline()
-               }
-    }
+            if let userCoord = userLocation?.coordinate {
+                self.userTraversedCoordinates.append(userCoord)
+                drawUserTrailPolyline()
+            }
+            
+            if self.userTraversedCoordinates.count >= 3 {
+                drawUserTrailPolyline()
+            }
+        }
     }
     
     
@@ -467,3 +547,80 @@ extension MapVC: MGLMapViewDelegate {
 }
 
 
+//MARK: - TableView Methods for Weather
+
+extension MapVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerlabel = UILabel()
+        headerlabel.backgroundColor = .lightGray
+        headerlabel.adjustsFontSizeToFitWidth = true
+        headerlabel.textAlignment = .center
+        if let trail = self.trail {
+            headerlabel.text = " Weather for \(trail.name) "
+        } else {
+            headerlabel.text = "No trail detected"
+        }
+        return headerlabel
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch selectedForecast {
+            case .daily:
+                return forecastDetails?.daily?.data?.count ?? 0
+            case .hourly:
+                return forecastDetails?.hourly?.data?.count ?? 0
+            case .none:
+                return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherTableViewCell", for: indexPath) as? WeatherTableViewCell else  {
+            print("Could not make tvc")
+            return UITableViewCell()
+            
+        }
+        switch selectedForecast {
+            case .daily:
+                let dayForecast = forecastDetails?.daily?.data?[indexPath.row]
+                if indexPath.row == 0 {
+                    cell.dateLabel.text = "Today"
+                } else {
+                    cell.dateLabel.text = convertTimeToDate(forecastType: .daily, time: dayForecast?.time ?? 0)
+                }
+                cell.weatherIconImageView.image = getWeatherIcon(named: dayForecast?.icon ?? "cloud")
+                cell.weatherDescription.text = dayForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
+                cell.lowTempLabel.textColor = .systemBlue
+                if let lowTemp = dayForecast?.temperatureLow, let highTemp = dayForecast?.temperatureHigh {
+                    cell.lowTempLabel.text = String(format: "%.0f\u{00B0}", lowTemp)
+                    cell.highTempLabel.text = String(format: "%.0f\u{00B0}", highTemp)
+            }
+            
+            case .hourly:
+                let hourForecast = forecastDetails?.hourly?.data?[indexPath.row]
+                cell.dateLabel.text = convertTimeToDate(forecastType: .hourly, time: hourForecast?.time ?? 0)
+                cell.weatherIconImageView.image = getWeatherIcon(named: hourForecast?.icon ?? "cloud")
+                cell.weatherDescription.text = hourForecast?.icon?.replacingOccurrences(of: "-", with: " ").capitalized
+                cell.lowTempLabel.textColor = .black
+                if let temp = hourForecast?.temperature {
+                    cell.highTempLabel.text = ""
+                    cell.lowTempLabel.text = String(format: "%.0f\u{00B0}", temp)
+            }
+            
+            default:
+                return cell
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+    
+    
+}
