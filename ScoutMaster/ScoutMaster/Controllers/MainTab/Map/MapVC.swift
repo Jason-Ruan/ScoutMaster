@@ -80,7 +80,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var trail: Trail? {
         didSet{
 //             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
-//            drawTrailPolyline()
+            drawTrailPolyline()
         }
     }
     
@@ -88,11 +88,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var newCoords: [(Double,Double)]! {
         didSet {
-            for i in newCoords {
-                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
-                drawTrailPolyline()
+//            for i in newCoords {
+//                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
+//                drawTrailPolyline()
             }
-        }
+//        }
     }
     
     var coordinates = [CLLocationCoordinate2D]()
@@ -396,7 +396,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     func drawTrailPolyline() {
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
+            guard self.trail != nil else {
+            return
+            }
+            let pathName = String(self.trail!.id)
+            let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson")
             let url = URL(fileURLWithPath: jsonPath!)
             
             do {
