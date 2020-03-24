@@ -75,7 +75,6 @@ class DarkSkyAPIClient {
             completionHandler(.success(cachedWeather))
         } else {
             // Object was not found in cache, so make a network call
-            print(urlStr)
             NetworkManager.shared.fetchData(urlString: urlStr, completionHandler: { (result) in
                 switch result {
                     case .failure(let error):
