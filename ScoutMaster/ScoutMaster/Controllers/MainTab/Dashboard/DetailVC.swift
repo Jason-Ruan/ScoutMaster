@@ -144,6 +144,7 @@ class DetailVC: UIViewController {
             switch result {
             case .failure(let error):
                 print(error)
+//                parenses in parenses
             case .success(()):
                 print("yes")
                 self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)

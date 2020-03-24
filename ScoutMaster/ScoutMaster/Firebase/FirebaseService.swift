@@ -146,6 +146,10 @@ class FirestoreService {
             }
         }
     }
+    
+    func checkForFaves () {
+        
+    }
 
     
 // MARK: USER STATS

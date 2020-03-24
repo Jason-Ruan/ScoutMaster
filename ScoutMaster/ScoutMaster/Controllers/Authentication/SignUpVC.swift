@@ -14,6 +14,13 @@ class SignUpVC: UIViewController {
 
 //    MARK: UI Objects
     
+    lazy var userNameTextField: UITextField = {
+        let text = UITextField()
+        text.text = "username"
+        text.borderStyle = .line
+        return text
+    }()
+    
     lazy var emailTextField: UITextField = {
         let text = UITextField()
         text.text = "email"
@@ -51,9 +58,15 @@ class SignUpVC: UIViewController {
     }()
     
     lazy var defaultImage: UIImageView = {
-    let defaultImage = UIImageView()
-        defaultImage.image = UIImage(named: "defaultpicture")
-        return defaultImage
+    let icon = UIImageView()
+     icon.backgroundColor = .clear
+        icon.contentMode = .scaleAspectFill
+        icon.image = UIImage(named: "logo")
+        icon.layer.cornerRadius = 35
+        icon.clipsToBounds = true
+        icon.layer.borderWidth = 3.0
+        icon.layer.borderColor = UIColor.white.cgColor
+        return icon
     }()
     
 // MARK: ObjectiveC
@@ -111,34 +124,41 @@ class SignUpVC: UIViewController {
         
         private func addSubViews() {
             view.addSubview(emailTextField)
-    //        view.addSubview(defaultImage)
+            view.addSubview(defaultImage)
             view.addSubview(passwordTextField)
             view.addSubview(signUpButton)
             view.addSubview(cancelButton)
+            view.addSubview(userNameTextField)
             
         }
         
         private func constraints() {
             emailTextConstraint()
-    //        defaultImageConstraint()
+            defaultImageConstraint()
             passwordTextConstraint()
             signInConstraint()
             cancelConstraint()
+            userNameTextConstraint()
             
         }
         
-    //    private func usernameConstraint() {
-    //
-    //    }
+  
         
-        private func defaultImageConstraint() {
-            defaultImage.translatesAutoresizingMaskIntoConstraints = false
-            [defaultImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-             defaultImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-             defaultImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-             defaultImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  300)].forEach{$0.isActive = true}
+    private func defaultImageConstraint() {
+        defaultImage.translatesAutoresizingMaskIntoConstraints = false
+        [defaultImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 175),
+         defaultImage.heightAnchor.constraint(equalToConstant: 70),
+         defaultImage.widthAnchor.constraint(equalToConstant: 70),
+         defaultImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)].forEach{$0.isActive = true}
         }
-        
+    
+    private func userNameTextConstraint() {
+        userNameTextField.translatesAutoresizingMaskIntoConstraints = false
+        [userNameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 375),
+         userNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         userNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+         userNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)].forEach{$0.isActive = true}
+    }
         private func emailTextConstraint() {
             emailTextField.translatesAutoresizingMaskIntoConstraints = false
             [emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),

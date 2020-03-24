@@ -29,15 +29,24 @@ class ProfileVC: UIViewController {
     
 //    MARK: UI OBJECTS
     
-    lazy var userImage: UIImageView = {
-    let defaultImage = UIImageView()
-        defaultImage.image = UIImage(named: "alps")
+    lazy var userImage: UIButton = {
+    let defaultImage = UIButton()
+//        defaultImage.addTarget(self, action: #selector(<#T##@objc method#>), for: <#T##UIControl.Event#>)
+        defaultImage.backgroundColor = .clear
+        defaultImage.contentMode = .scaleAspectFill
+        defaultImage.setImage(UIImage(named: "logo"), for: .normal)
+//            = UIImage(named: "logo")
+        defaultImage.layer.cornerRadius = 35
+        defaultImage.clipsToBounds = true
+        defaultImage.layer.borderWidth = 3.0
+        defaultImage.layer.borderColor = UIColor.white.cgColor
         return defaultImage
     }()
     
     lazy var userName: UILabel = {
        let name = UILabel()
-        name.text = "Hello Scout!"
+        name.text = "Hey Scout!"
+        name.font = UIFont.init(name: "Baskerville", size: 35)
         return name
     }()
 
@@ -133,12 +142,11 @@ class ProfileVC: UIViewController {
     
     
     private func constrainFaveCollectionView(){
-
         faveHikesCollection.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 550),
-            faveHikesCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50),
-            faveHikesCollection.widthAnchor.constraint(equalTo: view.widthAnchor),
+        faveHikesCollection.topAnchor.constraint(equalTo: view.topAnchor, constant: 550),
+        faveHikesCollection.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50),
+        faveHikesCollection.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
     }
     
@@ -150,19 +158,21 @@ class ProfileVC: UIViewController {
     }
     
     private func profileimageConstraint() {
-               userImage.translatesAutoresizingMaskIntoConstraints = false
-               [userImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-                userImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-                userImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-                userImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  300)].forEach{$0.isActive = true}
+        userImage.translatesAutoresizingMaskIntoConstraints = false
+        [userImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75),
+        userImage.heightAnchor.constraint(equalToConstant: 80),
+        userImage.widthAnchor.constraint(equalToConstant: 80),
+        userImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -75)
+//                userImage.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  350)
+            ].forEach{$0.isActive = true}
     }
     
     
     private func profileNameConstraint() {
-               userName.translatesAutoresizingMaskIntoConstraints = false
-               [userName.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-                userName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-                userName.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  150)].forEach{$0.isActive = true}
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        [userName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75),
+        userName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+        userName.bottomAnchor.constraint(equalTo: view.topAnchor, constant:  200)].forEach{$0.isActive = true}
     }
     
     

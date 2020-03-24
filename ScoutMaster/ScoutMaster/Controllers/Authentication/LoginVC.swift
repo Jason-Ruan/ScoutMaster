@@ -30,6 +30,12 @@ class LoginVC: UIViewController {
         return passWord
        }()
     
+    lazy var showPassImage: UIImageView = {
+        let icon = UIImageView()
+        icon.image = UIImage(systemName: "eye.slash")
+        return icon
+    }()
+    
     lazy var signInError: UILabel = {
         let errorLabel = UILabel()
         return errorLabel
@@ -64,6 +70,10 @@ class LoginVC: UIViewController {
         icon.layer.borderColor = UIColor.white.cgColor
         return icon
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        passwordTextField.isSecureTextEntry = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +142,7 @@ class LoginVC: UIViewController {
             logoImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 175),
             logoImage.heightAnchor.constraint(equalToConstant: 70),
             logoImage.widthAnchor.constraint(equalToConstant: 70),
-            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)])
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100)])
     }
             
 //    MARK: Objective C
