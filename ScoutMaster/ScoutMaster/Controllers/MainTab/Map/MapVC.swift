@@ -191,9 +191,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)])
+            collectionView.heightAnchor.constraint(equalToConstant: 100), collectionView.widthAnchor.constraint(equalToConstant: view.frame.width / 2), collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 25)])
         
     }
     
@@ -457,7 +455,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
 
 extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
