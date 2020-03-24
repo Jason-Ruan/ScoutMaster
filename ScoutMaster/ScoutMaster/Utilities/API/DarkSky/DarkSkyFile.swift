@@ -99,71 +99,71 @@ class DarkSkyAPIClient {
         
     }
 }
-    //MARK: - Weather Forecast Object w/ Daily and Hourly
+//MARK: - Weather Forecast Object w/ Daily and Hourly
+
+class WeatherForecast: Codable {
+    let timezone: String?
+    let daily: DailyForecast?
+    let hourly: HourlyForecast?
     
-    class WeatherForecast: Codable {
-        let timezone: String?
-        let daily: DailyForecast?
-        let hourly: HourlyForecast?
-        
-        struct DailyForecast: Codable {
-            let summary: String?
-            let icon: String?
-            let data: [DayForecastDetails]?
-            let alerts: [AlertsWrapper]?
-        }
-        
-        struct HourlyForecast: Codable {
-            let summary: String?
-            let icon: String?
-            let data: [HourForecastDetails]?
-        }
-        
-        struct AlertsWrapper: Codable {
-            let title: String?
-            let time: Int?
-            let expires: Int?
-            let descriptiption: String?
-            let uri: String?
-        }
-        
-        
-    }
-    
-    //MARK: - Daily Forecast Details
-    
-    struct DayForecastDetails: Codable {
-        let time: Int?
+    struct DailyForecast: Codable {
         let summary: String?
         let icon: String?
-        let sunriseTime: Int?
-        let sunsetTime: Int?
-        let precipIntensityMax: Double?
-        let precipProbability: Double?
-        let precipType: String?
-        let temperatureHigh: Double?
-        let temperatureLow: Double?
-        let apparentTemperatureHigh: Double?
-        let windSpeed: Double?
-        let humidity: Double?
-        let cloudCover: Double?
-        let visibility: Double?
+        let data: [DayForecastDetails]?
+        let alerts: [AlertsWrapper]?
+    }
+    
+    struct HourlyForecast: Codable {
+        let summary: String?
+        let icon: String?
+        let data: [HourForecastDetails]?
+    }
+    
+    struct AlertsWrapper: Codable {
+        let title: String?
+        let time: Int?
+        let expires: Int?
+        let descriptiption: String?
+        let uri: String?
     }
     
     
-    //MARK: - Hourly Forecast Details
-    
-    struct HourForecastDetails: Codable {
-        let time: Int?
-        let summary: String?
-        let icon: String?
-        let precipIntensity: Double?
-        let precipProbability: Double?
-        let precipType: String?
-        let temperature: Double?
-        let apparentTemperature: Double?
-        let humidity: Double?
-        let windSpeed: Double?
-        let cloudCover: Double?
-        let visibility: Double?
+}
+
+//MARK: - Daily Forecast Details
+
+struct DayForecastDetails: Codable {
+    let time: Int?
+    let summary: String?
+    let icon: String?
+    let sunriseTime: Int?
+    let sunsetTime: Int?
+    let precipIntensityMax: Double?
+    let precipProbability: Double?
+    let precipType: String?
+    let temperatureHigh: Double?
+    let temperatureLow: Double?
+    let apparentTemperatureHigh: Double?
+    let windSpeed: Double?
+    let humidity: Double?
+    let cloudCover: Double?
+    let visibility: Double?
+}
+
+
+//MARK: - Hourly Forecast Details
+
+struct HourForecastDetails: Codable {
+    let time: Int?
+    let summary: String?
+    let icon: String?
+    let precipIntensity: Double?
+    let precipProbability: Double?
+    let precipType: String?
+    let temperature: Double?
+    let apparentTemperature: Double?
+    let humidity: Double?
+    let windSpeed: Double?
+    let cloudCover: Double?
+    let visibility: Double?
 }
