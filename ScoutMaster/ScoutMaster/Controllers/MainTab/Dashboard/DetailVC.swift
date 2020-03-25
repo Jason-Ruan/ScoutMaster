@@ -9,6 +9,7 @@
 import UIKit
 import Mapbox
 import SafariServices
+import Reachability
 
 class DetailVC: UIViewController, UIScrollViewDelegate {
     
@@ -19,8 +20,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mv.styleURL = MGLStyle.darkStyleURL
         if let trail = self.trail {
-            //            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
-            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
+            mv.setCenter(CLLocationCoordinate2D(latitude: trail.latitude, longitude: trail.longitude), zoomLevel: 14, animated: false)
+            //            mv.setCenter(CLLocationCoordinate2D(latitude: 40.668, longitude: -73.9738), zoomLevel: 14, animated: false)
         }
         return mv
     }()
@@ -190,6 +191,15 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return cv
     }()
     
+    lazy var weatherHeaderLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Weather Forecast"
+        label.textColor = .lightText
+        label.font = label.font.withSize(20)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
     lazy var forecastSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl()
         sc.insertSegment(withTitle: "Daily", at: 0, animated: true)
@@ -239,29 +249,57 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     //    MARK: - Objective-C Methods
     @objc func faveTrail() {
-        
-        guard let user = FirebaseAuthService.manager.currentUser else {
-            print("Error- no current user")
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Could not access the AppDelegate")
             return
         }
-        // to be done: set parameters
-        let newFaveTrail = FavedHikes(id: trail.id, name: trail.name, type: trail.type, summary: trail.summary, difficulty: trail.difficulty, location: trail.location, url: trail.url, img: trail.imgMedium, length: trail.length, ascent: trail.ascent, descent: trail.descent, high: trail.high, low: trail.low, longitude: trail.longitude, latitude: trail.latitude, creatorId: user.uid)
-        
-        FirestoreService.manager.createFaveHikes(post: newFaveTrail) { (result) in
-            switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(()):
-                    print("yes")
-                    self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
+        guard let reachability = appDelegate.reachability else {
+            print("Could not find property called reachabilty in the appDelegate")
+            return
         }
+        
+        switch reachability.connection {
+            case .wifi, .cellular:
+                guard let user = FirebaseAuthService.manager.currentUser else {
+                    print("Error- no current user")
+                    return
+                }
+                // to be done: set parameters
+                let newFaveTrail = FavedHikes(id: trail.id, name: trail.name, type: trail.type, summary: trail.summary, difficulty: trail.difficulty, location: trail.location, url: trail.url, img: trail.imgMedium, length: trail.length, ascent: trail.ascent, descent: trail.descent, high: trail.high, low: trail.low, longitude: trail.longitude, latitude: trail.latitude, creatorId: user.uid)
+                
+                FirestoreService.manager.createFaveHikes(post: newFaveTrail) { (result) in
+                    switch result {
+                        case .failure(let error):
+                            print(error)
+                        case .success(()):
+                            print("yes")
+                            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                    }
+            }
+            default:
+                showAlertController(title: "Uh-oh! Looks like you're not connected online.", message: "Please check for a place with a stable internet connection and try again.")
+        }
+        
     }
     
     @objc func openTrailLink() {
-        guard let trail = self.trail, let trailURL = URL(string: trail.url) else {return}
-        let safariWebView = SFSafariViewController(url: trailURL)
-        present(safariWebView, animated: true, completion: nil)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Could not access the AppDelegate")
+            return
+        }
+        guard let reachability = appDelegate.reachability else {
+            print("Could not find property called reachabilty in the appDelegate")
+            return
+        }
+        
+        switch reachability.connection {
+            case .wifi, .cellular:
+                guard let trail = self.trail, let trailURL = URL(string: trail.url) else {return}
+                let safariWebView = SFSafariViewController(url: trailURL)
+                present(safariWebView, animated: true, completion: nil)
+            default:
+                showAlertController(title: "Uh-oh! Looks like you're not connected online.", message: "Please check for a place with a stable internet connection and try again.")
+        }
     }
     
     @objc private func segueToMap() {
@@ -333,6 +371,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         scrollView.addSubview(descriptionHeaderLabel)
         scrollView.addSubview(descriptionTextView)
         
+        scrollView.addSubview(weatherHeaderLabel)
         scrollView.addSubview(forecastSegmentedControl)
         scrollView.addSubview(weatherCollectionView)
         
@@ -422,9 +461,16 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             descriptionTextView.heightAnchor.constraint(equalToConstant: 75)
         ])
         
+        weatherHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            weatherHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 50),
+            weatherHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            weatherHeaderLabel.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
+        ])
+        
         forecastSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            forecastSegmentedControl.bottomAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 100),
+            forecastSegmentedControl.topAnchor.constraint(equalTo: weatherHeaderLabel.bottomAnchor, constant: 5),
             forecastSegmentedControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             forecastSegmentedControl.widthAnchor.constraint(equalToConstant: view.frame.width - 30),
             forecastSegmentedControl.heightAnchor.constraint(equalToConstant: 30)
@@ -449,6 +495,12 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                     print(error)
             }
         }
+    }
+    
+    private func showAlertController(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -476,9 +528,12 @@ extension DetailVC: MGLMapViewDelegate {
     func drawTrailPolyline() {
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         DispatchQueue.global(qos: .background).async(execute: {
-            // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
-            let url = URL(fileURLWithPath: jsonPath!)
+            guard self.trail != nil else {
+                       return
+                       }
+                       let pathName = String(self.trail!.id)
+                       let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson")
+                       let url = URL(fileURLWithPath: jsonPath!)
             
             do {
                 // Convert the file contents to a shape collection feature object

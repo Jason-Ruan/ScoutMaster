@@ -9,17 +9,31 @@
 import UIKit
 import CoreData
 import Firebase
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    
+    let reachability = try? Reachability()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        configureReachability()
         return true
     }
+    
+    
+    // MARK: - Reachability Methods
+    private func configureReachability() {
+        do {
+            guard let reachability = self.reachability else { return }
+            try reachability.startNotifier()
+        } catch {
+            print("Could not start reachability with error: \(error)")
+        }
+    }
+    
 
     // MARK: UISceneSession Lifecycle
 
