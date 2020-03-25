@@ -396,13 +396,13 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     func drawTrailPolyline() {
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            guard self.trail != nil else {
-            return
+            guard let trail = self.trail else {
+                return
             }
-            let pathName = String(self.trail!.id)
-            let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson")
-            let url = URL(fileURLWithPath: jsonPath!)
-            
+            let pathName = String(trail.id)
+            guard let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson") else { return }
+            let url = URL(fileURLWithPath: jsonPath)
+        
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)

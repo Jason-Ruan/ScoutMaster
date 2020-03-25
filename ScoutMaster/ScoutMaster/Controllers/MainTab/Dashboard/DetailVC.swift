@@ -528,12 +528,12 @@ extension DetailVC: MGLMapViewDelegate {
     func drawTrailPolyline() {
         // Parsing GeoJSON can be CPU intensive, do it on a background thread
         DispatchQueue.global(qos: .background).async(execute: {
-            guard self.trail != nil else {
-                       return
+            guard let trail = self.trail else {
+                           return
                        }
-                       let pathName = String(self.trail!.id)
-                       let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson")
-                       let url = URL(fileURLWithPath: jsonPath!)
+                       let pathName = String(trail.id)
+                       guard let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson") else { return }
+                       let url = URL(fileURLWithPath: jsonPath)
             
             do {
                 // Convert the file contents to a shape collection feature object
