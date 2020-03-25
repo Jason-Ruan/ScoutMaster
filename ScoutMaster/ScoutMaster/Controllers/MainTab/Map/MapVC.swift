@@ -45,6 +45,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
         button.addTarget(self, action: #selector(recordTrailPrompt(button:)), for: .touchUpInside)
+        button.isEnabled = false
+        button.isHidden = true
         return button
     }()
     
@@ -80,7 +82,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var trail: Trail? {
         didSet{
 //             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
-//            drawTrailPolyline()
+            drawTrailPolyline()
         }
     }
     
@@ -88,11 +90,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var newCoords: [(Double,Double)]! {
         didSet {
-            for i in newCoords {
-                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
-                drawTrailPolyline()
+//            for i in newCoords {
+//                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
+//                drawTrailPolyline()
             }
-        }
+//        }
     }
     
     var coordinates = [CLLocationCoordinate2D]()
@@ -191,9 +193,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50),
-            collectionView.heightAnchor.constraint(equalToConstant: 100)])
+            collectionView.heightAnchor.constraint(equalToConstant: 100), collectionView.widthAnchor.constraint(equalToConstant: view.frame.width / 2), collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 25)])
         
     }
     
@@ -396,9 +396,13 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     func drawTrailPolyline() {
         DispatchQueue.global(qos: .background).async(execute: {
             // Get the path for example.geojson in the app's bundle
-            let jsonPath = Bundle.main.path(forResource: "prospectparkloop", ofType: "geojson")
-            let url = URL(fileURLWithPath: jsonPath!)
-            
+            guard let trail = self.trail else {
+                return
+            }
+            let pathName = String(trail.id)
+            guard let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson") else { return }
+            let url = URL(fileURLWithPath: jsonPath)
+        
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)
@@ -453,7 +457,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
 
 extension MapVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
