@@ -45,6 +45,8 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         button.tintColor = .white
         button.setBackgroundImage(UIImage(systemName: "smallcircle.fill.circle"), for: .normal)
         button.addTarget(self, action: #selector(recordTrailPrompt(button:)), for: .touchUpInside)
+        button.isEnabled = false
+        button.isHidden = true
         return button
     }()
     
