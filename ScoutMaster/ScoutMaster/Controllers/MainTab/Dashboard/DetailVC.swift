@@ -517,6 +517,7 @@ extension DetailVC: MGLMapViewDelegate {
                 coords.append((i[1],i[0]))
             }
             newCoords = coords
+            print(coords[0])
         }
         catch {
             print("error, could not decode geoJSON")
@@ -532,13 +533,17 @@ extension DetailVC: MGLMapViewDelegate {
                            return
                        }
                        let pathName = String(trail.id)
-                       guard let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson") else { return }
+                        print(pathName)
+                       guard let jsonPath = Bundle.main.path(forResource: pathName , ofType: "geojson") else {
+                        print("not loading bundle")
+                        return }
                        let url = URL(fileURLWithPath: jsonPath)
             
             do {
                 // Convert the file contents to a shape collection feature object
                 let data = try Data(contentsOf: url)
                 self.getCoordinates(data: data)
+                
                 guard let shapeCollectionFeature = try MGLShape(data: data, encoding: String.Encoding.utf8.rawValue) as? MGLShapeCollectionFeature else {
                     fatalError("Could not cast to specified MGLShapeCollectionFeature")
                 }

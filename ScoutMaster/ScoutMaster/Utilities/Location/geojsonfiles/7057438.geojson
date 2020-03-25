@@ -1,0 +1,48 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gravel Footpath",
+                "time": "2018-10-23T11:25:35-06:00",
+                "links": [
+                    {
+                        "href": "https://www.hikingproject.com/trail/7057438/gravel-footpath"
+                    }
+                ],
+                "coordTimes": [
+                    "2018-10-23T11:25:35-06:00",
+                    "2018-10-23T11:26:35-06:00",
+                    "2018-10-23T11:27:35-06:00",
+                    "2018-10-23T11:28:35-06:00"
+                ]
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -74.053375,
+                        40.699394,
+                        2.47
+                    ],
+                    [
+                        -74.053168,
+                        40.699238,
+                        2.43
+                    ],
+                    [
+                        -74.051632,
+                        40.698475,
+                        2.6
+                    ],
+                    [
+                        -74.050087,
+                        40.697705,
+                        2.76
+                    ]
+                ]
+            }
+        }
+    ]
+}
