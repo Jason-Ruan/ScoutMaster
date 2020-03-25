@@ -82,6 +82,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var trail: Trail? {
         didSet{
 //             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
+            mapView.setCenter(CLLocationCoordinate2D(latitude: self.trail!.latitude, longitude: self.trail!.longitude), animated: true)
             drawTrailPolyline()
         }
     }
