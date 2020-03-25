@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080C48CC2412F616006A19EC /* WeatherCell.swift */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
 		080E1C9B23E4734500EF94A6 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		08BF0ED0242255D600F12B9C /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */; };
 		0D965CB6B3A011C0B1E1BEC6 /* Pods_ScoutMasterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */; };
 		3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */; };
 		3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */; };
 		3A00771323F635F600FE1CE6 /* SoftEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A00771223F635F600FE1CE6 /* SoftEffect.swift */; };
-		3A00771523F6466B00FE1CE6 /* prospectparkloop.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */; };
+		3A00771523F6466B00FE1CE6 /* 7057680.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3A00771423F6466B00FE1CE6 /* 7057680.geojson */; };
 		3A164A922412E40800EF6A19 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A912412E40800EF6A19 /* Secrets.swift */; };
 		3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */; };
 		3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A95241689F800EF6A19 /* PointOfInterest.swift */; };
 		3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A972416CB2700EF6A19 /* MyTrail.swift */; };
+		3A18C121241FF79F002C7919 /* MyTrailPersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18C120241FF79E002C7919 /* MyTrailPersistenceHelper.swift */; };
+		3A18C1432429155A002C7919 /* AddTrailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18C1422429155A002C7919 /* AddTrailView.swift */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
 		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
@@ -36,6 +40,7 @@
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
 		3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0C23DF6EA0008DBC60 /* LocationData.swift */; };
 		3AAA6AE523E88F4F00A5E8F1 /* blue-trail.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */; };
+		3AB9A4AE241ADF8A0051C4D6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AB9A4AD241ADF8A0051C4D6 /* NetworkExtension.framework */; };
 		3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */; };
 		3AE92FDB23FDCB15009D7AD0 /* AddPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */; };
 		4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */; };
@@ -219,16 +224,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080C48CC2412F616006A19EC /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxTestVC.swift; sourceTree = "<group>"; };
+		08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		1B33429CD402F55EAA5FEC22 /* Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; path = "Target Support Files/Pods-ScoutMaster-ScoutMasterUITests/Pods-ScoutMaster-ScoutMasterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettings.swift; sourceTree = "<group>"; };
 		3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		3A00771223F635F600FE1CE6 /* SoftEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftEffect.swift; sourceTree = "<group>"; };
-		3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = prospectparkloop.geojson; sourceTree = "<group>"; };
+		3A00771423F6466B00FE1CE6 /* 7057680.geojson */ = {isa = PBXFileReference; lastKnownFileType = text; path = 7057680.geojson; sourceTree = "<group>"; };
 		3A164A912412E40800EF6A19 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../Secrets/Secrets.swift; sourceTree = "<group>"; };
 		3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIPersistenceHelper.swift; sourceTree = "<group>"; };
 		3A164A95241689F800EF6A19 /* PointOfInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointOfInterest.swift; sourceTree = "<group>"; };
 		3A164A972416CB2700EF6A19 /* MyTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrail.swift; sourceTree = "<group>"; };
+		3A18C120241FF79E002C7919 /* MyTrailPersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrailPersistenceHelper.swift; sourceTree = "<group>"; };
+		3A18C1422429155A002C7919 /* AddTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrailView.swift; sourceTree = "<group>"; };
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -253,6 +262,8 @@
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "blue-trail.geojson"; sourceTree = "<group>"; };
+		3AB9A4AC241ADF8A0051C4D6 /* ScoutMaster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScoutMaster.entitlements; sourceTree = "<group>"; };
+		3AB9A4AD241ADF8A0051C4D6 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPoint.swift; sourceTree = "<group>"; };
 		4E6610D523E373BC00846CB4 /* FirebaseAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuth.swift; sourceTree = "<group>"; };
@@ -429,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6446E3CD422B5D26FDF55849 /* Pods_ScoutMaster.framework in Frameworks */,
+				3AB9A4AE241ADF8A0051C4D6 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +517,7 @@
 		3A999DB023DF58AC008DBC60 /* ScoutMaster */ = {
 			isa = PBXGroup;
 			children = (
+				3AB9A4AC241ADF8A0051C4D6 /* ScoutMaster.entitlements */,
 				3A999DF123DF5AAE008DBC60 /* Controllers */,
 				4E6610D423E3739B00846CB4 /* Firebase */,
 				3A999E0023DF5C5A008DBC60 /* Models */,
@@ -647,11 +660,12 @@
 			children = (
 				5267846C242BABE90002AD26 /* GPXFiles */,
 				3AAA6AE423E88F4F00A5E8F1 /* blue-trail.geojson */,
-				3A00771423F6466B00FE1CE6 /* prospectparkloop.geojson */,
+				3A00771423F6466B00FE1CE6 /* 7057680.geojson */,
 				3A999E0C23DF6EA0008DBC60 /* LocationData.swift */,
 				3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */,
 				3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */,
 				3AE92FDA23FDCB15009D7AD0 /* AddPoint.swift */,
+				3A18C1422429155A002C7919 /* AddTrailView.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -661,6 +675,7 @@
 			children = (
 				3ACBC604240EF14300A7E7C5 /* PersistenceManager.swift */,
 				3A164A932416881900EF6A19 /* POIPersistenceHelper.swift */,
+				3A18C120241FF79E002C7919 /* MyTrailPersistenceHelper.swift */,
 				3A164A95241689F800EF6A19 /* PointOfInterest.swift */,
 				3A164A972416CB2700EF6A19 /* MyTrail.swift */,
 			);
@@ -869,6 +884,8 @@
 			isa = PBXGroup;
 			children = (
 				52B152E423E0CA1E007C9BF6 /* DarkSkyFile.swift */,
+				080C48CC2412F616006A19EC /* WeatherCell.swift */,
+				08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */,
 			);
 			path = DarkSky;
 			sourceTree = "<group>";
@@ -876,6 +893,7 @@
 		689ED15B92246C31FD2CDAE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AB9A4AD241ADF8A0051C4D6 /* NetworkExtension.framework */,
 				FA7E4F0D33D850CE5ED6BBD1 /* Pods_ScoutMaster.framework */,
 				4F3321CC94AFFA3AA928AEB5 /* Pods_ScoutMaster_ScoutMasterUITests.framework */,
 				64111E6BC2C9660EB54F7F2C /* Pods_ScoutMasterTests.framework */,
@@ -1136,6 +1154,7 @@
 				52678573242BAC570002AD26 /* 7082335.gpx in Resources */,
 				5267850F242BAC570002AD26 /* 7060843.gpx in Resources */,
 				5267853B242BAC570002AD26 /* 7060845.gpx in Resources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1274,10 +1293,12 @@
 				3A164A96241689F800EF6A19 /* PointOfInterest.swift in Sources */,
 				3A999E0823DF6E52008DBC60 /* Network.swift in Sources */,
 				4EA3D3BE23F1D08C00501EB3 /* Posts.swift in Sources */,
+				080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */,
 				3A164A942416881900EF6A19 /* POIPersistenceHelper.swift in Sources */,
 				4EA3D3C223F30DF000501EB3 /* FaveHikeCVC.swift in Sources */,
 				4EA3D3BC23F1C60100501EB3 /* FireStorage.swift in Sources */,
 				523BE1CE23F34020006761A6 /* DashboardVC.swift in Sources */,
+				3A18C121241FF79F002C7919 /* MyTrailPersistenceHelper.swift in Sources */,
 				52B152DF23E0C9DA007C9BF6 /* HikingProjectFile.swift in Sources */,
 				3AAA6AE323E8879A00A5E8F1 /* LocationData.swift in Sources */,
 				3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */,
@@ -1287,6 +1308,7 @@
 				3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */,
 				3A0076C023F1CAE600FE1CE6 /* MapCell.swift in Sources */,
 				3A164A982416CB2700EF6A19 /* MyTrail.swift in Sources */,
+				08BF0ED0242255D600F12B9C /* WeatherTableViewCell.swift in Sources */,
 				4EB921E323E88A9C0013B245 /* String+Validations.swift in Sources */,
 				52B152E223E0C9FA007C9BF6 /* NPSFile.swift in Sources */,
 				52B152DB23E0C99B007C9BF6 /* FirebaseFile.swift in Sources */,
@@ -1302,6 +1324,7 @@
 				4E6BF24023F5F68D00C59E04 /* FavedHikes.swift in Sources */,
 				4E6610D623E373BC00846CB4 /* FirebaseAuth.swift in Sources */,
 				4E6BF23E23F5F57F00C59E04 /* Protocols.swift in Sources */,
+				3A18C1432429155A002C7919 /* AddTrailView.swift in Sources */,
 				080E1C9B23E4734500EF94A6 /* (null) in Sources */,
 				3ACBC605240EF14300A7E7C5 /* PersistenceManager.swift in Sources */,
 				3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */,
@@ -1479,14 +1502,15 @@
 			baseConfigurationReference = 89BEEEC1DEB13BC05A77021C /* Pods-ScoutMaster.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScoutMaster/ScoutMaster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
+				DEVELOPMENT_TEAM = 26RHXP32FH;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = samroman.ScoutMaster;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pursuit.scoutmaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1498,14 +1522,15 @@
 			baseConfigurationReference = 98583C72840D538BA7034646 /* Pods-ScoutMaster.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ScoutMaster/ScoutMaster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3PQWZJD8Z5;
+				DEVELOPMENT_TEAM = 26RHXP32FH;
 				INFOPLIST_FILE = ScoutMaster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = samroman.ScoutMaster;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pursuit.scoutmaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
