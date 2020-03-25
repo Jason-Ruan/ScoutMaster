@@ -51,6 +51,78 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return collectionView
     }()
     
+    lazy var displayedFilterButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Tttttttttttttttt", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        button.addTarget(self, action: #selector(clickDisplayedFilterButton), for: .touchUpInside)
+        return button
+    }()
+    
+        @objc func clickDisplayedFilterButton(sender: UIButton) {
+            print("click")
+    //        filterLabel.isHidden = false
+            horizontalStackViewForFilterIcon.isHidden = true
+        }
+    
+    lazy var easyButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Easy", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        button.addTarget(self, action: #selector(clickEasyButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func clickEasyButton(sender: UIButton) {
+        print("click")
+//        filterLabel.isHidden = false
+        horizontalStackViewForFilterIcon.isHidden = true
+    }
+    
+    lazy var mediumButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Medium", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        button.addTarget(self, action: #selector(clickMediumButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func clickMediumButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        horizontalStackView.isHidden = true
+    }
+    
+    lazy var hardButton: UIButton = {
+        let button: UIButton = UIButton()
+        button.setTitle("Hard", for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 20)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.numberOfLines = 1
+        button.titleLabel?.adjustsFontSizeToFitWidth = false
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        button.addTarget(self, action: #selector(clickHardButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func clickHardButton(sender: UIButton) {
+        print("click")
+        filterLabel.isHidden = false
+        horizontalStackView.isHidden = true
+    }
+    
     lazy var nearbyButton: UIButton = {
         let button: UIButton = UIButton()
         button.setTitle("Nearby", for: .normal)
@@ -58,6 +130,16 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var horizontalStackViewForFilterIcon: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [easyButton, mediumButton, hardButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 30
+        stackView.isHidden = true
+        return stackView
     }()
     
     @objc func clickNearbyButton(sender: UIButton) {
@@ -130,8 +212,20 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     lazy var filterButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "filter"), for: .normal)
+                button.addTarget(self, action: #selector(clickFilterButton), for: .touchUpInside)
         return button
     }()
+    
+    @objc func clickFilterButton(sender: UIButton) {
+        print("click")
+//        filterLabel.isHidden = true
+        if horizontalStackViewForFilterIcon.isHidden == false {
+            horizontalStackViewForFilterIcon.isHidden = true
+        } else {
+            horizontalStackViewForFilterIcon.isHidden = false
+        }
+        
+    }
     
     
     override func viewDidLoad() {
@@ -154,6 +248,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(profileImage)
         view.addSubview(filterButton)
         view.addSubview(horizontalStackView)
+        view.addSubview(horizontalStackViewForFilterIcon)
+        view.addSubview(displayedFilterButton)
         
         
         // add Constraints
@@ -165,6 +261,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setProfileImageConstraints()
         setFilterButtonConstraints()
         setHorizontalStackViewConstraints()
+        setHorizontalForFilterButtonStackViewConstraints()
+        setdisplayedFilterButtonConstraints()
         
     }
     
@@ -310,8 +408,26 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
             horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             horizontalStackView.heightAnchor.constraint(equalToConstant: 30)])
     }
+    // try width anchor contraint next
+    private func setHorizontalForFilterButtonStackViewConstraints(){
+        self.horizontalStackViewForFilterIcon.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            horizontalStackViewForFilterIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            horizontalStackViewForFilterIcon.widthAnchor.constraint(equalToConstant: 275),
+            horizontalStackViewForFilterIcon.heightAnchor.constraint(equalToConstant: 140),
+            horizontalStackViewForFilterIcon.centerYAnchor.constraint(equalTo: filterLabel.centerYAnchor)])
+    }
     
     private func setFilterButtonConstraints(){
+        self.filterButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            filterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            filterButton.widthAnchor.constraint(equalToConstant: 40),
+            filterButton.heightAnchor.constraint(equalToConstant: 40),
+            filterButton.centerYAnchor.constraint(equalTo: filterLabel.centerYAnchor)])
+    }
+    
+    private func setdisplayedFilterButtonConstraints(){
         self.filterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             filterButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
