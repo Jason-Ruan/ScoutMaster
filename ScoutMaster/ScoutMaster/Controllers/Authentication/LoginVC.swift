@@ -211,9 +211,10 @@ class LoginVC: UIViewController {
                     }
 
                     UIView.transition(with: window, duration: 0.3, options: .transitionFlipFromBottom, animations: {
-                         let signupVC = MainTabBarViewController()
-                         signupVC.modalPresentationStyle = .fullScreen
-                         self.present(signupVC, animated: true, completion: nil)
+                        window.rootViewController = MainTabBarViewController()
+//                        let signupVC = MainTabBarViewController()
+//                         signupVC.modalPresentationStyle = .fullScreen
+//                         self.present(signupVC, animated: true, completion: nil)
 
                                 }, completion: nil)
                 }

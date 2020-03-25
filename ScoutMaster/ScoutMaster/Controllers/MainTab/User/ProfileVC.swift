@@ -69,6 +69,7 @@ class ProfileVC: UIViewController {
             cv.register(userStatsCVC.self, forCellWithReuseIdentifier: "userStatCell")
             return cv
         }()
+    
 
     
 
@@ -88,20 +89,6 @@ class ProfileVC: UIViewController {
 // MARK: PRIVATE FUNCS
     
     
-    private func getfaved(){
-           FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
-                     DispatchQueue.main.async {
-                         switch result{
-                         case .failure(let error):
-                             print(error)
-                         case .success(let data):
-                             self.userPost = data
-    
-                             print(data.count)
-                         }
-                     }
-           }
-       }
     
     private func addSubview() {
         view.addSubview(faveHikesCollection)
@@ -117,28 +104,27 @@ class ProfileVC: UIViewController {
         profileNameConstraint()
         
     }
+     
+    private func reloadFaves() {
+        faveHikesCollection.reloadData()
+    }
     
+    private func getfaved(){
+           FirestoreService.manager.getUserFaved(userId: user.uid) { (result) in
+                     DispatchQueue.main.async {
+                         switch result{
+                         case .failure(let error):
+                             print(error)
+                         case .success(let data):
+                             self.userPost = data
     
-//    private func setUp() {
-//        if user.userName == nil {
-//            userName.text = user.email
-//        } else {
-//            userName.text = user.userName
-//        }
-//
-//        if let photoUrl = user.photoURL {
-//        FirebaseStorage.profileManager.getImages(profileUrl: photoUrl) { (result) in
-//            switch result{
-//            case .failure(let error):
-//                self.userImage.image = UIImage(named: "alps")
-//            case .success(let data):
-//                self.userImage.image = UIImage(data: data)
-//            }
-//        }
-//        } else {
-//            self.userImage.image = UIImage(named: "alps")
-//        }
-//    }
+                             print(data.count)
+                         }
+                     }
+           }
+       }
+    
+
     
     
     private func constrainFaveCollectionView(){
@@ -198,6 +184,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         
         numOfItems = userPost.count
             
+            
         } else {
             numOfItems = 5
         }
@@ -213,6 +200,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faveCell", for: indexPath) as? FaveHikeCVC else {return UICollectionViewCell()}
         let data = userPost[indexPath.row]
         cell.userFavedTrailName.text = data.name
+            cell.delegate = self
         
         ImageHelper.shared.fetchImage(urlString: data.img!) { (result) in
             DispatchQueue.main.async {
@@ -241,6 +229,20 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     }
     
     
+    
+    
+}
+
+extension ProfileVC: FaveCellDelegate {
+    
+    func unfavorite(tag: Int) {
+        let data = userPost[tag]
+
+        FirestoreService.manager.unFavoritedHikes(id: data.favedId) { (result) in
+            print(tag)
+            self.reloadFaves()
+        }
+    }
     
     
 }

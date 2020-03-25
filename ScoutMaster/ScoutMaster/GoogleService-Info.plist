@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>406700337662-077gujuih278l0smh874pgaljt0bjv8o.apps.googleusercontent.com</string>
+	<string>406700337662-sqask5r9a5l11vnvmk2gf6e1rq246hac.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.406700337662-077gujuih278l0smh874pgaljt0bjv8o</string>
+	<string>com.googleusercontent.apps.406700337662-sqask5r9a5l11vnvmk2gf6e1rq246hac</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBbX1z9xbztL4VQBp1-I-ppwW7oZexXjhc</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>samroman.ScoutMaster</string>
+	<string>com.pursuit.scoutmaster</string>
 	<key>PROJECT_ID</key>
 	<string>scoutmaster-c3590</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:406700337662:ios:1debcdfc8954ca96fff8af</string>
+	<string>1:406700337662:ios:c0869d817339ef2bfff8af</string>
 	<key>DATABASE_URL</key>
 	<string>https://scoutmaster-c3590.firebaseio.com</string>
 </dict>

@@ -11,3 +11,7 @@ import Foundation
 protocol ButtonPressed: AnyObject {
     func buttonPressed(tag: Int)
 }
+
+protocol FaveCellDelegate: AnyObject {
+    func unfavorite(tag: Int)
+}

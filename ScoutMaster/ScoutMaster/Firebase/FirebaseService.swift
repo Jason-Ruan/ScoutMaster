@@ -12,10 +12,7 @@ import FirebaseFirestore
 fileprivate enum FireStoreCollections: String {
     case users
     case posts
-    case comments
-    case markets
-    case produceByMonth = "Produce"
-    case produce = "ProduceByType"
+   
 }
 
 enum SortingCriteria: String {
@@ -139,7 +136,7 @@ class FirestoreService {
             } else {
                 let posts = snapshot?.documents.compactMap({ (snapshot) -> FavedHikes? in
                     let postId = snapshot.documentID
-                    let post = FavedHikes(from: snapshot.data(), id: postId)
+                    let post = FavedHikes(from: snapshot.data(), faveId: postId)
                     return post
                 })
                 completion(.success(posts ?? []))
@@ -149,6 +146,17 @@ class FirestoreService {
     
     func checkForFaves () {
         
+    }
+    
+    func unFavoritedHikes (id: String, completion: @escaping(Result<[FavedHikes], Error>) -> () ) {
+        db.collection(FireStoreCollections.posts.rawValue).document(id).delete() { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("\(id)")
+                print("Document successfully removed!")
+            }
+        }
     }
 
     

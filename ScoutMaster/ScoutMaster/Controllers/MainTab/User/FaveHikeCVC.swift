@@ -10,6 +10,8 @@ import UIKit
 
 class FaveHikeCVC: UICollectionViewCell {
     
+    weak var delegate: ProfileVC?
+    
     lazy var userFavedImages : UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "alps")
@@ -30,6 +32,19 @@ class FaveHikeCVC: UICollectionViewCell {
         return view
     }()
     
+    lazy var faved: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage.init(systemName: "heart.fill"), for: .normal)
+        button.addTarget(self, action: #selector(unfave(_:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    @objc func unfave (_ sender: UIButton) {
+        delegate?.unfavorite(tag: sender.tag)
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
@@ -42,6 +57,7 @@ class FaveHikeCVC: UICollectionViewCell {
         contentView.addSubview(userFavedImages)
         contentView.addSubview(infoView)
         contentView.addSubview(userFavedTrailName)
+        contentView.addSubview(faved)
         
     }
     
@@ -49,8 +65,11 @@ class FaveHikeCVC: UICollectionViewCell {
         constrainImageView()
         setInfoViewConstraints()
         constrainName()
+        faveButtonConstraint()
         
     }
+    
+    
     
     private func constrainImageView(){
        self.userFavedImages.translatesAutoresizingMaskIntoConstraints = false
@@ -82,28 +101,14 @@ class FaveHikeCVC: UICollectionViewCell {
         ])
     }
     
-    /*
-    func configureCell(post: FavedHikes) {
-        FirebaseStorage.postManager.getImages(profileUrl: post.img) { (result) in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let imageData):
-                self.userFavedImages.image = UIImage(data: imageData)
-            }
-        }
-        FirestoreService.manager.getUserFromPost(creatorID: <#T##String#>, completion: <#T##(Result<AppUser, Error>) -> ()#>) { (result) in
-            DispatchQueue.main.async {
-                switch result{
-                case .failure(let error):
-                    print(error)
-                case .success(let user):
-                    print("configureCell success")
-                }
-            }
-        }
+    private func faveButtonConstraint() {
+        self.faved.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.faved.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
+            self.faved.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -75),
+            self.faved.heightAnchor.constraint(equalToConstant: 50)])
     }
- */
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -26,9 +26,10 @@ struct FavedHikes: Codable {
     var longitude: Double
     var latitude: Double
     var creatorId: String
+    var favedId: String
 
     
-    init(id: Int, name: String, type: String, summary: String, difficulty: String, location: String, url: String, img: String?, length: Double, ascent: Int, descent: Int, high: Int, low: Int, longitude: Double, latitude: Double, creatorId: String) {
+    init(id: Int, name: String, type: String, summary: String, difficulty: String, location: String, url: String, img: String?, length: Double, ascent: Int, descent: Int, high: Int, low: Int, longitude: Double, latitude: Double, creatorId: String, favedId: String) {
         self.id = id
         self.name = name
         self.type = type
@@ -45,9 +46,10 @@ struct FavedHikes: Codable {
         self.longitude = longitude
         self.latitude = latitude
         self.creatorId = creatorId
+        self.favedId = favedId
     }
     
-    init?(from dict: [String: Any], id: String) {
+    init?(from dict: [String: Any], faveId: String) {
         guard let id = dict["id"] as? Int,
             let name = dict["name"] as? String,
             let type = dict["type"] as? String,
@@ -81,6 +83,7 @@ struct FavedHikes: Codable {
         self.longitude = longitude
         self.latitude = latitude
         self.creatorId = creatorId
+        self.favedId = faveId
     }
 
 
