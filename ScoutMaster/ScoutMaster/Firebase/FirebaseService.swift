@@ -148,14 +148,17 @@ class FirestoreService {
         
     }
     
-    func unFavoritedHikes (id: String, completion: @escaping(Result<[FavedHikes], Error>) -> () ) {
+    func unFavoritedHikes (id: String, completion: @escaping(Result<(), Error>) -> () ) {
         db.collection(FireStoreCollections.posts.rawValue).document(id).delete() { error in
             if let error = error {
                 print("Error removing document: \(error)")
+                completion(.failure(error))
             } else {
                 print("\(id)")
                 print("Document successfully removed!")
+                completion(.success(()))
             }
+            
         }
     }
 

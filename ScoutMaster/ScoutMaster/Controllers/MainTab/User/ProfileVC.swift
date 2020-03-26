@@ -236,11 +236,17 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
 extension ProfileVC: FaveCellDelegate {
     
     func unfavorite(tag: Int) {
+        
         let data = userPost[tag]
 
         FirestoreService.manager.unFavoritedHikes(id: data.favedId) { (result) in
-            print(tag)
-            self.reloadFaves()
+            DispatchQueue.main.async {
+                print(tag)
+                self.userPost.removeAll {$0.favedId == data.favedId}
+//                or removeAt tag
+            }
+           
+            
         }
     }
     
