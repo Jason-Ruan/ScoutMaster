@@ -207,11 +207,12 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return icon
     }()
     
-   lazy var profileImage: UIImageView = {
-        let icon = UIImageView()
+   lazy var profileImage: UIButton = {
+        let icon = UIButton()
         icon.backgroundColor = .clear
         icon.contentMode = .scaleAspectFill
-        icon.image = UIImage(named: "personhiking")
+        icon.setBackgroundImage( UIImage(named: "personhiking"), for: .normal)
+    icon.addTarget(self, action: #selector(logout), for: .touchUpInside)
         return icon
     }()
     
@@ -234,6 +235,28 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    @objc func logout(){
+              let alert = UIAlertController(title: "Log Out?", message: nil, preferredStyle: .alert)
+              let action = UIAlertAction.init(title: "Yup!", style: .destructive, handler: .some({ (action) in
+                  DispatchQueue.main.async {
+                      FirebaseAuthService.manager.logOut { (result) in
+                      }
+                      guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                          else {
+                              return
+                      }
+                      UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromBottom, animations: {
+                          window.rootViewController = LoginVC()
+                      }, completion: nil)
+                  }
+              }))
+              let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+              alert.addAction(action)
+              alert.addAction(cancel)
+              present(alert, animated:true)
+          }
     
     
     override func viewDidLoad() {
