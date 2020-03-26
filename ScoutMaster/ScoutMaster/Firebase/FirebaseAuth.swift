@@ -56,14 +56,12 @@ class FirebaseAuthService {
         }
     }
     
-    func signOut() {
-        do {
-            try auth.signOut()
-            
-        } catch {
-            print(error)
-        }
-    }
+    func logOut(completion: @escaping (Result<(), Error>) -> ()) {
+           do{ try auth.signOut()}
+           catch {
+               print(error)
+           }
+       }
     
     private init () {}
     

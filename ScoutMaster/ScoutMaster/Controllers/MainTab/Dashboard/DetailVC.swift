@@ -79,6 +79,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
         button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
         button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
@@ -99,9 +101,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         sv.addArrangedSubview(self.favoriteButton)
         let favButton = UIButton(type: UIButton.ButtonType.system)
-        favButton.setTitle("Favorite", for: .normal)
+//        favButton.setTitle("Favorite", for: .normal)
         favButton.setTitleColor(.systemBlue, for: .normal)
-        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+//        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
         sv.addArrangedSubview(favButton)
         
         sv.addArrangedSubview(self.webLinkButton)

@@ -129,6 +129,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        button.isEnabled = false
+        button.isHidden = true
         return button
     }()
     
@@ -154,6 +156,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickPopularButton), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
@@ -183,6 +187,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         label.titleLabel?.numberOfLines = 1
         label.titleLabel?.adjustsFontSizeToFitWidth = true
         label.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        label.isHidden = true
+        label.isEnabled = false
         return label
     }()
 
@@ -201,18 +207,21 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return icon
     }()
     
-   lazy var profileImage: UIImageView = {
-        let icon = UIImageView()
+   lazy var profileImage: UIButton = {
+        let icon = UIButton()
         icon.backgroundColor = .clear
         icon.contentMode = .scaleAspectFill
-        icon.image = UIImage(named: "personhiking")
+        icon.setBackgroundImage( UIImage(named: "personhiking"), for: .normal)
+    icon.addTarget(self, action: #selector(logout), for: .touchUpInside)
         return icon
     }()
     
     lazy var filterButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "filter"), for: .normal)
-                button.addTarget(self, action: #selector(clickFilterButton), for: .touchUpInside)
+//                button.addTarget(self, action: #selector(clickFilterButton), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
@@ -226,6 +235,28 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    @objc func logout(){
+              let alert = UIAlertController(title: "Log Out?", message: nil, preferredStyle: .alert)
+              let action = UIAlertAction.init(title: "Yup!", style: .destructive, handler: .some({ (action) in
+                  DispatchQueue.main.async {
+                      FirebaseAuthService.manager.logOut { (result) in
+                      }
+                      guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+                          else {
+                              return
+                      }
+                      UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromBottom, animations: {
+                          window.rootViewController = LoginVC()
+                      }, completion: nil)
+                  }
+              }))
+              let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+              alert.addAction(action)
+              alert.addAction(cancel)
+              present(alert, animated:true)
+          }
     
     
     override func viewDidLoad() {

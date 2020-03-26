@@ -19,6 +19,7 @@ class SignUpVC: UIViewController {
         text.text = "email"
         text.borderStyle = .line
         text.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        text.delegate = self
         return text
     }()
     
@@ -27,6 +28,7 @@ class SignUpVC: UIViewController {
         passWord.text = "password"
         passWord.borderStyle = .line
         passWord.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        passWord.delegate = self
         return passWord
     }()
     
@@ -55,6 +57,17 @@ class SignUpVC: UIViewController {
         defaultImage.image = UIImage(named: "defaultpicture")
         return defaultImage
     }()
+    
+    lazy var tappedScreenRecognizer: UITapGestureRecognizer = {
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped(sender:)))
+                
+                return tapGesture
+            }()
+
+         @objc private func tapGestureTapped(sender: UIView) {
+             emailTextField.resignFirstResponder()
+             passwordTextField.resignFirstResponder()
+         }
     
 // MARK: ObjectiveC
     
@@ -98,6 +111,7 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .blue
+        view.addGestureRecognizer(tappedScreenRecognizer)
         addSubViews()
         constraints()
         // Do any additional setup after loading the view.
@@ -159,7 +173,7 @@ class SignUpVC: UIViewController {
         private func signInConstraint() {
             signUpButton.translatesAutoresizingMaskIntoConstraints = false
             [signUpButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
-                 signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 200),
+                 signUpButton.leadingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: 120),
                  signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100)].forEach{$0.isActive = true}
         }
     
@@ -219,4 +233,11 @@ class SignUpVC: UIViewController {
         
        
    
+}
+
+extension SignUpVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
