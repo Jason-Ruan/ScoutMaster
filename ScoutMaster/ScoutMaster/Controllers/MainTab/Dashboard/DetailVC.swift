@@ -79,6 +79,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
         button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
         button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
