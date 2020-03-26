@@ -129,6 +129,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickNearbyButton), for: .touchUpInside)
+        button.isEnabled = false
+        button.isHidden = true
         return button
     }()
     
@@ -154,6 +156,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         button.titleLabel?.font = UIFont.init(name: "Baskerville", size: 25)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(clickPopularButton), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
@@ -183,6 +187,8 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         label.titleLabel?.numberOfLines = 1
         label.titleLabel?.adjustsFontSizeToFitWidth = true
         label.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        label.isHidden = true
+        label.isEnabled = false
         return label
     }()
 
@@ -212,7 +218,9 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     lazy var filterButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "filter"), for: .normal)
-                button.addTarget(self, action: #selector(clickFilterButton), for: .touchUpInside)
+//                button.addTarget(self, action: #selector(clickFilterButton), for: .touchUpInside)
+        button.isHidden = true
+        button.isEnabled = false
         return button
     }()
     
