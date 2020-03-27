@@ -96,15 +96,15 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.distribution = .fillProportionally
-        sv.alignment = .center
+        sv.alignment = .leading
         sv.spacing = 10
         
-        sv.addArrangedSubview(self.favoriteButton)
-        let favButton = UIButton(type: UIButton.ButtonType.system)
+//        sv.addArrangedSubview(self.favoriteButton)
+//        let favButton = UIButton(type: UIButton.ButtonType.system)
 //        favButton.setTitle("Favorite", for: .normal)
-        favButton.setTitleColor(.systemBlue, for: .normal)
+//        favButton.setTitleColor(.systemBlue, for: .normal)
 //        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-        sv.addArrangedSubview(favButton)
+//        sv.addArrangedSubview(favButton)
         
         sv.addArrangedSubview(self.webLinkButton)
         let webButton = UIButton(type: UIButton.ButtonType.system)
@@ -435,9 +435,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             buttonStackView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
             buttonStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 250),
+//            buttonStackView.widthAnchor.constraint(equalToConstant: 250),
             buttonStackView.heightAnchor.constraint(equalToConstant: 40)
         ])
+        buttonStackView.sizeToFit()
         
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -465,7 +466,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         
         weatherHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            weatherHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 50),
+            weatherHeaderLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 40),
             weatherHeaderLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             weatherHeaderLabel.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
         ])

@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-
+        
         if FirebaseAuthService.manager.currentUser == nil {
             window?.rootViewController = LoginVC()
         } else {
