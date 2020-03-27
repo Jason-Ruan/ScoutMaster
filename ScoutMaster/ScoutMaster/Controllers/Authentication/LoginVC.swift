@@ -19,6 +19,7 @@ class LoginVC: UIViewController {
         text.text = "email"
         text.borderStyle = .line
         text.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        text.delegate = self
         return text
        }()
        
@@ -27,6 +28,7 @@ class LoginVC: UIViewController {
         passWord.text = "password"
         passWord.borderStyle = .line
         passWord.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        passWord.delegate = self
         return passWord
        }()
     
@@ -53,10 +55,22 @@ class LoginVC: UIViewController {
         return signUp
        }()
     
+    lazy var tappedScreenRecognizer: UITapGestureRecognizer = {
+             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped(sender:)))
+             
+             return tapGesture
+         }()
+
+      @objc private func tapGestureTapped(sender: UIView) {
+          emailTextField.resignFirstResponder()
+          passwordTextField.resignFirstResponder()
+      }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         // Do any additional setup after loading the view.
+        view.addGestureRecognizer(tappedScreenRecognizer)
         addSubViews()
         constraints()
 
@@ -101,8 +115,8 @@ class LoginVC: UIViewController {
     private func signUpContraint() {
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
         [signUpButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
-        signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 250),
-        signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -75)].forEach{$0.isActive = true}
+        signUpButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor, constant: 120 ),
+        signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100)].forEach{$0.isActive = true}
     }
             
     private func loginContraint() {
@@ -185,4 +199,11 @@ class LoginVC: UIViewController {
                                 }, completion: nil)
                 }
             }
+}
+
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
