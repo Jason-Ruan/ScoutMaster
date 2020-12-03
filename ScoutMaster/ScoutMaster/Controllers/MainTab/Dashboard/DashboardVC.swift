@@ -49,7 +49,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.register(TrailCell.self, forCellWithReuseIdentifier: "trailCell")
-        
+        collectionView.isPagingEnabled = true
         return collectionView
     }()
     
@@ -506,6 +506,11 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         present(detailVC, animated: true, completion: nil)
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
 }
     
 
