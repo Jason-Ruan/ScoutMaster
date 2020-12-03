@@ -204,7 +204,6 @@
 		3A449C03242BEA35003CE9C8 /* 7057303.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 3A449B50242BEA35003CE9C8 /* 7057303.geojson */; };
 		3A999DB223DF58AC008DBC60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB123DF58AC008DBC60 /* AppDelegate.swift */; };
 		3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */; };
-		3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DB723DF58AC008DBC60 /* Main.storyboard */; };
 		3A999DBC23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DBA23DF58AC008DBC60 /* ScoutMaster.xcdatamodeld */; };
 		3A999DBE23DF58AD008DBC60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DBD23DF58AD008DBC60 /* Assets.xcassets */; };
 		3A999DC123DF58AD008DBC60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DBF23DF58AD008DBC60 /* LaunchScreen.storyboard */; };
@@ -214,7 +213,6 @@
 		3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DEC23DF59AA008DBC60 /* ProfileVC.swift */; };
 		3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DEE23DF59EC008DBC60 /* MainTabBarViewController.swift */; };
 		3A999DF423DF5B1A008DBC60 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF323DF5B1A008DBC60 /* DetailVC.swift */; };
-		3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */; };
 		3A999DF923DF5B7A008DBC60 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DF823DF5B79008DBC60 /* MapVC.swift */; };
 		3A999E0823DF6E52008DBC60 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
 		3AAA6AE223E886DA00A5E8F1 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AE123E886DA00A5E8F1 /* CustomPointAnnotation.swift */; };
@@ -463,7 +461,6 @@
 		3A999DAE23DF58AC008DBC60 /* ScoutMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoutMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A999DB123DF58AC008DBC60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3A999DB823DF58AC008DBC60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3A999DBB23DF58AC008DBC60 /* ScoutMaster.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScoutMaster.xcdatamodel; sourceTree = "<group>"; };
 		3A999DBD23DF58AD008DBC60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A999DC023DF58AD008DBC60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -478,7 +475,6 @@
 		3A999DEC23DF59AA008DBC60 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		3A999DEE23DF59EC008DBC60 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		3A999DF323DF5B1A008DBC60 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
-		3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyVC.swift; sourceTree = "<group>"; };
 		3A999DF823DF5B79008DBC60 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		3A999E0723DF6E52008DBC60 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3A999E0C23DF6EA0008DBC60 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
@@ -874,7 +870,6 @@
 		3A999DF523DF5B3E008DBC60 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				3A999DF623DF5B6B008DBC60 /* JourneyVC.swift */,
 				3A999DF823DF5B79008DBC60 /* MapVC.swift */,
 				080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */,
 				3A0076BF23F1CAE600FE1CE6 /* MapCell.swift */,
@@ -887,7 +882,6 @@
 			children = (
 				3A999DB123DF58AC008DBC60 /* AppDelegate.swift */,
 				3A999DB323DF58AC008DBC60 /* SceneDelegate.swift */,
-				3A999DB723DF58AC008DBC60 /* Main.storyboard */,
 				3A999DBF23DF58AD008DBC60 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
@@ -1313,7 +1307,6 @@
 				3A449B7A242BEA35003CE9C8 /* 7055689.geojson in Resources */,
 				3A449B8A242BEA35003CE9C8 /* 7029923.geojson in Resources */,
 				3A449B96242BEA35003CE9C8 /* 7036638.geojson in Resources */,
-				3A999DB923DF58AC008DBC60 /* Main.storyboard in Resources */,
 				3A449B55242BEA35003CE9C8 /* 7060775.geojson in Resources */,
 				3A449B8D242BEA35003CE9C8 /* 7060778.geojson in Resources */,
 				3A449B75242BEA35003CE9C8 /* 7024951.geojson in Resources */,
@@ -1482,7 +1475,6 @@
 				4EB921E123E8895E0013B245 /* SignUpVC.swift in Sources */,
 				52B152E723E0E9D8007C9BF6 /* ImageHelper.swift in Sources */,
 				523D98B923F5BB76007EF639 /* GoogleFile.swift in Sources */,
-				3A999DF723DF5B6B008DBC60 /* JourneyVC.swift in Sources */,
 				3A999DB423DF58AC008DBC60 /* SceneDelegate.swift in Sources */,
 				3A999DE923DF5960008DBC60 /* LoginVC.swift in Sources */,
 				3A00771323F635F600FE1CE6 /* SoftEffect.swift in Sources */,
@@ -1531,14 +1523,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3A999DB723DF58AC008DBC60 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A999DB823DF58AC008DBC60 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3A999DBF23DF58AD008DBC60 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
