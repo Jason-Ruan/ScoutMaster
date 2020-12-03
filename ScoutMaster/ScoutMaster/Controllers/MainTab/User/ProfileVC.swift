@@ -179,7 +179,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         ImageHelper.shared.fetchImage(urlString: data.img!) { (result) in
             DispatchQueue.main.async {
                 switch result {
-                case .failure(let error):
+                case .failure:
                     cell.userFavedImages.image = UIImage(named: "alps")
                 case .success(let img):
                     cell.userFavedImages.image = img

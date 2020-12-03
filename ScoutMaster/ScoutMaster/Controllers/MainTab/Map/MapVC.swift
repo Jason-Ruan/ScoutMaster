@@ -89,7 +89,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     
     var mapView = MapSettings.customMap
     
-    var newCoords: [(Double,Double)]! {
+    var newCoords: [(Double,Double)]? {
         didSet {
 //            for i in newCoords {
 //                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
@@ -144,7 +144,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
+//        mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -155,6 +155,9 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         constrainRecordTrailButton()
         constrainAddPopUp()
         getPointsOfInterest()
+        
+        guard let userLocation = mapView.userLocation else { return }
+        mapView.setCenter(CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), zoomLevel: 13.5, animated: false)
         
     }
     
