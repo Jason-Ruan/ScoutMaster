@@ -154,6 +154,11 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         constrainRecordTrailButton()
         constrainAddPopUp()
         getPointsOfInterest()
+        
+        if let userLocationCoordinates = mapView.userLocation?.coordinate {
+            mapView.setCenter(userLocationCoordinates, zoomLevel: 13.5, animated: true)
+        }
+        
     }
     
     //MARK: - Constraint Methods

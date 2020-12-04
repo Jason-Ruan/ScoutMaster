@@ -21,9 +21,7 @@ class MainTabBarViewController: UITabBarController {
         discoverVC.tabBarItem = UITabBarItem(title: "Discover", image: UIImage(named: "search"), tag: 0)
         journeyVC.tabBarItem = UITabBarItem(title: "Journey", image: UIImage(named: "map"), tag: 1)
 //        userVC.tabBarItem = UITabBarItem(title: "User", image: UIImage(systemName: "person"), tag: 2)
-        
-        journeyVC.tabBarItem.isEnabled = false
-        
+                
         self.viewControllers = [discoverVC, journeyVC]
         self.viewControllers?.forEach({$0.tabBarController?.tabBar.barStyle = .default})
         
