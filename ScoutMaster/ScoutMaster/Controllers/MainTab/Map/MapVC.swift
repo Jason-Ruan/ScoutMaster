@@ -107,7 +107,12 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             self.pointsOfInterest.forEach { (point) in
                 let poi = MGLPointAnnotation()
                 poi.coordinate = CLLocationCoordinate2D(latitude: point.lat, longitude: point.long)
-                poi.title = point.title
+                if let poiTitle = point.title {
+                    poi.title = poiTitle
+                }
+                if let poiDescription = point.desc {
+                    poi.subtitle = poiDescription
+                }
                 mapView.addAnnotation(poi)
                 POIAnnotations.append(poi)
             }
@@ -154,6 +159,9 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         constrainRecordTrailButton()
         constrainAddPopUp()
         getPointsOfInterest()
+        
+        mapView.compassView.compassVisibility = .visible
+        mapView.showsScale = true
         
         if let userLocationCoordinates = mapView.userLocation?.coordinate {
             mapView.setCenter(userLocationCoordinates, zoomLevel: 13.5, animated: true)
