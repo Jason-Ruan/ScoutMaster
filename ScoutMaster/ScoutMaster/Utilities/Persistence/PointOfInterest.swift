@@ -17,8 +17,7 @@ struct PointOfInterest: Codable {
     let desc: String?
     
     var id: String {
-        var latLong = "\(lat)\(long)".replacingOccurrences(of: "-", with: "").replacingOccurrences(of: ".", with: "")
-        return latLong
+        return "\(lat)\(long)".replacingOccurrences(of: "-", with: "").replacingOccurrences(of: ".", with: "")
     }
     
     

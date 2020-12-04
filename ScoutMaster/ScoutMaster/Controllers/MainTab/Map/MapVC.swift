@@ -82,21 +82,21 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     var trail: Trail? {
         didSet{
 //             TODO: Resolve conflict between getting a trail and drawing line vs appending to coordinates when newCoords is set. Both attempt to mutate var coordinates at line 92 when trail is present.
-            mapView.setCenter(CLLocationCoordinate2D(latitude: self.trail!.latitude, longitude: self.trail!.longitude), animated: true)
+            mapView.setCenter(CLLocationCoordinate2D(latitude: self.trail!.latitude, longitude: self.trail!.longitude), zoomLevel: 13.5, animated: false)
             drawTrailPolyline()
         }
     }
     
     var mapView = MapSettings.customMap
     
-    var newCoords: [(Double,Double)]! {
-        didSet {
+    var newCoords: [(Double,Double)]?
+//        didSet {
 //            for i in newCoords {
 //                coordinates.append(CLLocationCoordinate2D(latitude: i.0, longitude: i.1))
 //                drawTrailPolyline()
-            }
+//            }
 //        }
-    }
+    
     
     var coordinates = [CLLocationCoordinate2D]()
     
@@ -144,7 +144,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.setCenter(CLLocationCoordinate2D(latitude: mapView.userLocation!.coordinate.latitude, longitude: mapView.userLocation!.coordinate.longitude), zoomLevel: 13.5, animated: false)
         mapView.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -155,7 +154,6 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
         constrainRecordTrailButton()
         constrainAddPopUp()
         getPointsOfInterest()
-        
     }
     
     //MARK: - Constraint Methods
@@ -217,7 +215,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             addPopUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hidePopUpTopAnchorConstraint,
             addPopUp.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
-            addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
+            addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width - 4)])
     }
     
     func showWeatherTableView() {

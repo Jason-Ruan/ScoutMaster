@@ -12,7 +12,9 @@ class TrailCell: UICollectionViewCell {
     
     lazy var name: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Baskerville", size: 22)
+        label.font = UIFont(name: "ChalkboardSE-Regular", size: 35)
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
         label.textColor = .white
         return label

@@ -1,11 +1,3 @@
-//
-//  Dashboard.swift
-//  ScoutMaster
-//
-//  Created by Sam Roman on 1/27/20.
-//  Copyright © 2020 Sam Roman. All rights reserved.
-//
-
 import UIKit
 import Mapbox
 import SafariServices
@@ -74,13 +66,12 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    lazy var favoriteButton: UIButton = {
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
-        button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
-        button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-        button.isHidden = true
-        button.isEnabled = false
+        button.setImage(UIImage(systemName: "bookmark", withConfiguration: imageConfig), for: .normal)
+        button.setTitle("Bookmark", for: .normal)
+        button.addTarget(self, action: #selector(bookmarkTrail), for: .touchUpInside)
         return button
     }()
     
@@ -88,6 +79,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let button = UIButton(type: UIButton.ButtonType.system)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
         button.setImage(UIImage.init(systemName: "safari", withConfiguration: imageConfig), for: .normal)
+        button.setTitle("Website", for: .normal)
         button.addTarget(self, action: #selector(openTrailLink), for: .touchUpInside)
         return button
     }()
@@ -96,23 +88,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         let sv = UIStackView()
         sv.axis = .horizontal
         sv.distribution = .fillProportionally
-        sv.alignment = .leading
-        sv.spacing = 10
-        
-//        sv.addArrangedSubview(self.favoriteButton)
-//        let favButton = UIButton(type: UIButton.ButtonType.system)
-//        favButton.setTitle("Favorite", for: .normal)
-//        favButton.setTitleColor(.systemBlue, for: .normal)
-//        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-//        sv.addArrangedSubview(favButton)
-        
+        sv.alignment = .firstBaseline
+        sv.spacing = 5
+        sv.addArrangedSubview(self.bookmarkButton)
         sv.addArrangedSubview(self.webLinkButton)
-        let webButton = UIButton(type: UIButton.ButtonType.system)
-        webButton.setTitle("Website", for: .normal)
-        webButton.setTitleColor(.systemBlue, for: .normal)
-        webButton.addTarget(self, action: #selector(openTrailLink), for: .touchUpInside)
-        sv.addArrangedSubview(webButton)
-        
         return sv
     }()
     
@@ -151,7 +130,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             label.text = trail.location
             label.font = label.font.withSize(14)
             label.textColor = .white
-            label.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
+            label.backgroundColor = .clear
         }
         return label
     }()
@@ -168,6 +147,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     lazy var descriptionTextView: UITextView = {
         let tv = UITextView()
         tv.isEditable = false
+        tv.isScrollEnabled = false
         if let trail = self.trail {
             tv.text = trail.summary
             tv.textColor = .white
@@ -250,7 +230,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     }
     
     //    MARK: - Objective-C Methods
-    @objc func faveTrail() {
+    @objc func bookmarkTrail() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Could not access the AppDelegate")
             return
@@ -275,9 +255,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                             print(error)
                         case .success(()):
                             print("yes")
-                            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                            self.bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                     }
-            }
+                }
             default:
                 showAlertController(title: "Uh-oh! Looks like you're not connected online.", message: "Please check for a place with a stable internet connection and try again.")
         }
@@ -306,14 +286,16 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     @objc private func segueToMap() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
-            else { return }
+              let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+        else { return }
         if let tabBarController = window.rootViewController as? MainTabBarViewController, let mapVC = tabBarController.viewControllers![1] as? MapVC {
-            tabBarController.selectedIndex = 1
+            mapVC.tabBarItem.isEnabled = true
             mapVC.forecastDetails = self.forecastDetails
             mapVC.trail = self.trail
+            dismiss(animated: true, completion: nil)
+            tabBarController.selectedIndex = 1
         }
-        dismiss(animated: true, completion: nil)
+        
     }
     
     @objc func tappedForecastSegmentControl() {
@@ -431,15 +413,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             locationLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
         
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            buttonStackView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
-            buttonStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
-//            buttonStackView.widthAnchor.constraint(equalToConstant: 250),
-            buttonStackView.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        buttonStackView.sizeToFit()
-        
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             startButton.widthAnchor.constraint(equalToConstant: 90),
@@ -447,6 +420,15 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             startButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 20),
             startButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
+        
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonStackView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 30),
+            buttonStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+            buttonStackView.trailingAnchor.constraint(equalTo: startButton.leadingAnchor),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        buttonStackView.sizeToFit()
         
         descriptionHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -461,7 +443,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor, constant: 5),
             descriptionTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             descriptionTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-            descriptionTextView.heightAnchor.constraint(equalToConstant: 75)
         ])
         
         weatherHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -520,7 +501,6 @@ extension DetailVC: MGLMapViewDelegate {
                 coords.append((i[1],i[0]))
             }
             newCoords = coords
-            print(coords[0])
         }
         catch {
             print("error, could not decode geoJSON")

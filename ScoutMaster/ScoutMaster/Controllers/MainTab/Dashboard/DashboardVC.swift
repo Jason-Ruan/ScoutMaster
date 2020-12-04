@@ -42,12 +42,14 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     }()
     
     lazy var collectionView: UICollectionView = {
-        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.register(TrailCell.self, forCellWithReuseIdentifier: "trailCell")
-        
+        collectionView.isPagingEnabled = true
         return collectionView
     }()
     
@@ -358,7 +360,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         
         NSLayoutConstraint.activate([
             
-            self.collectionView.topAnchor.constraint(equalTo: self.filterLabel.bottomAnchor, constant: 20),
+            self.collectionView.topAnchor.constraint(equalTo: self.filterLabel.bottomAnchor),
             self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
             self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
@@ -495,7 +497,7 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 380, height: 400)
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -504,6 +506,11 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         present(detailVC, animated: true, completion: nil)
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
 }
     
 
