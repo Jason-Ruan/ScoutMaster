@@ -66,13 +66,12 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
-    lazy var favoriteButton: UIButton = {
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.system)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: UIImage.SymbolWeight.bold)
-        button.setImage(UIImage(systemName: "heart", withConfiguration: imageConfig), for: .normal)
-        button.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-        button.isHidden = true
-        button.isEnabled = false
+        button.setImage(UIImage(systemName: "bookmark", withConfiguration: imageConfig), for: .normal)
+        button.setTitle("Bookmark", for: .normal)
+        button.addTarget(self, action: #selector(bookmarkTrail), for: .touchUpInside)
         return button
     }()
     
@@ -88,17 +87,10 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     lazy var buttonStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.distribution = .equalCentering
-        sv.alignment = .leading
-        sv.spacing = 10
-        
-//        sv.addArrangedSubview(self.favoriteButton)
-//        let favButton = UIButton(type: UIButton.ButtonType.system)
-//        favButton.setTitle("Favorite", for: .normal)
-//        favButton.setTitleColor(.systemBlue, for: .normal)
-//        favButton.addTarget(self, action: #selector(faveTrail), for: .touchUpInside)
-//        sv.addArrangedSubview(favButton)
-        
+        sv.distribution = .fillProportionally
+        sv.alignment = .firstBaseline
+        sv.spacing = 5
+        sv.addArrangedSubview(self.bookmarkButton)
         sv.addArrangedSubview(self.webLinkButton)
         return sv
     }()
@@ -138,7 +130,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             label.text = trail.location
             label.font = label.font.withSize(14)
             label.textColor = .white
-            label.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.4)
+            label.backgroundColor = .clear
         }
         return label
     }()
@@ -238,7 +230,7 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     }
     
     //    MARK: - Objective-C Methods
-    @objc func faveTrail() {
+    @objc func bookmarkTrail() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Could not access the AppDelegate")
             return
@@ -263,9 +255,9 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
                             print(error)
                         case .success(()):
                             print("yes")
-                            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                            self.bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
                     }
-            }
+                }
             default:
                 showAlertController(title: "Uh-oh! Looks like you're not connected online.", message: "Please check for a place with a stable internet connection and try again.")
         }
@@ -294,8 +286,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     
     @objc private func segueToMap() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
-            else { return }
+              let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
+        else { return }
         if let tabBarController = window.rootViewController as? MainTabBarViewController, let mapVC = tabBarController.viewControllers![1] as? MapVC {
             mapVC.tabBarItem.isEnabled = true
             mapVC.forecastDetails = self.forecastDetails
@@ -509,7 +501,6 @@ extension DetailVC: MGLMapViewDelegate {
                 coords.append((i[1],i[0]))
             }
             newCoords = coords
-            print(coords[0])
         }
         catch {
             print("error, could not decode geoJSON")

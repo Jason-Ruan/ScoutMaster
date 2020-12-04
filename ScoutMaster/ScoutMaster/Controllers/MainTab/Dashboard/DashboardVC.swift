@@ -360,7 +360,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         
         NSLayoutConstraint.activate([
             
-            self.collectionView.topAnchor.constraint(equalTo: self.filterLabel.bottomAnchor, constant: 20),
+            self.collectionView.topAnchor.constraint(equalTo: self.filterLabel.bottomAnchor),
             self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
             self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
