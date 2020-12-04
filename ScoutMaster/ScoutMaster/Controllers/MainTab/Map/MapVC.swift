@@ -215,7 +215,7 @@ class MapVC: UIViewController, UICollectionViewDelegate, UICollectionViewDelegat
             addPopUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hidePopUpTopAnchorConstraint,
             addPopUp.heightAnchor.constraint(equalToConstant: view.frame.height / 2),
-            addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width)])
+            addPopUp.widthAnchor.constraint(equalToConstant: view.frame.width - 4)])
     }
     
     func showWeatherTableView() {

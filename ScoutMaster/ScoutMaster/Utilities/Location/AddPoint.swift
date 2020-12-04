@@ -29,14 +29,16 @@ class AddPointView: UIView {
     
     lazy var titleField: UITextField = {
         var tf = UITextField()
-        tf.backgroundColor = .gray
+        tf.backgroundColor = .systemBackground
+//        tf.borderStyle = .roundedRect
         tf.placeholder = "Title for trail mark..."
         return tf
     }()
     
     lazy var descField: UITextField = {
         var tf = UITextField()
-        tf.backgroundColor = .gray
+        tf.borderStyle = .roundedRect
+        tf.backgroundColor = .systemBackground
         tf.placeholder = "Description..."
         tf.isUserInteractionEnabled = true
         return tf
@@ -90,6 +92,8 @@ class AddPointView: UIView {
     private func setupView() {
         self.backgroundColor = .white
         self.layer.cornerRadius = 50
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.systemBlue.cgColor
         constrainTitleField()
         constrainDescField()
         constrainCancelButton()

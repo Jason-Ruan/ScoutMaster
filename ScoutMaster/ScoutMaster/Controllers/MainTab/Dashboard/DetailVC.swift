@@ -88,7 +88,8 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
     lazy var buttonStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.alignment = .center
+        sv.distribution = .equalCentering
+        sv.alignment = .leading
         sv.spacing = 10
         
 //        sv.addArrangedSubview(self.favoriteButton)
@@ -450,7 +451,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
             descriptionTextView.topAnchor.constraint(equalTo: descriptionHeaderLabel.bottomAnchor, constant: 5),
             descriptionTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             descriptionTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-//            descriptionTextView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         weatherHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
