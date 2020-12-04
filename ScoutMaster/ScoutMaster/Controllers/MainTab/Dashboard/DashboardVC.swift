@@ -4,6 +4,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     
     var HPTrails = [Trail]() {
         didSet {
+            pageControl.numberOfPages = HPTrails.count
             collectionView.reloadData()
         }
     }
@@ -227,6 +228,15 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    lazy var pageControl: UIPageControl = {
+      let pc = UIPageControl()
+        pc.currentPageIndicatorTintColor = .systemBlue
+        pc.pageIndicatorTintColor = .systemGray3
+        pc.hidesForSinglePage = true
+        pc.addTarget(self, action: #selector(scrollToSelectedPage), for: .valueChanged)
+        return pc
+    }()
+    
     @objc func clickFilterButton(sender: UIButton) {
         print("click")
 //        filterLabel.isHidden = true
@@ -260,6 +270,10 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
               present(alert, animated:true)
           }
     
+    @objc func scrollToSelectedPage() {
+        collectionView.scrollToItem(at: IndexPath(row: pageControl.currentPage, section: 0), at: .centeredHorizontally, animated: true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -283,6 +297,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         view.addSubview(horizontalStackView)
         view.addSubview(horizontalStackViewForFilterIcon)
         view.addSubview(displayedFilterButton)
+        view.addSubview(pageControl)
         
         
         // add Constraints
@@ -296,6 +311,7 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
         setHorizontalStackViewConstraints()
         setHorizontalForFilterButtonStackViewConstraints()
         setdisplayedFilterButtonConstraints()
+        setPageControlConstraints()
         
     }
     
@@ -380,7 +396,15 @@ class DashboardVC: UIViewController, UITextFieldDelegate {
     }
     
 
-
+    private func setPageControlConstraints() {
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageControl.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            pageControl.widthAnchor.constraint(equalTo: collectionView.widthAnchor),
+            pageControl.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
 
     
     private func setSearchItBarConstraints() {
@@ -509,6 +533,11 @@ extension DashboardVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let lastVisibleItemRow = collectionView.indexPathsForVisibleItems.last?.row else { return }
+        pageControl.currentPage = lastVisibleItemRow
     }
     
 }
