@@ -289,7 +289,6 @@ class DetailVC: UIViewController, UIScrollViewDelegate {
               let sceneDelegate = windowScene.delegate as? SceneDelegate, let window = sceneDelegate.window
         else { return }
         if let tabBarController = window.rootViewController as? MainTabBarViewController, let mapVC = tabBarController.viewControllers![1] as? MapVC {
-            mapVC.tabBarItem.isEnabled = true
             mapVC.forecastDetails = self.forecastDetails
             mapVC.trail = self.trail
             dismiss(animated: true, completion: nil)

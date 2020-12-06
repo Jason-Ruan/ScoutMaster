@@ -10,6 +10,9 @@
 		080C48CD2412F616006A19EC /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080C48CC2412F616006A19EC /* WeatherCell.swift */; };
 		080E1C9923E4722200EF94A6 /* MapboxTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E1C9823E4722200EF94A6 /* MapboxTestVC.swift */; };
 		080E1C9B23E4734500EF94A6 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		086B8626257C919C00F0C0F2 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B152D723E0A651007C9BF6 /* AppError.swift */; };
+		086B862D257C936900F0C0F2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999E0723DF6E52008DBC60 /* Network.swift */; };
+		086B8631257C936E00F0C0F2 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A164A912412E40800EF6A19 /* Secrets.swift */; };
 		08BF0ED0242255D600F12B9C /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BF0ECF242255D600F12B9C /* WeatherTableViewCell.swift */; };
 		1C73F377D507FE1B3943BBAE /* Pods_ScoutMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD3AAFC1DB150A8B05D34F5 /* Pods_ScoutMaster.framework */; };
 		3A0076BD23F1C7D900FE1CE6 /* MapSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0076BC23F1C7D900FE1CE6 /* MapSettings.swift */; };
@@ -208,7 +211,6 @@
 		3A999DBE23DF58AD008DBC60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DBD23DF58AD008DBC60 /* Assets.xcassets */; };
 		3A999DC123DF58AD008DBC60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A999DBF23DF58AD008DBC60 /* LaunchScreen.storyboard */; };
 		3A999DCC23DF58AE008DBC60 /* ScoutMasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DCB23DF58AE008DBC60 /* ScoutMasterTests.swift */; };
-		3A999DD723DF58AE008DBC60 /* ScoutMasterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DD623DF58AE008DBC60 /* ScoutMasterUITests.swift */; };
 		3A999DE923DF5960008DBC60 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DE823DF5960008DBC60 /* LoginVC.swift */; };
 		3A999DED23DF59AA008DBC60 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DEC23DF59AA008DBC60 /* ProfileVC.swift */; };
 		3A999DEF23DF59EC008DBC60 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A999DEE23DF59EC008DBC60 /* MainTabBarViewController.swift */; };
@@ -470,8 +472,6 @@
 		3A999DCB23DF58AE008DBC60 /* ScoutMasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoutMasterTests.swift; sourceTree = "<group>"; };
 		3A999DCD23DF58AE008DBC60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A999DD223DF58AE008DBC60 /* ScoutMasterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoutMasterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A999DD623DF58AE008DBC60 /* ScoutMasterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoutMasterUITests.swift; sourceTree = "<group>"; };
-		3A999DD823DF58AE008DBC60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A999DE823DF5960008DBC60 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		3A999DEC23DF59AA008DBC60 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		3A999DEE23DF59EC008DBC60 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -765,7 +765,6 @@
 			children = (
 				3A999DB023DF58AC008DBC60 /* ScoutMaster */,
 				3A999DCA23DF58AE008DBC60 /* ScoutMasterTests */,
-				3A999DD523DF58AE008DBC60 /* ScoutMasterUITests */,
 				3A999DAF23DF58AC008DBC60 /* Products */,
 				2999A720D047E1FF4E4642E4 /* Pods */,
 				689ED15B92246C31FD2CDAE3 /* Frameworks */,
@@ -807,15 +806,6 @@
 				3A999DCD23DF58AE008DBC60 /* Info.plist */,
 			);
 			path = ScoutMasterTests;
-			sourceTree = "<group>";
-		};
-		3A999DD523DF58AE008DBC60 /* ScoutMasterUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3A999DD623DF58AE008DBC60 /* ScoutMasterUITests.swift */,
-				3A999DD823DF58AE008DBC60 /* Info.plist */,
-			);
-			path = ScoutMasterUITests;
 			sourceTree = "<group>";
 		};
 		3A999DE423DF5938008DBC60 /* MainTab */ = {
@@ -1496,6 +1486,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A999DCC23DF58AE008DBC60 /* ScoutMasterTests.swift in Sources */,
+				086B8631257C936E00F0C0F2 /* Secrets.swift in Sources */,
+				086B862D257C936900F0C0F2 /* Network.swift in Sources */,
+				086B8626257C919C00F0C0F2 /* AppError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,7 +1496,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A999DD723DF58AE008DBC60 /* ScoutMasterUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
