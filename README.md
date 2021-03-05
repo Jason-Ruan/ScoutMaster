@@ -1,22 +1,9 @@
-# User Stories:
+# ScoutMaster
 
-1.)	Neema is a long-time hiker, she recently moved to New York City from California and realized she would need to continue her hiking passion in a new place. She has no prior knowledge of NYC hiking trails and downloads the app to familiarize herself with options.
-
-Level: Advanced
-Address: Lower East Side
-
-2.)	Eric is a brand-new hiker. He lives in Colorado. Although hiking trails are plentiful around him, he has never hiked before in his life. In fact, he was sheltered during his childhood and needs to be handheld through every new experience in his adulthood.
-
-Level: Beginner
-Address: Aspen, Colorado
-
-3.)	Kary used to hike a bit in her youth. She also has some hiking experience in her adulthood but not much.
-
-Level: Intermediate
-Address: Flagstaff, Arizona
+A lightweight hiking app that lets users search for trails. This app can be useful to newcomers and veteran hikers alike with its handy features that can be used on the journey, with and without online access. Let ScoutMaster help you plan your next hiking trip by showing details of the trail, current and projected weather conditions, and a difficulty rating based on a national standardized scale.
 
 
-# Prototype Features:
+# Features:
 
 1.) Ability to download/save hike details and available maps for offline use.
 	
@@ -24,17 +11,16 @@ Address: Flagstaff, Arizona
 
 3.) Record user's last position where cell service was available.
 
-4.) Display emergency services info.
-	
-5.) Functionality to automatically contact emergency services during certain circumstances.
+4.) Mark down points of interest.
 
 
 # Technologies:
 
+-	UIKit
 -	Mapkit
 -	Core Location
--	CloudKit
--	UIApplication
+-	ReachabilitySwift
+-	Cocoapods
 
 # API(s): 
 -	[Hiking Project](https://www.hikingproject.com/data)
