@@ -6,12 +6,14 @@ A lightweight hiking app that lets users search for trails. This app can be usef
 # Features:
 
 1.) Ability to download/save hike details and available maps for offline use.
+
+2.) View up-to-date terrain and weather conditions of the trail.
 	
-2.) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
+3.) Live drawing of user's walked path as a toggle-able overlay on the map for easy backtracking.
 
-3.) Record user's last position where cell service was available.
+4.) Record user's last position where cell service was available.
 
-4.) Mark down points of interest.
+5.) Mark down points of interest on the map with annotations.
 
 
 # Technologies:
